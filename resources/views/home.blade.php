@@ -232,18 +232,34 @@
             @foreach($umkm as $product)
             <div class="col-md-6 col-lg-3 mb-4">
                 <div class="card h-100">
-                    <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400" 
-                         class="card-img-top" alt="{{ $product['name'] }}">
+                    <a href="{{ route('umkm.show', $product->id) }}">
+                        @if($product->image)
+                            @if(str_starts_with($product->image, 'http'))
+                            <img src="{{ $product->image }}" 
+                                 class="card-img-top" alt="{{ $product->name }}">
+                            @else
+                            <img src="{{ asset('storage/' . $product->image) }}" 
+                                 class="card-img-top" alt="{{ $product->name }}">
+                            @endif
+                        @else
+                            <img src="https://via.placeholder.com/400x300?text=No+Image" 
+                                 class="card-img-top" alt="{{ $product->name }}">
+                        @endif
+                    </a>
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $product['name'] }}</h5>
-                        <p class="card-text text-muted small">{{ $product['description'] }}</p>
+                        <h5 class="card-title">
+                            <a href="{{ route('umkm.show', $product->id) }}" class="text-decoration-none text-dark">
+                                {{ $product->name }}
+                            </a>
+                        </h5>
+                        <p class="card-text text-muted small">{{ Str::limit($product->description, 60) }}</p>
                         <div class="mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="h5 mb-0 text-success">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
+                                <span class="h5 mb-0 text-success">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                             </div>
-                            <button class="btn btn-primary w-100">
-                                <i class="bi bi-cart-plus"></i> Pesan Sekarang
-                            </button>
+                            <a href="{{ route('umkm.show', $product->id) }}" class="btn btn-primary w-100 text-decoration-none">
+                                <i class="bi bi-eye"></i> Lihat Detail
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -251,35 +267,48 @@
             @endforeach
             <div class="col-md-6 col-lg-3 mb-4">
                 <div class="card h-100">
-                    <img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400" 
-                         class="card-img-top" alt="Batik Tulis">
+                    <a href="{{ route('umkm.show', 3) }}">
+                        <img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400" 
+                             class="card-img-top" alt="Batik Tulis">
+                    </a>
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Batik Tulis Khas Desa</h5>
+                        <h5 class="card-title">
+                            <a href="{{ route('umkm.show', 3) }}" class="text-decoration-none text-dark">
+                                Batik Tulis Khas Desa
+                            </a>
+                        </h5>
                         <p class="card-text text-muted small">Batik tulis dengan motif khas</p>
                         <div class="mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="h5 mb-0 text-success">Rp 150.000</span>
                             </div>
-                            <button class="btn btn-primary w-100">
-                                <i class="bi bi-cart-plus"></i> Pesan Sekarang
-                            </button>
+                            <a href="{{ route('umkm.show', 3) }}" class="btn btn-primary w-100 text-decoration-none">
+                                <i class="bi bi-eye"></i> Lihat Detail
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 mb-4">
                 <div class="card h-100">
-                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400" 
-                         class="card-img-top" alt="Kerajinan">
+                    <a href="{{ route('umkm.show', 4) }}">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400" 
+                             class="card-img-top" alt="Kerajinan">
+                    </a>
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Anyaman Bambu</h5>
+                        <h5 class="card-title">
+                            <a href="{{ route('umkm.show', 4) }}" class="text-decoration-none text-dark">
+                                Anyaman Bambu
+                            </a>
+                        </h5>
                         <p class="card-text text-muted small">Kerajinan anyaman tangan</p>
                         <div class="mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="h5 mb-0 text-success">Rp 35.000</span>
                             </div>
-                            <button class="btn btn-primary w-100">
-                                <i class="bi bi-cart-plus"></i> Pesan Sekarang
+                            <a href="{{ route('umkm.show', 4) }}" class="btn btn-primary w-100 text-decoration-none">
+                                <i class="bi bi-eye"></i> Lihat Detail
+                            </a>
                             </button>
                         </div>
                     </div>

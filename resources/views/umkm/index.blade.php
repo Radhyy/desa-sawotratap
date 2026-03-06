@@ -165,53 +165,71 @@
         <!-- Products Grid -->
         <div class="row" id="productsContainer">
             @forelse($products as $product)
-            <div class="col-md-6 col-lg-4 mb-4 product-item" data-category="{{ $product['category'] }}">
+            <div class="col-md-6 col-lg-4 mb-4 product-item" data-category="{{ $product->category }}">
                 <div class="card umkm-card h-100">
-                    <div class="position-relative">
-                        <img src="{{ $product['image'] }}" 
-                             class="card-img-top umkm-card-img" 
-                             alt="{{ $product['name'] }}">
-                        @if($product['stock'] <= 0)
-                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
-                             style="background: rgba(0,0,0,0.6);">
-                            <span class="text-white fw-bold" style="font-size: 1.2rem;">Stok Habis</span>
+                    <a href="{{ route('umkm.show', $product->id) }}" class="text-decoration-none">
+                        <div class="position-relative">
+                            @if($product->image)
+                                @if(str_starts_with($product->image, 'http'))
+                                <img src="{{ $product->image }}" 
+                                     class="card-img-top umkm-card-img" 
+                                     alt="{{ $product->name }}">
+                                @else
+                                <img src="{{ asset('storage/' . $product->image) }}" 
+                                     class="card-img-top umkm-card-img" 
+                                     alt="{{ $product->name }}">
+                                @endif
+                            @else
+                                <img src="https://via.placeholder.com/400x300?text=No+Image" 
+                                     class="card-img-top umkm-card-img" 
+                                     alt="{{ $product->name }}">
+                            @endif
+                            @if($product->stock <= 0)
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+                                 style="background: rgba(0,0,0,0.6);">
+                                <span class="text-white fw-bold" style="font-size: 1.2rem;">Stok Habis</span>
+                            </div>
+                            @else
+                            <span class="position-absolute top-0 end-0 badge bg-success m-3">
+                                Stok: {{ $product->stock }}
+                            </span>
+                            @endif
                         </div>
-                        @else
-                        <span class="position-absolute top-0 end-0 badge bg-success m-3">
-                            Stok: {{ $product['stock'] }}
-                        </span>
-                        @endif
-                    </div>
+                    </a>
                     
                     <div class="card-body d-flex flex-column">
-                        <span class="umkm-category">{{ $product['category'] }}</span>
+                        <span class="umkm-category">{{ $product->category }}</span>
                         
-                        <h5 class="card-title fw-bold mb-2">{{ $product['name'] }}</h5>
+                        <h5 class="card-title fw-bold mb-2">
+                            <a href="{{ route('umkm.show', $product->id) }}" class="text-decoration-none text-dark">
+                                {{ $product->name }}
+                            </a>
+                        </h5>
                         
                         <p class="card-text text-muted small flex-grow-1">
-                            {{ $product['description'] }}
+                            {{ Str::limit($product->description, 80) }}
                         </p>
 
                         <div class="d-flex align-items-center mb-3 mt-3">
                             <i class="bi bi-shop text-success me-2"></i>
-                            <small class="text-muted">{{ $product['seller'] }}</small>
+                            <small class="text-muted">{{ $product->seller }}</small>
                         </div>
 
                         <div class="d-flex align-items-center mb-3">
                             <i class="bi bi-geo-alt text-success me-2"></i>
-                            <small class="text-muted">{{ $product['location'] }}</small>
+                            <small class="text-muted">{{ $product->location }}</small>
                         </div>
 
                         <hr class="my-3">
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="umkm-price">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
+                            <span class="umkm-price">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                         </div>
 
-                        @if($product['stock'] > 0)
-                        <button class="btn btn-success w-100 fw-semibold" style="border-radius: 8px; padding: 10px;">
-                            <i class="bi bi-cart-plus"></i> Pesan Sekarang
-                        </button>
+                        @if($product->stock > 0)
+                        <a href="{{ route('umkm.show', $product->id) }}" class="btn btn-success w-100 fw-semibold text-decoration-none" style="border-radius: 8px; padding: 10px;">
+                            <i class="bi bi-eye"></i> Lihat Detail
+                        </a>
                         @else
                         <button class="btn btn-secondary w-100 fw-semibold" style="border-radius: 8px; padding: 10px;" disabled>
                             <i class="bi bi-x-circle"></i> Tidak Tersedia
@@ -234,11 +252,11 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-5" style="background: linear-gradient(135deg, var(--primary-green), var(--light-green)); color: white;">
+<section class="py-5" style="background: white; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;">
     <div class="container text-center">
-        <h2 class="mb-4">Ingin Menjual Produk Anda?</h2>
-        <p class="mb-4" style="font-size: 1.1rem;">Bergabunglah dengan UMKM Sawotratap dan perluas jangkauan produk Anda</p>
-        <button class="btn btn-light fw-bold" style="padding: 12px 40px; border-radius: 8px;">
+        <h2 class="mb-4" style="color: var(--primary-green); font-family: 'Sora', sans-serif; font-weight: 700;">Ingin Menjual Produk Anda?</h2>
+        <p class="mb-4 text-muted" style="font-size: 1.1rem;">Bergabunglah dengan UMKM Sawotratap dan perluas jangkauan produk Anda</p>
+        <button class="btn btn-primary fw-bold" style="padding: 12px 40px; border-radius: 8px; background: linear-gradient(135deg, var(--primary-green), var(--secondary-green)); border: none;">
             <i class="bi bi-person-plus"></i> Daftar Sebagai Penjual
         </button>
     </div>

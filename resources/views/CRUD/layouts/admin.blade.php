@@ -306,7 +306,7 @@
             </a>
             
             <div class="menu-section-title">UMKM</div>
-            <a href="#" class="menu-item">
+            <a href="{{ route('admin.umkm.index') }}" class="menu-item {{ request()->routeIs('admin.umkm.*') ? 'active' : '' }}">
                 <i class="bi bi-shop"></i> Kelola UMKM
             </a>
             <a href="#" class="menu-item">

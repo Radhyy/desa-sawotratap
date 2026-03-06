@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementContro
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/pengumuman', [HomeController::class, 'announcements'])->name('announcements');
 Route::get('/pengumuman/{announcement}', [HomeController::class, 'show'])->name('announcements.show');
+Route::get('/umkm', [HomeController::class, 'umkm'])->name('umkm');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {

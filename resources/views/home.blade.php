@@ -287,12 +287,12 @@
             </div>
         </div>
         <div class="text-center mt-5">
-            <button class="shiny-button">
+            <a href="{{ route('umkm') }}" class="shiny-button" style="text-decoration: none; display: inline-block;">
                 <span class="button-text">
                     LIHAT SEMUA UMKM
                     <i class="bi bi-arrow-right"></i>
                 </span>
-            </button>
+            </a>
         </div>
     </div>
 </section>

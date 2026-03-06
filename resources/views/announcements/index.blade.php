@@ -121,7 +121,7 @@
             <div class="col-lg-4 text-lg-end">
                 <a href="#" class="shiny-button" style="text-decoration: none; display: inline-block;">
                     <span class="button-text">
-                        Berlangganan Notifikasi
+                        Berlangganan Notifikasii
                         <i class="bi bi-arrow-right"></i>
                     </span>
                 </a>

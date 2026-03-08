@@ -11,6 +11,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/pengumuman', [HomeController::class, 'announcements'])->name('announcements');
 Route::get('/pengumuman/{announcement}', [HomeController::class, 'show'])->name('announcements.show');
 Route::get('/umkm', [HomeController::class, 'umkm'])->name('umkm');
+Route::get('/umkm/{id}', [HomeController::class, 'showUmkm'])->name('umkm.show');
+Route::get('/berita', [HomeController::class, 'berita'])->name('berita');
+Route::get('/berita/{id}', [HomeController::class, 'showBerita'])->name('berita.show');
+Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
+Route::get('/galeri/{id}', [HomeController::class, 'showGaleri'])->name('galeri.show');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {

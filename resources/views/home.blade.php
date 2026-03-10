@@ -712,7 +712,7 @@
                     </h5>
                     <div class="map-container" style="height: calc(100% - 60px);">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126646.43841825953!2d112.6447!3d-7.4509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e1c9e0c0e0e1%3A0x0!2sSidoarjo!5e0!3m2!1sen!2sid!4v1234567890"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11616.9548051795!2d112.7299005261466!3d-7.3695107493137435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e495b3986b59%3A0x88b42aee982571fd!2sSawotratap%2C%20Kec.%20Gedangan%2C%20Kabupaten%20Sidoarjo%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1772784335202!5m2!1sid!2sid"
                             width="100%" 
                             height="100%" 
                             style="border:0; border-radius: 15px;" 

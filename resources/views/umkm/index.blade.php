@@ -96,6 +96,16 @@
         color: white;
         font-weight: 500;
     }
+
+    .umkm-actions {
+        margin-top: auto;
+    }
+
+    .umkm-detail-btn {
+        border-radius: 8px;
+        padding: 10px;
+        font-weight: 600;
+    }
 </style>
 @endsection
 
@@ -149,14 +159,14 @@
     <div class="container">
         <!-- Filter Categories -->
         <div class="text-center mb-5">
-            <button class="filter-btn active" onclick="filterProducts('all')">
+            <button class="filter-btn active" onclick="filterProducts('all', this)">
                 <i class="bi bi-funnel"></i> Semua Kategori
             </button>
             @php
                 $categories = $products->pluck('category')->unique()->values();
             @endphp
             @foreach($categories as $category)
-            <button class="filter-btn" onclick="filterProducts('{{ $category }}')">
+            <button class="filter-btn" onclick="filterProducts('{{ $category }}', this)">
                 {{ $category }}
             </button>
             @endforeach
@@ -168,9 +178,12 @@
             <div class="col-md-6 col-lg-4 mb-4 product-item" data-category="{{ $product['category'] }}">
                 <div class="card umkm-card h-100">
                     <div class="position-relative">
-                        <img src="{{ $product['image'] }}" 
+                        <a href="{{ route('umkm.show', $product['id']) }}" class="d-block">
+                        <img src="{{ $product['image'] }}"
                              class="card-img-top umkm-card-img" 
-                             alt="{{ $product['name'] }}">
+                            alt="{{ $product['name'] }}"
+                            onerror="this.onerror=null;this.src='https://via.placeholder.com/800x500?text=Produk+UMKM';">
+                        </a>
                         @if($product['stock'] <= 0)
                         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
                              style="background: rgba(0,0,0,0.6);">
@@ -186,7 +199,11 @@
                     <div class="card-body d-flex flex-column">
                         <span class="umkm-category">{{ $product['category'] }}</span>
                         
-                        <h5 class="card-title fw-bold mb-2">{{ $product['name'] }}</h5>
+                        <h5 class="card-title fw-bold mb-2">
+                            <a href="{{ route('umkm.show', $product['id']) }}" class="text-decoration-none text-dark">
+                                {{ $product['name'] }}
+                            </a>
+                        </h5>
                         
                         <p class="card-text text-muted small flex-grow-1">
                             {{ $product['description'] }}
@@ -204,19 +221,25 @@
 
                         <hr class="my-3">
 
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="umkm-price">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
-                        </div>
+                        <div class="umkm-actions">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="umkm-price">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
+                            </div>
 
-                        @if($product['stock'] > 0)
-                        <button class="btn btn-success w-100 fw-semibold" style="border-radius: 8px; padding: 10px;">
-                            <i class="bi bi-cart-plus"></i> Pesan Sekarang
-                        </button>
-                        @else
-                        <button class="btn btn-secondary w-100 fw-semibold" style="border-radius: 8px; padding: 10px;" disabled>
-                            <i class="bi bi-x-circle"></i> Tidak Tersedia
-                        </button>
-                        @endif
+                            <a href="{{ route('umkm.show', $product['id']) }}" class="btn btn-outline-success w-100 umkm-detail-btn mb-2">
+                                <i class="bi bi-eye"></i> Lihat Selengkapnya
+                            </a>
+
+                            @if($product['stock'] > 0)
+                            <button class="btn btn-success w-100 fw-semibold umkm-detail-btn">
+                                <i class="bi bi-cart-plus"></i> Pesan Sekarang
+                            </button>
+                            @else
+                            <button class="btn btn-secondary w-100 fw-semibold umkm-detail-btn" disabled>
+                                <i class="bi bi-x-circle"></i> Tidak Tersedia
+                            </button>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -248,13 +271,15 @@
 
 @push('scripts')
 <script>
-function filterProducts(category) {
+function filterProducts(category, buttonElement) {
     const products = document.querySelectorAll('.product-item');
     const buttons = document.querySelectorAll('.filter-btn');
 
     // Update active button
     buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if (buttonElement) {
+        buttonElement.classList.add('active');
+    }
 
     // Filter products
     products.forEach(product => {

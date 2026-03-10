@@ -532,12 +532,12 @@
             </div>
         </div>
         <div class="text-center mt-5">
-            <button class="shiny-button">
+            <a href="{{ route('berita') }}" class="shiny-button" style="text-decoration: none; display: inline-block;">
                 <span class="button-text">
                     Lihat Semua Berita
                     <i class="bi bi-arrow-right"></i>
                 </span>
-            </button>
+            </a>
         </div>
     </div>
 </section>
@@ -613,11 +613,12 @@
             </div>
         </div>
         <div class="text-center mt-5">
-            <button class="shiny-button">
+            <a href="{{ route('galeri') }}" class="shiny-button" style="text-decoration: none; display: inline-block;">
                 <span class="button-text">
                     Lihat Semua Galeri
                     <i class="bi bi-arrow-right"></i>
                 </span>
+            </a>
             </button>
         </div>
     </div>

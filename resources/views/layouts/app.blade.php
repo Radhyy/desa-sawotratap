@@ -67,7 +67,7 @@
                             Layanan
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Pengajuan Surat</a></li>
+                            <li><a class="dropdown-item" href="{{ route('pengajuan-surat.index') }}">Pengajuan Surat</a></li>
                             <li><a class="dropdown-item" href="#">Pengaduan</a></li>
                             <li><a class="dropdown-item" href="#">Perizinan</a></li>
                             <li><a class="dropdown-item" href="#umkm">UMKM</a></li>

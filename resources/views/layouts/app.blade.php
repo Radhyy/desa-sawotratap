@@ -113,7 +113,7 @@
                             <li><hr class="dropdown-divider"></li>
                             @endif
                             <li>
-                                <a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil Saya</a>
+                                <a class="dropdown-item" href="{{ route('profile.index') }}"><i class="bi bi-person me-2"></i>Profil Saya</a>
                             </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST" class="d-inline">

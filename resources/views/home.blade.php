@@ -232,32 +232,32 @@
             @foreach($umkm as $product)
             <div class="col-md-6 col-lg-3 mb-4">
                 <div class="card h-100">
-                    <a href="{{ route('umkm.show', $product->id) }}">
-                        @if($product->image)
-                            @if(str_starts_with($product->image, 'http'))
-                            <img src="{{ $product->image }}" 
-                                 class="card-img-top" alt="{{ $product->name }}">
+                    <a href="{{ route('umkm.show', $product['id']) }}">
+                        @if($product['image'])
+                            @if(str_starts_with($product['image'], 'http'))
+                            <img src="{{ $product['image'] }}" 
+                                 class="card-img-top" alt="{{ $product['name'] }}">
                             @else
-                            <img src="{{ asset('storage/' . $product->image) }}" 
-                                 class="card-img-top" alt="{{ $product->name }}">
+                            <img src="{{ asset('storage/' . $product['image']) }}" 
+                                 class="card-img-top" alt="{{ $product['name'] }}">
                             @endif
                         @else
                             <img src="https://via.placeholder.com/400x300?text=No+Image" 
-                                 class="card-img-top" alt="{{ $product->name }}">
+                                 class="card-img-top" alt="{{ $product['name'] }}">
                         @endif
                     </a>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">
-                            <a href="{{ route('umkm.show', $product->id) }}" class="text-decoration-none text-dark">
-                                {{ $product->name }}
+                            <a href="{{ route('umkm.show', $product['id']) }}" class="text-decoration-none text-dark">
+                                {{ $product['name'] }}
                             </a>
                         </h5>
-                        <p class="card-text text-muted small">{{ Str::limit($product->description, 60) }}</p>
+                        <p class="card-text text-muted small">{{ Str::limit($product['description'], 60) }}</p>
                         <div class="mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="h5 mb-0 text-success">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                <span class="h5 mb-0 text-success">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
                             </div>
-                            <a href="{{ route('umkm.show', $product->id) }}" class="btn btn-primary w-100 text-decoration-none">
+                            <a href="{{ route('umkm.show', $product['id']) }}" class="btn btn-primary w-100 text-decoration-none">
                                 <i class="bi bi-eye"></i> Lihat Detail
                             </a>
                         </div>

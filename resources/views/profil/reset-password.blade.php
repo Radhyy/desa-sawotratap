@@ -164,7 +164,7 @@
     }
 
     .password-toggle input {
-        padding-right: 0.875rem;
+        padding-right: 3rem;
     }
 
     .form-group input:focus {
@@ -189,19 +189,27 @@
 
     .toggle-btn {
         position: absolute;
-        right: 12px;
-        top: 39px;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
         background: none;
         border: none;
         cursor: pointer;
         color: var(--primary-green);
-        font-size: 1.2rem;
-        padding: 0.5rem;
+        font-size: 1.1rem;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        z-index: 2;
         transition: all 0.3s ease;
     }
 
     .toggle-btn:hover {
         color: #1b7d52;
+        background: rgba(45, 134, 89, 0.08);
     }
 
     .form-actions {
@@ -339,7 +347,7 @@
                                     placeholder="Masukkan password saat ini"
                                     required
                                 >
-                                <button type="button" class="toggle-btn" onclick="togglePassword('current_password')">
+                                <button type="button" class="toggle-btn" onclick="togglePassword('current_password', this)">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </div>
@@ -364,7 +372,7 @@
                                     required
                                     minlength="8"
                                 >
-                                <button type="button" class="toggle-btn" onclick="togglePassword('new_password')">
+                                <button type="button" class="toggle-btn" onclick="togglePassword('new_password', this)">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </div>
@@ -389,7 +397,7 @@
                                     required
                                     minlength="8"
                                 >
-                                <button type="button" class="toggle-btn" onclick="togglePassword('new_password_confirmation')">
+                                <button type="button" class="toggle-btn" onclick="togglePassword('new_password_confirmation', this)">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </div>
@@ -417,9 +425,8 @@
 </div>
 
 <script>
-function togglePassword(fieldId) {
+function togglePassword(fieldId, button) {
     const field = document.getElementById(fieldId);
-    const button = event.target.closest('.toggle-btn');
     
     if (field.type === 'password') {
         field.type = 'text';

@@ -17,6 +17,7 @@ Route::get('/berita', [HomeController::class, 'berita'])->name('berita');
 Route::get('/berita/{id}', [HomeController::class, 'showBerita'])->name('berita.show');
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/galeri/{id}', [HomeController::class, 'showGaleri'])->name('galeri.show');
+Route::view('/profile-desa', 'profile-desa.index')->name('profile-desa.index');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {

@@ -36,9 +36,9 @@
                             Profil
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Sejarah Desa</a></li>
-                            <li><a class="dropdown-item" href="#">Visi & Misi</a></li>
-                            <li><a class="dropdown-item" href="#">Geografis</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile-desa.index') }}#sejarah">Sejarah Desa</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile-desa.index') }}#visi-misi">Visi & Misi</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile-desa.index') }}#geografis">Geografis</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

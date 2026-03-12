@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PengajuanSuratController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 
@@ -18,7 +19,10 @@ Route::get('/berita/{id}', [HomeController::class, 'showBerita'])->name('berita.
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/galeri/{id}', [HomeController::class, 'showGaleri'])->name('galeri.show');
 Route::view('/profile-desa', 'profile-desa.index')->name('profile-desa.index');
-Route::view('/pengajuan-surat', 'pengajuan-surat.index')->name('pengajuan-surat.index');
+
+// Pengajuan Surat Routes
+Route::get('/pengajuan-surat', [PengajuanSuratController::class, 'index'])->name('pengajuan-surat.index');
+Route::post('/pengajuan-surat', [PengajuanSuratController::class, 'store'])->name('pengajuan-surat.store');
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
@@ -37,6 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/reset-password', [ProfileController::class, 'showResetPassword'])->name('profile.reset-password');
     Route::put('/profile/reset-password', [ProfileController::class, 'resetPassword'])->name('profile.reset-password.update');
+    
+    // Pengajuan Surat Routes (User)
+    Route::get('/pengajuan-surat/{pengajuanSurat}', [PengajuanSuratController::class, 'show'])->name('pengajuan-surat.show');
+    Route::get('/pengajuan-surat/{pengajuanSurat}/edit', [PengajuanSuratController::class, 'edit'])->name('pengajuan-surat.edit');
+    Route::put('/pengajuan-surat/{pengajuanSurat}', [PengajuanSuratController::class, 'update'])->name('pengajuan-surat.update');
+    Route::delete('/pengajuan-surat/{pengajuanSurat}', [PengajuanSuratController::class, 'destroy'])->name('pengajuan-surat.destroy');
+    Route::delete('/pengajuan-surat-dokumen/{dokumen}', [PengajuanSuratController::class, 'deleteDokumen'])->name('pengajuan-surat.dokumen.delete');
 });
 
 // Admin Routes

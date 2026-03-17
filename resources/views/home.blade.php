@@ -19,16 +19,6 @@
         <div class="row align-items-center min-vh-90">
             <div class="col-lg-6 order-lg-1 order-2">
                 <div class="hero-content">
-                    <!-- Badge with Glow -->
-                    <div class="mb-4 animate-fade-in">
-                        <div class="hero-badge-premium">
-                            <span class="badge-glow"></span>
-                            <span class="badge-dot-animated"></span>
-                            <span class="badge-text-premium">🏆 Portal Digital Resmi</span>
-                            <span class="badge-shimmer"></span>
-                        </div>
-                    </div>
-                    
                     <!-- Animated Title -->
                     <div class="hero-title-wrapper">
                         <h1 class="hero-title-premium animate-slide-up">

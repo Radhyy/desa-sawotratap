@@ -31,12 +31,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">Home</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             Profil
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('profile-desa.index') }}#sejarah">Sejarah Desa</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile-desa.index') }}">Sejarah Desa</a></li>
                             <li><a class="dropdown-item" href="{{ route('profile-desa.index') }}#visi-misi">Visi & Misi</a></li>
                             <li><a class="dropdown-item" href="{{ route('profile-desa.index') }}#geografis">Geografis</a></li>
                         </ul>
@@ -46,9 +49,9 @@
                             Pemerintahan
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Struktur Organisasi</a></li>
-                            <li><a class="dropdown-item" href="#">Perangkat Desa</a></li>
-                            <li><a class="dropdown-item" href="#">BPD</a></li>
+                            <li><a class="dropdown-item" href="{{ route('pemerintahan.index') }}">Struktur Organisasi</a></li>
+                            <li><a class="dropdown-item" href="{{ route('pemerintahan.index') }}#perangkat-desa">Perangkat Desa</a></li>
+                            <li><a class="dropdown-item" href="{{ route('pemerintahan.index') }}#bpd">BPD</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -69,7 +72,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('pengajuan-surat.index') }}">Pengajuan Surat</a></li>
                             <li><a class="dropdown-item" href="#">Pengaduan</a></li>
-                            <li><a class="dropdown-item" href="#">Perizinan</a></li>
+                            <li><a class="dropdown-item" href="{{ route('perizinan.index') }}">Perizinan</a></li>
                             <li><a class="dropdown-item" href="#umkm">UMKM</a></li>
                         </ul>
                     </li>
@@ -223,7 +226,7 @@
                     <ul class="footer-links">
                         <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Surat</a></li>
                         <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Pengaduan</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Perizinan</a></li>
+                        <li><a href="{{ route('perizinan.index') }}"><i class="bi bi-chevron-right me-2"></i>Perizinan</a></li>
                         <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Bantuan</a></li>
                     </ul>
                 </div>

@@ -19,6 +19,8 @@ Route::get('/berita/{id}', [HomeController::class, 'showBerita'])->name('berita.
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/galeri/{id}', [HomeController::class, 'showGaleri'])->name('galeri.show');
 Route::view('/profile-desa', 'profile-desa.index')->name('profile-desa.index');
+Route::view('/pemerintahan', 'pemerintahan.index')->name('pemerintahan.index');
+Route::view('/perizinan', 'perizinan.index')->name('perizinan.index');
 
 // Pengajuan Surat Routes
 Route::get('/pengajuan-surat', [PengajuanSuratController::class, 'index'])->name('pengajuan-surat.index');

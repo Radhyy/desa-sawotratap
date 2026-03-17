@@ -130,6 +130,12 @@
         margin-bottom: 1rem;
     }
 
+    #sejarah,
+    #visi-misi,
+    #geografis {
+        scroll-margin-top: 120px;
+    }
+
     .desa-card h2 {
         font-size: 1.25rem;
         font-weight: 700;

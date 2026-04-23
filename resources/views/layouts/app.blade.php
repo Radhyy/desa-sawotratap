@@ -71,7 +71,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('pengajuan-surat.index') }}">Pengajuan Surat</a></li>
-                            <li><a class="dropdown-item" href="#">Pengaduan</a></li>
+                            <li><a class="dropdown-item" href="{{ route('pengaduan.index') }}">Pengaduan</a></li>
                             <li><a class="dropdown-item" href="{{ route('perizinan.index') }}">Perizinan</a></li>
                             <li><a class="dropdown-item" href="#umkm">UMKM</a></li>
                         </ul>
@@ -225,7 +225,7 @@
                     <h5 class="footer-title mb-4">Layanan</h5>
                     <ul class="footer-links">
                         <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Surat</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Pengaduan</a></li>
+                        <li><a href="{{ route('pengaduan.index') }}"><i class="bi bi-chevron-right me-2"></i>Pengaduan</a></li>
                         <li><a href="{{ route('perizinan.index') }}"><i class="bi bi-chevron-right me-2"></i>Perizinan</a></li>
                         <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Bantuan</a></li>
                     </ul>

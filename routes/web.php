@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PengajuanSuratController;
+use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 
@@ -21,6 +22,8 @@ Route::get('/galeri/{id}', [HomeController::class, 'showGaleri'])->name('galeri.
 Route::view('/profile-desa', 'profile-desa.index')->name('profile-desa.index');
 Route::view('/pemerintahan', 'pemerintahan.index')->name('pemerintahan.index');
 Route::view('/perizinan', 'perizinan.index')->name('perizinan.index');
+Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
+Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
 // Pengajuan Surat Routes
 Route::get('/pengajuan-surat', [PengajuanSuratController::class, 'index'])->name('pengajuan-surat.index');

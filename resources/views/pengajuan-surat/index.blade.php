@@ -5,15 +5,19 @@
 @section('styles')
 <style>
     .letter-page {
-        padding-top: 138px;
-        padding-bottom: 56px;
+        margin-top: 0;
+        padding-bottom: 70px;
         min-height: 100vh;
         background:
-            radial-gradient(circle at top right, rgba(22, 163, 74, 0.09), transparent 42%),
-            radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.08), transparent 40%),
-            #f7fbf8;
+            linear-gradient(180deg, #f8fbf7 0%, #f4f7fa 100%);
         position: relative;
         overflow: hidden;
+    }
+
+    .letter-breadcrumb {
+        margin-top: 80px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e8ecef;
     }
 
     .letter-shell {
@@ -21,42 +25,34 @@
         z-index: 1;
     }
 
-    .letter-hero {
-        border-radius: 22px;
-        padding: 2rem;
-        margin-bottom: 1.25rem;
-        color: #fff;
-        background: linear-gradient(135deg, #166534 0%, #15803d 55%, #22c55e 100%);
-        box-shadow: 0 16px 36px rgba(22, 101, 52, 0.25);
-        position: relative;
-        overflow: hidden;
+    .letter-header {
+        background: #f8f9fa;
+        border-bottom: 1px solid #e8ecef;
     }
 
-    .letter-hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-        background-size: 30px 30px;
-        opacity: 0.2;
+    .letter-header .container {
+        padding-top: 44px;
+        padding-bottom: 44px;
     }
 
-    .letter-hero h1 {
+    .hero-content-box {
+        padding: 0;
+        margin-bottom: 0;
         position: relative;
-        z-index: 1;
-        font-size: 2rem;
-        font-weight: 800;
-        margin-bottom: 0.45rem;
+        z-index: 2;
     }
 
-    .letter-hero p {
-        position: relative;
-        z-index: 1;
-        margin: 0;
-        color: rgba(255, 255, 255, 0.92);
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        color: #6c757d;
         max-width: 760px;
+        margin: 0 auto;
+        font-size: 1.08rem;
+        line-height: 1.6;
+        font-weight: 400;
     }
 
     .letter-grid {
@@ -67,53 +63,56 @@
 
     .letter-card {
         background: #fff;
-        border: 1px solid #dcfce7;
-        border-radius: 16px;
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+        border: 1px solid #e4ecdf;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(45, 80, 22, 0.08);
+        overflow: hidden;
     }
 
     .letter-card .head {
-        padding: 1rem 1.2rem;
-        border-bottom: 1px solid #ecfdf5;
+        padding: 22px 24px;
+        background: linear-gradient(135deg, rgba(74, 124, 36, 0.12), rgba(45, 80, 22, 0.08));
+        border-bottom: 1px solid #e9f0e3;
         display: flex;
         align-items: center;
         gap: 0.55rem;
     }
 
     .letter-card .head h2 {
-        font-size: 1.08rem;
+        font-size: 1.15rem;
         font-weight: 700;
-        color: #166534;
+        color: #24381f;
         margin: 0;
     }
 
     .letter-body {
-        padding: 1.1rem 1.2rem 1.2rem;
+        padding: 22px 24px 24px;
     }
 
     .form-label {
+        color: #2c4225;
         font-weight: 600;
-        color: #166534;
-        margin-bottom: 0.4rem;
+        margin-bottom: 8px;
     }
 
     .form-control,
     .form-select,
     textarea {
-        border-radius: 12px !important;
-        border: 1px solid #bbf7d0 !important;
-        padding: 0.72rem 0.85rem !important;
+        border-radius: 11px !important;
+        border: 1px solid #c9d8c1 !important;
+        padding: 0.7rem 0.86rem !important;
+        font-size: 0.95rem;
     }
 
     .form-control:focus,
     .form-select:focus,
     textarea:focus {
-        box-shadow: 0 0 0 0.2rem rgba(34, 197, 94, 0.15) !important;
-        border-color: #22c55e !important;
+        box-shadow: 0 0 0 0.2rem rgba(74, 124, 36, 0.2) !important;
+        border-color: var(--light-green) !important;
     }
 
     .help-text {
-        font-size: 0.82rem;
+        font-size: 0.84rem;
         color: #6b7280;
         margin-top: 0.25rem;
     }
@@ -224,8 +223,31 @@
             grid-template-columns: 1fr;
         }
 
+        .letter-header .container {
+            padding-top: 34px;
+            padding-bottom: 34px;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            line-height: 1.24;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.97rem;
+            line-height: 1.62;
+        }
+    }
+
+    @media (max-width: 767.98px) {
         .letter-page {
-            padding-top: 130px;
+            padding-bottom: 40px;
+        }
+
+        .letter-card .head,
+        .letter-body {
+            padding: 18px;
         }
     }
 </style>
@@ -233,15 +255,34 @@
 
 @section('content')
 <div class="letter-page">
-    <div class="container letter-shell">
-        <section class="letter-hero">
-            <h1>Pengajuan Surat</h1>
-            <p>
-                Ajukan kebutuhan surat administrasi desa secara online. Isi formulir dengan lengkap,
-                lalu tim desa akan memproses pengajuan Anda.
-            </p>
-        </section>
+    <div class="letter-breadcrumb py-3">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}" class="text-decoration-none" style="color: var(--primary-green);">
+                            <i class="bi bi-house-door"></i> Beranda
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Pengajuan Surat</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
 
+    <section class="letter-header py-5">
+        <div class="container">
+            <div class="hero-content-box text-center">
+                <h1 class="section-title-center hero-title">Pengajuan Surat</h1>
+                <p class="hero-subtitle">
+                    Ajukan kebutuhan surat administrasi desa secara online. Isi formulir dengan lengkap,
+                    lalu tim desa akan memproses pengajuan Anda.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container letter-shell section-wrap pt-4">
         <div class="letter-grid">
             <section class="letter-card">
                 <div class="head">

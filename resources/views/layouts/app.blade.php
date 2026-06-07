@@ -60,10 +60,10 @@
                             Informasi
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#berita">Berita</a></li>
+                            <li><a class="dropdown-item" href="{{ route('berita') }}">Berita</a></li>
                             <li><a class="dropdown-item" href="{{ route('announcements') }}">Pengumuman</a></li>
-                            <li><a class="dropdown-item" href="#galeri">Galeri</a></li>
-                            <li><a class="dropdown-item" href="#">Agenda</a></li>
+                            <li><a class="dropdown-item" href="{{ route('galeri') }}">Galeri</a></li>
+                            <li><a class="dropdown-item" href="{{ route('agenda') }}">Agenda</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -74,7 +74,7 @@
                             <li><a class="dropdown-item" href="{{ route('pengajuan-surat.index') }}">Pengajuan Surat</a></li>
                             <li><a class="dropdown-item" href="{{ route('pengaduan.index') }}">Pengaduan</a></li>
                             <li><a class="dropdown-item" href="{{ route('perizinan.index') }}">Perizinan</a></li>
-                            <li><a class="dropdown-item" href="#umkm">UMKM</a></li>
+                            <li><a class="dropdown-item" href="{{ route('umkm') }}">UMKM</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -170,39 +170,49 @@
     @yield('content')
 
     <!-- Footer -->
-    <footer class="footer" id="footer" style="padding-top: 0; padding-bottom: 0;">
-        <div style="background-color: var(--primary-green, #2E7D32); padding: 40px 0;">
+    <footer class="footer" id="footer">
+        <div class="footer-main">
             <div class="container">
-                <div class="row align-items-center">
-                    <!-- Left Side: Logo & Name -->
-                    <div class="col-md-6 d-flex align-items-center justify-content-center justify-content-md-start mb-4 mb-md-0">
-                        <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sawotratap" class="me-3" style="width: 80px; height: 80px; object-fit: contain;">
-                        <div class="text-white text-center text-md-start">
-                            <div style="font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase;">Pemerintah Desa</div>
-                            <div style="font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin: 5px 0;">SAWOTRATAP</div>
-                            <div style="font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Kec. Gedangan - Kab. Sidoarjo</div>
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-6">
+                        <div class="footer-brand-block d-flex align-items-center justify-content-center justify-content-lg-start">
+                            <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sawotratap" class="footer-logo me-3">
+                            <div class="footer-brand text-center text-lg-start">
+                                <div class="footer-kicker">PEMERINTAH DESA</div>
+                                <h4 class="mb-1">SAWOTRATAP</h4>
+                                <div class="footer-subtitle">Kec. Gedangan - Kab. Sidoarjo</div>
+                                <p class="footer-desc mt-3 mb-0">
+                                    Layanan informasi desa yang rapi, cepat, dan mudah diakses untuk mendukung pelayanan warga.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Right Side: Contact Info -->
-                    <div class="col-md-6 d-flex flex-column align-items-center align-items-md-end text-white">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="bi bi-house-door-fill me-3" style="font-size: 1.3rem;"></i>
-                            <span style="font-size: 1rem; font-weight: 500;">Jl. Raya Sawotratap No. 123, Gedangan, Sidoarjo</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-mouse3-fill me-3" style="font-size: 1.3rem;"></i>
-                            <a href="https://sawotratap.desa.id" class="text-white text-decoration-none" style="font-size: 1rem; font-weight: 500;">https://sawotratap.desa.id</a>
+
+                    <div class="col-lg-6">
+                        <div class="footer-contact-card">
+                            <div class="footer-title mb-3">Kontak Resmi</div>
+                            <div class="footer-contact">
+                                <div class="contact-item mb-3">
+                                    <i class="bi bi-house-door-fill me-3"></i>
+                                    <span>Jl. Raya Sawotratap No. 123, Gedangan, Sidoarjo</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="bi bi-globe2 me-3"></i>
+                                    <a href="https://sawotratap.desa.id" class="text-white text-decoration-none">https://sawotratap.desa.id</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Bottom Copyright Band -->
-        <div style="background-color: rgba(0, 0, 0, 0.15); padding: 15px 0;">
-            <div class="container text-center text-white" style="font-size: 0.85rem; font-weight: 500;">
-                &copy; {{ date('Y') }} Pemerintah Desa Sawotratap. Hak cipta dilindungi undang-undang. Jejaring Desa Daring Sidoarjo.
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-inner text-center text-md-start">
+                    <span>&copy; {{ date('Y') }} Pemerintah Desa Sawotratap. Hak cipta dilindungi undang-undang.</span>
+                    <span class="footer-bottom-note">Jejaring Desa Daring Sidoarjo</span>
+                </div>
             </div>
         </div>
         

@@ -5,27 +5,32 @@
 @section('styles')
 <style>
     .gov-page {
-        padding-top: 132px;
-        padding-bottom: 60px;
+        margin-top: 0;
+        padding-bottom: 70px;
         min-height: 100vh;
-        background:
-            radial-gradient(circle at 88% 6%, rgba(22, 163, 74, 0.10), transparent 34%),
-            radial-gradient(circle at 5% 80%, rgba(34, 197, 94, 0.08), transparent 32%),
-            #f6faf7;
+        background: linear-gradient(180deg, #f8fbf7 0%, #f4f7fa 100%);
         position: relative;
         overflow: hidden;
     }
 
-    .gov-page::before {
-        content: '';
-        position: absolute;
-        top: -120px;
-        left: -110px;
-        width: 320px;
-        height: 320px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(22, 163, 74, 0.15), transparent 70%);
-        pointer-events: none;
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .gov-breadcrumb {
+        margin-top: 80px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e8ecef;
+    }
+
+    .gov-header {
+        background: #f8f9fa;
+        border-bottom: 1px solid #e8ecef;
+    }
+
+    .gov-header .container {
+        padding-top: 44px;
+        padding-bottom: 44px;
     }
 
     .gov-shell {
@@ -33,60 +38,73 @@
         z-index: 1;
     }
 
-    .gov-hero {
-        background: linear-gradient(135deg, #166534 0%, #15803d 56%, #22c55e 100%);
-        border-radius: 24px;
-        padding: 2.4rem;
-        box-shadow: 0 18px 42px rgba(21, 128, 61, 0.24);
-        color: white;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 1.25rem;
-    }
-
-    .gov-hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
-        background-size: 30px 30px;
-        opacity: 0.16;
-    }
-
-    .gov-hero-content {
+    .hero-content-box {
+        padding: 0;
+        margin-bottom: 0;
         position: relative;
         z-index: 1;
     }
 
-    .gov-hero h1 {
-        font-size: 2rem;
-        font-weight: 800;
-        margin-bottom: 0.55rem;
+    .hero-title {
+        font-size: 2.5rem;
     }
 
-    .gov-hero p {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.92);
+    .hero-subtitle {
+        color: #6c757d;
         max-width: 780px;
-        line-height: 1.7;
+        margin: 0 auto;
+        font-size: 1.08rem;
+        line-height: 1.6;
+        font-weight: 400;
+    }
+
+    .gov-stats {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .gov-stat-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid #dde7d6;
+        box-shadow: 0 6px 18px rgba(45, 80, 22, 0.06);
+        text-align: center;
+    }
+
+    .gov-stat-number {
+        display: block;
+        font-family: 'Sora', sans-serif;
+        color: var(--primary-green);
+        font-size: 1.35rem;
+        font-weight: 800;
+    }
+
+    .gov-stat-label {
+        margin-top: 6px;
+        display: block;
+        color: #5e6d64;
+        font-size: 0.88rem;
+        font-weight: 500;
     }
 
     .gov-pill-nav {
         display: flex;
         flex-wrap: wrap;
         gap: 0.75rem;
-        margin: 1rem 0 1.4rem;
+        justify-content: center;
+        margin: 1.2rem 0 0;
     }
 
     .gov-pill-nav a {
         text-decoration: none;
-        color: #14532d;
-        background: #ecfdf5;
-        border: 1px solid #a7f3d0;
+        color: #355027;
+        background: #eef5e8;
+        border: 1px solid #dce9d2;
         border-radius: 999px;
-        padding: 0.58rem 0.95rem;
+        padding: 0.58rem 1rem;
         font-size: 0.86rem;
         font-weight: 700;
         transition: all 0.2s ease;
@@ -97,29 +115,43 @@
         transform: translateY(-1px);
     }
 
+    .section-card[id] {
+        scroll-margin-top: 130px;
+    }
+
     #struktur-organisasi,
     #perangkat-desa,
     #bpd {
-        scroll-margin-top: 120px;
+        scroll-margin-top: 130px;
     }
 
     .gov-card {
         background: #fff;
-        border: 1px solid #dcfce7;
+        border: 1px solid #e4ecdf;
         border-radius: 18px;
-        box-shadow: 0 4px 16px rgba(2, 6, 23, 0.06);
-        padding: 1.45rem;
+        box-shadow: 0 8px 24px rgba(45, 80, 22, 0.08);
+        overflow: hidden;
         margin-bottom: 1rem;
     }
 
-    .gov-card h2 {
-        font-size: 1.28rem;
-        color: #166534;
-        font-weight: 800;
-        margin-bottom: 1rem;
+    .gov-card .head {
+        padding: 22px 24px;
+        background: linear-gradient(135deg, rgba(74, 124, 36, 0.12), rgba(45, 80, 22, 0.08));
+        border-bottom: 1px solid #e9f0e3;
         display: flex;
         align-items: center;
         gap: 0.58rem;
+    }
+
+    .gov-card .head h2 {
+        font-size: 1.15rem;
+        color: #24381f;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .gov-card .body {
+        padding: 22px 24px 24px;
     }
 
     .gov-muted {
@@ -140,8 +172,8 @@
     }
 
     .org-node {
-        background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-        border: 1px solid #bbf7d0;
+        background: #f8fef9;
+        border: 1px solid #dce9d2;
         border-radius: 14px;
         padding: 0.95rem;
         text-align: center;
@@ -151,7 +183,7 @@
     .org-node .title {
         display: block;
         font-weight: 800;
-        color: #166534;
+        color: #355027;
         margin-bottom: 0.2rem;
         font-size: 0.9rem;
     }
@@ -169,8 +201,8 @@
     }
 
     .staff-item {
-        background: #f8fef9;
-        border: 1px solid #d1fae5;
+        background: #fff;
+        border: 1px solid #e5ece0;
         border-radius: 14px;
         padding: 1rem;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -203,7 +235,7 @@
     }
 
     .staff-role {
-        color: #166534;
+        color: #355027;
         font-size: 0.82rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -229,10 +261,11 @@
     }
 
     .bpd-item {
-        background: linear-gradient(135deg, #f0fdf4, #f7fee7);
-        border: 1px solid #bbf7d0;
+        background: #fff;
+        border: 1px solid #e5ece0;
         border-radius: 14px;
         padding: 1rem;
+        box-shadow: 0 5px 16px rgba(45, 80, 22, 0.07);
     }
 
     .bpd-item .head {
@@ -246,8 +279,8 @@
         width: 34px;
         height: 34px;
         border-radius: 10px;
-        background: #dcfce7;
-        color: #166534;
+        background: #eef5e8;
+        color: #355027;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -255,7 +288,7 @@
 
     .bpd-item .position {
         margin: 0;
-        color: #166534;
+        color: #355027;
         font-size: 0.82rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -276,6 +309,12 @@
         line-height: 1.6;
     }
 
+    @media (max-width: 1199.98px) {
+        .gov-stats {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
     @media (max-width: 992px) {
         .org-row,
         .staff-grid,
@@ -283,16 +322,24 @@
             grid-template-columns: 1fr 1fr;
         }
 
-        .gov-hero {
-            padding: 2rem;
+        .gov-header .container {
+            padding-top: 34px;
+            padding-bottom: 34px;
         }
 
-        .gov-hero h1 {
-            font-size: 1.65rem;
+        .hero-title {
+            font-size: 2rem;
+            line-height: 1.24;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.97rem;
+            line-height: 1.62;
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 767.98px) {
         .org-row,
         .staff-grid,
         .bpd-grid {
@@ -300,11 +347,16 @@
         }
 
         .gov-page {
-            padding-top: 118px;
+            padding-bottom: 40px;
         }
 
-        .gov-card {
-            padding: 1.2rem;
+        .gov-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .gov-card .head,
+        .gov-card .body {
+            padding: 18px;
         }
     }
 </style>
@@ -312,185 +364,234 @@
 
 @section('content')
 <div class="gov-page">
-    <div class="container gov-shell">
-        <section class="gov-hero">
-            <div class="gov-hero-content">
-                <h1>Pemerintahan Desa Sawotratap</h1>
-                <p>
+    <div class="gov-breadcrumb py-3">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}" class="text-decoration-none" style="color: var(--primary-green);">
+                            <i class="bi bi-house-door"></i> Beranda
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Pemerintahan</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <section class="gov-header py-5">
+        <div class="container">
+            <div class="hero-content-box text-center">
+                <h1 class="section-title-center hero-title">Pemerintahan Desa Sawotratap</h1>
+                <p class="hero-subtitle">
                     Halaman ini menyajikan informasi pemerintahan desa dalam satu tampilan terpadu,
                     meliputi Struktur Organisasi, Perangkat Desa, dan BPD.
                 </p>
             </div>
-        </section>
 
-        <div class="gov-pill-nav">
-            <a href="#struktur-organisasi"><i class="bi bi-diagram-3 me-1"></i>Struktur Organisasi</a>
-            <a href="#perangkat-desa"><i class="bi bi-people me-1"></i>Perangkat Desa</a>
-            <a href="#bpd"><i class="bi bi-building me-1"></i>BPD</a>
+            <div class="gov-stats">
+                <div class="gov-stat-card">
+                    <span class="gov-stat-number">Struktur</span>
+                    <span class="gov-stat-label">Alur organisasi desa</span>
+                </div>
+                <div class="gov-stat-card">
+                    <span class="gov-stat-number">Perangkat</span>
+                    <span class="gov-stat-label">Tim pelayanan desa</span>
+                </div>
+                <div class="gov-stat-card">
+                    <span class="gov-stat-number">BPD</span>
+                    <span class="gov-stat-label">Mitra pengawasan desa</span>
+                </div>
+            </div>
+
+            <div class="gov-pill-nav">
+                <a href="#struktur-organisasi"><i class="bi bi-diagram-3 me-1"></i>Struktur Organisasi</a>
+                <a href="#perangkat-desa"><i class="bi bi-people me-1"></i>Perangkat Desa</a>
+                <a href="#bpd"><i class="bi bi-building me-1"></i>BPD</a>
+            </div>
         </div>
+    </section>
 
-        <section id="struktur-organisasi" class="gov-card">
-            <h2><i class="bi bi-diagram-3"></i>Struktur Organisasi</h2>
-            <p class="gov-muted mb-3">
-                Susunan jabatan pemerintahan desa ditampilkan secara ringkas sebagai gambaran alur koordinasi
-                dan pelaksanaan pelayanan kepada masyarakat.
-            </p>
+    <section class="pt-4">
+        <div class="container gov-shell">
+            <section id="struktur-organisasi" class="gov-card section-card">
+                <div class="head">
+                    <i class="bi bi-diagram-3"></i>
+                    <h2>Struktur Organisasi</h2>
+                </div>
+                <div class="body">
+                    <p class="gov-muted mb-3">
+                        Susunan jabatan pemerintahan desa ditampilkan secara ringkas sebagai gambaran alur koordinasi
+                        dan pelaksanaan pelayanan kepada masyarakat.
+                    </p>
 
-            <div class="org-flow">
-                <div class="org-row" style="grid-template-columns: 1fr;">
-                    <div class="org-node">
-                        <span class="title">Kepala Desa</span>
-                        <span class="name">H. Santoso Wibowo</span>
+                    <div class="org-flow">
+                        <div class="org-row" style="grid-template-columns: 1fr;">
+                            <div class="org-node">
+                                <span class="title">Kepala Desa</span>
+                                <span class="name">H. Santoso Wibowo</span>
+                            </div>
+                        </div>
+                        <div class="org-row" style="grid-template-columns: 1fr 1fr;">
+                            <div class="org-node">
+                                <span class="title">Sekretaris Desa</span>
+                                <span class="name">Rina Maharani, S.Sos.</span>
+                            </div>
+                            <div class="org-node">
+                                <span class="title">Kasi Pemerintahan</span>
+                                <span class="name">Agus Priyanto</span>
+                            </div>
+                        </div>
+                        <div class="org-row">
+                            <div class="org-node">
+                                <span class="title">Kasi Pelayanan</span>
+                                <span class="name">Dewi Lestari</span>
+                            </div>
+                            <div class="org-node">
+                                <span class="title">Kaur Keuangan</span>
+                                <span class="name">Bambang Setiawan</span>
+                            </div>
+                            <div class="org-node">
+                                <span class="title">Kaur Umum</span>
+                                <span class="name">Nadia Putri</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="org-row" style="grid-template-columns: 1fr 1fr;">
-                    <div class="org-node">
-                        <span class="title">Sekretaris Desa</span>
-                        <span class="name">Rina Maharani, S.Sos.</span>
-                    </div>
-                    <div class="org-node">
-                        <span class="title">Kasi Pemerintahan</span>
-                        <span class="name">Agus Priyanto</span>
-                    </div>
-                </div>
-                <div class="org-row">
-                    <div class="org-node">
-                        <span class="title">Kasi Pelayanan</span>
-                        <span class="name">Dewi Lestari</span>
-                    </div>
-                    <div class="org-node">
-                        <span class="title">Kaur Keuangan</span>
-                        <span class="name">Bambang Setiawan</span>
-                    </div>
-                    <div class="org-node">
-                        <span class="title">Kaur Umum</span>
-                        <span class="name">Nadia Putri</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="perangkat-desa" class="gov-card">
-            <h2><i class="bi bi-people"></i>Perangkat Desa</h2>
-            <p class="gov-muted mb-3">
-                Tim perangkat desa berperan dalam administrasi, pelayanan publik, pembangunan, dan
-                pemberdayaan masyarakat di tingkat desa.
-            </p>
+            <section id="perangkat-desa" class="gov-card section-card">
+                <div class="head">
+                    <i class="bi bi-people"></i>
+                    <h2>Perangkat Desa</h2>
+                </div>
+                <div class="body">
+                    <p class="gov-muted mb-3">
+                        Tim perangkat desa berperan dalam administrasi, pelayanan publik, pembangunan, dan
+                        pemberdayaan masyarakat di tingkat desa.
+                    </p>
 
-            <div class="staff-grid">
-                <div class="staff-item">
-                    <div class="staff-top">
-                        <span class="staff-icon"><i class="bi bi-person-badge"></i></span>
-                        <div>
-                            <div class="staff-role">Sekretaris Desa</div>
-                            <div class="staff-name">Rina Maharani</div>
+                    <div class="staff-grid">
+                        <div class="staff-item">
+                            <div class="staff-top">
+                                <span class="staff-icon"><i class="bi bi-person-badge"></i></span>
+                                <div>
+                                    <div class="staff-role">Sekretaris Desa</div>
+                                    <div class="staff-name">Rina Maharani</div>
+                                </div>
+                            </div>
+                            <p class="staff-detail">Koordinasi administrasi umum dan penyusunan dokumen desa.</p>
+                        </div>
+                        <div class="staff-item">
+                            <div class="staff-top">
+                                <span class="staff-icon"><i class="bi bi-cash-coin"></i></span>
+                                <div>
+                                    <div class="staff-role">Kaur Keuangan</div>
+                                    <div class="staff-name">Bambang Setiawan</div>
+                                </div>
+                            </div>
+                            <p class="staff-detail">Pengelolaan APBDes dan laporan keuangan pemerintahan desa.</p>
+                        </div>
+                        <div class="staff-item">
+                            <div class="staff-top">
+                                <span class="staff-icon"><i class="bi bi-journal-text"></i></span>
+                                <div>
+                                    <div class="staff-role">Kasi Pelayanan</div>
+                                    <div class="staff-name">Dewi Lestari</div>
+                                </div>
+                            </div>
+                            <p class="staff-detail">Pelayanan surat menyurat dan kebutuhan administrasi warga.</p>
+                        </div>
+                        <div class="staff-item">
+                            <div class="staff-top">
+                                <span class="staff-icon"><i class="bi bi-building"></i></span>
+                                <div>
+                                    <div class="staff-role">Kasi Pemerintahan</div>
+                                    <div class="staff-name">Agus Priyanto</div>
+                                </div>
+                            </div>
+                            <p class="staff-detail">Pelaksanaan program tata kelola dan pemerintahan wilayah.</p>
+                        </div>
+                        <div class="staff-item">
+                            <div class="staff-top">
+                                <span class="staff-icon"><i class="bi bi-tools"></i></span>
+                                <div>
+                                    <div class="staff-role">Kaur Umum</div>
+                                    <div class="staff-name">Nadia Putri</div>
+                                </div>
+                            </div>
+                            <p class="staff-detail">Pengelolaan inventaris, sarana kantor, dan dukungan operasional.</p>
+                        </div>
+                        <div class="staff-item">
+                            <div class="staff-top">
+                                <span class="staff-icon"><i class="bi bi-person-workspace"></i></span>
+                                <div>
+                                    <div class="staff-role">Operator Desa</div>
+                                    <div class="staff-name">Fajar Ramadhan</div>
+                                </div>
+                            </div>
+                            <p class="staff-detail">Pemutakhiran data desa dan pengelolaan layanan digital.</p>
                         </div>
                     </div>
-                    <p class="staff-detail">Koordinasi administrasi umum dan penyusunan dokumen desa.</p>
                 </div>
-                <div class="staff-item">
-                    <div class="staff-top">
-                        <span class="staff-icon"><i class="bi bi-cash-coin"></i></span>
-                        <div>
-                            <div class="staff-role">Kaur Keuangan</div>
-                            <div class="staff-name">Bambang Setiawan</div>
-                        </div>
-                    </div>
-                    <p class="staff-detail">Pengelolaan APBDes dan laporan keuangan pemerintahan desa.</p>
-                </div>
-                <div class="staff-item">
-                    <div class="staff-top">
-                        <span class="staff-icon"><i class="bi bi-journal-text"></i></span>
-                        <div>
-                            <div class="staff-role">Kasi Pelayanan</div>
-                            <div class="staff-name">Dewi Lestari</div>
-                        </div>
-                    </div>
-                    <p class="staff-detail">Pelayanan surat menyurat dan kebutuhan administrasi warga.</p>
-                </div>
-                <div class="staff-item">
-                    <div class="staff-top">
-                        <span class="staff-icon"><i class="bi bi-building"></i></span>
-                        <div>
-                            <div class="staff-role">Kasi Pemerintahan</div>
-                            <div class="staff-name">Agus Priyanto</div>
-                        </div>
-                    </div>
-                    <p class="staff-detail">Pelaksanaan program tata kelola dan pemerintahan wilayah.</p>
-                </div>
-                <div class="staff-item">
-                    <div class="staff-top">
-                        <span class="staff-icon"><i class="bi bi-tools"></i></span>
-                        <div>
-                            <div class="staff-role">Kaur Umum</div>
-                            <div class="staff-name">Nadia Putri</div>
-                        </div>
-                    </div>
-                    <p class="staff-detail">Pengelolaan inventaris, sarana kantor, dan dukungan operasional.</p>
-                </div>
-                <div class="staff-item">
-                    <div class="staff-top">
-                        <span class="staff-icon"><i class="bi bi-person-workspace"></i></span>
-                        <div>
-                            <div class="staff-role">Operator Desa</div>
-                            <div class="staff-name">Fajar Ramadhan</div>
-                        </div>
-                    </div>
-                    <p class="staff-detail">Pemutakhiran data desa dan pengelolaan layanan digital.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="bpd" class="gov-card">
-            <h2><i class="bi bi-building"></i>Badan Permusyawaratan Desa (BPD)</h2>
-            <p class="gov-muted mb-3">
-                BPD merupakan mitra pemerintah desa dalam fungsi pengawasan, aspirasi warga,
-                dan musyawarah perumusan kebijakan desa.
-            </p>
+            <section id="bpd" class="gov-card section-card">
+                <div class="head">
+                    <i class="bi bi-building"></i>
+                    <h2>Badan Permusyawaratan Desa (BPD)</h2>
+                </div>
+                <div class="body">
+                    <p class="gov-muted mb-3">
+                        BPD merupakan mitra pemerintah desa dalam fungsi pengawasan, aspirasi warga,
+                        dan musyawarah perumusan kebijakan desa.
+                    </p>
 
-            <div class="bpd-grid">
-                <div class="bpd-item">
-                    <div class="head">
-                        <i class="bi bi-person-lines-fill"></i>
-                        <div>
-                            <p class="position">Ketua BPD</p>
-                            <p class="person">Suwarno</p>
+                    <div class="bpd-grid">
+                        <div class="bpd-item">
+                            <div class="head">
+                                <i class="bi bi-person-lines-fill"></i>
+                                <div>
+                                    <p class="position">Ketua BPD</p>
+                                    <p class="person">Suwarno</p>
+                                </div>
+                            </div>
+                            <p class="desc">Memimpin rapat BPD dan memastikan fungsi pengawasan berjalan efektif.</p>
+                        </div>
+                        <div class="bpd-item">
+                            <div class="head">
+                                <i class="bi bi-person-video3"></i>
+                                <div>
+                                    <p class="position">Wakil Ketua</p>
+                                    <p class="person">Siti Aminah</p>
+                                </div>
+                            </div>
+                            <p class="desc">Mendampingi ketua serta mengoordinasikan penyampaian aspirasi masyarakat.</p>
+                        </div>
+                        <div class="bpd-item">
+                            <div class="head">
+                                <i class="bi bi-pencil-square"></i>
+                                <div>
+                                    <p class="position">Sekretaris</p>
+                                    <p class="person">Arif Hidayat</p>
+                                </div>
+                            </div>
+                            <p class="desc">Pengelolaan administrasi rapat dan dokumentasi keputusan BPD.</p>
+                        </div>
+                        <div class="bpd-item">
+                            <div class="head">
+                                <i class="bi bi-people-fill"></i>
+                                <div>
+                                    <p class="position">Anggota</p>
+                                    <p class="person">Unsur Kewilayahan</p>
+                                </div>
+                            </div>
+                            <p class="desc">Mewakili wilayah dusun dan menyalurkan kebutuhan prioritas warga.</p>
                         </div>
                     </div>
-                    <p class="desc">Memimpin rapat BPD dan memastikan fungsi pengawasan berjalan efektif.</p>
                 </div>
-                <div class="bpd-item">
-                    <div class="head">
-                        <i class="bi bi-person-video3"></i>
-                        <div>
-                            <p class="position">Wakil Ketua</p>
-                            <p class="person">Siti Aminah</p>
-                        </div>
-                    </div>
-                    <p class="desc">Mendampingi ketua serta mengoordinasikan penyampaian aspirasi masyarakat.</p>
-                </div>
-                <div class="bpd-item">
-                    <div class="head">
-                        <i class="bi bi-pencil-square"></i>
-                        <div>
-                            <p class="position">Sekretaris</p>
-                            <p class="person">Arif Hidayat</p>
-                        </div>
-                    </div>
-                    <p class="desc">Pengelolaan administrasi rapat dan dokumentasi keputusan BPD.</p>
-                </div>
-                <div class="bpd-item">
-                    <div class="head">
-                        <i class="bi bi-people-fill"></i>
-                        <div>
-                            <p class="position">Anggota</p>
-                            <p class="person">Unsur Kewilayahan</p>
-                        </div>
-                    </div>
-                    <p class="desc">Mewakili wilayah dusun dan menyalurkan kebutuhan prioritas warga.</p>
-                </div>
-            </div>
-        </section>
-    </div>
+            </section>
+        </div>
+    </section>
 </div>
 @endsection

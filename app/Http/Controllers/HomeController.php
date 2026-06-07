@@ -125,6 +125,50 @@ class HomeController extends Controller
         return view('berita.index', compact('allNews'));
     }
 
+    public function agenda()
+    {
+        $agendaItems = collect([
+            [
+                'title' => 'Rapat Koordinasi RT/RW',
+                'date' => '2026-06-12',
+                'time' => '19.00 WIB',
+                'location' => 'Balai Desa Sawotratap',
+                'type' => 'Pemerintahan',
+                'icon' => 'bi-people',
+                'description' => 'Koordinasi rutin bersama RT/RW untuk membahas pelayanan warga, keamanan lingkungan, dan program desa bulan berjalan.',
+            ],
+            [
+                'title' => 'Posyandu Balita & Ibu',
+                'date' => '2026-06-14',
+                'time' => '08.00 WIB',
+                'location' => 'Posyandu Melati 1',
+                'type' => 'Kesehatan',
+                'icon' => 'bi-heart-pulse',
+                'description' => 'Pelayanan kesehatan dasar untuk balita dan ibu hamil, termasuk penimbangan, pemeriksaan, dan penyuluhan gizi.',
+            ],
+            [
+                'title' => 'Kerja Bakti Lingkungan',
+                'date' => '2026-06-16',
+                'time' => '06.30 WIB',
+                'location' => 'RW 03 dan RW 04',
+                'type' => 'Lingkungan',
+                'icon' => 'bi-tree',
+                'description' => 'Gotong royong membersihkan selokan, jalan lingkungan, dan fasilitas umum untuk menjaga kebersihan desa.',
+            ],
+            [
+                'title' => 'Pelatihan UMKM dan Pemasaran Digital',
+                'date' => '2026-06-20',
+                'time' => '13.00 WIB',
+                'location' => 'Aula PKK Desa',
+                'type' => 'Ekonomi',
+                'icon' => 'bi-shop',
+                'description' => 'Sesi pendampingan untuk pelaku UMKM lokal agar produk lebih siap dipasarkan secara online dan offline.',
+            ],
+        ]);
+
+        return view('agenda.index', compact('agendaItems'));
+    }
+
     public function showBerita($id)
     {
         $news = Berita::findOrFail($id);

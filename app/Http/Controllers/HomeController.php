@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Announcement;
+use App\Models\Umkm;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil 2 pengumuman terbaru yang aktif
+        // Ambil 4 pengumuman terbaru yang aktif
         $announcements = Announcement::active()
             ->latest()
-            ->take(2)
+            ->take(4)
             ->get();
+
+        // Ambil 4 UMKM terbaru
+        $umkms = Umkm::latest()->take(4)->get();
 
         $data = [
             'village_name' => 'Desa Sawotratap',
@@ -23,24 +27,7 @@ class HomeController extends Controller
                 'hamlets' => 297
             ],
             'announcements' => $announcements,
-            'umkm' => [
-                [
-                    'id' => 1,
-                    'name' => 'Kerupuk Bola Tahu Sawotratap',
-                    'category' => 'Kuliner',
-                    'price' => 15000,
-                    'image' => 'umkm1.jpg',
-                    'description' => 'Kerupuk bola tahu khas desa'
-                ],
-                [
-                    'id' => 2,
-                    'name' => 'Batang Cabai Isi Teri',
-                    'category' => 'Kuliner',
-                    'price' => 25000,
-                    'image' => 'umkm2.jpg',
-                    'description' => 'Camilan pedas khas desa'
-                ]
-            ],
+            'umkm' => $umkms,
             'news' => [
                 [
                     'id' => 1,

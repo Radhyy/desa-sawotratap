@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="{{ asset('css/layouts.css') }}">
     @yield('styles')
@@ -20,10 +20,10 @@
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                <img src="{{ asset('Logo/Seal_of_Sidoarjo_Regency.svg.png') }}" alt="Logo Sidoarjo" class="me-2" style="width: 40px; height: 40px; object-fit: contain;">
-                <div>
-                    <div class="fw-bold" style="font-size: 1.1rem; line-height: 1.2;">Sawotratap</div>
-                    <small style="font-size: 0.75rem; color: #666;">Gedangan, Sidoarjo</small>
+                <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sidoarjo" class="me-2" style="width: 40px; height: 40px; object-fit: contain;">
+                <div class="d-flex flex-column justify-content-center">
+                    <span class="fw-bold" style="font-size: 1.3rem; line-height: 1.1;">Sawotratap</span>
+                    <span style="font-size: 0.85rem; color: #666; line-height: 1.1; margin-top: 2px;">Gedangan, Sidoarjo</span>
                 </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

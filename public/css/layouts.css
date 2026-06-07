@@ -933,8 +933,8 @@
         }
 
         .magic-button-secondary:hover .magic-button-border {
-            opacity: 1;
-            animation: border-rotate 2s linear infinite;
+            opacity: 0;
+            animation: none;
         }
 
         @keyframes border-rotate {
@@ -1036,7 +1036,9 @@
             inset: 0;
             background: linear-gradient(135deg, rgba(74, 124, 36, 0.2), rgba(45, 80, 22, 0.2));
             border-radius: 12px;
-            animation: rotate-bg 10s linear infinite;
+            /* Disable rotation animation so the box stays static */
+            animation: none;
+            transform: rotate(0deg);
         }
 
         @keyframes rotate-bg {
@@ -1187,76 +1189,24 @@
         /* Main Image Card */
         .hero-image-card {
             position: relative;
-            border-radius: 32px;
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.15),
-                0 0 40px rgba(74, 124, 36, 0.1);
-            transition: transform 0.3s ease;
-            transform-style: preserve-3d;
-        }
-
-        .hero-image-card:hover {
-            transform: scale(1.02);
-        }
-
-        .hero-image-card:hover .hero-image-premium {
-            transform: scale(1.1);
-        }
-
-        .image-card-glow {
-            position: absolute;
-            inset: -40px;
-            background: radial-gradient(circle, rgba(74, 124, 36, 0.15), transparent 70%);
-            animation: pulse-glow 3s ease-in-out infinite;
-        }
-
-        .image-border-animated {
-            position: absolute;
-            inset: 0;
-            border-radius: 32px;
-            padding: 3px;
-            background: linear-gradient(
-                135deg,
-                rgba(74, 124, 36, 0.5),
-                rgba(123, 193, 66, 0.5),
-                rgba(74, 124, 36, 0.5)
-            );
-            background-size: 200% 200%;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: border-flow 3s ease-in-out infinite;
-        }
-
-        @keyframes border-flow {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
+            box-shadow: none;
+            transition: none;
+            transform-style: flat;
+            aspect-ratio: 1 / 1;
+            max-width: 100%;
         }
 
         .hero-image-premium {
             display: block;
             width: 100%;
-            height: 380px;
+            height: 100%;
             object-fit: cover;
+            object-position: center;
             position: relative;
             z-index: 1;
-            transition: transform 0.3s ease;
-        }
-
-        .image-overlay-gradient {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                180deg,
-                transparent 0%,
-                rgba(0, 0, 0, 0.1) 100%
-            );
-            pointer-events: none;
+            transition: none;
         }
 
         /* Floating Info Cards */
@@ -1440,7 +1390,7 @@
             }
             
             .hero-image-premium {
-                height: 300px;
+                height: 100%;
             }
             
             .floating-info-card {

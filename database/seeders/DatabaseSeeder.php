@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AnnouncementSeeder::class,
             UmkmSeeder::class,
+            BeritaSeeder::class,
         ]);
     }
 }

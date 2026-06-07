@@ -20,10 +20,11 @@
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sidoarjo" class="me-2" style="width: 40px; height: 40px; object-fit: contain;">
-                <div class="d-flex flex-column justify-content-center">
-                    <span class="fw-bold" style="font-size: 1.3rem; line-height: 1.1;">Sawotratap</span>
-                    <span style="font-size: 0.85rem; color: #666; line-height: 1.1; margin-top: 2px;">Gedangan, Sidoarjo</span>
+                <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sawotratap" class="me-2" style="width: 45px; height: 45px; object-fit: contain;">
+                <div class="d-flex flex-column justify-content-center" style="color: #333;">
+                    <span style="font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; line-height: 1; margin-bottom: 2px;">Pemerintah Desa</span>
+                    <span style="font-size: 1.3rem; font-weight: 800; line-height: 1; text-transform: uppercase;">SAWOTRATAP</span>
+                    <span style="font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: #666; font-weight: 600; line-height: 1; margin-top: 2px;">Kec. Gedangan - Kab. Sidoarjo</span>
                 </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -136,21 +137,31 @@
 
     <!-- Flash Messages -->
     @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 90px 20px 0 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <div class="container">
-            <i class="bi bi-check-circle-fill me-2"></i>
-            <strong>Berhasil!</strong> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999; margin-top: 80px;">
+        <div class="alert alert-success alert-dismissible fade show shadow-lg" role="alert" style="border-radius: 12px; border: none; border-left: 6px solid var(--primary-green, #2E7D32); background-color: white; color: #333; min-width: 300px;">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle-fill fs-4 me-3" style="color: var(--primary-green, #2E7D32);"></i>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0 fw-bold" style="color: #1a1a1a;">Berhasil!</h6>
+                    <span style="font-size: 0.9rem; color: #666;">{{ session('success') }}</span>
+                </div>
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close" style="font-size: 0.8rem;"></button>
+            </div>
         </div>
     </div>
     @endif
 
     @if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 90px 20px 0 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <div class="container">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <strong>Error!</strong> {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999; margin-top: 80px;">
+        <div class="alert alert-danger alert-dismissible fade show shadow-lg" role="alert" style="border-radius: 12px; border: none; border-left: 6px solid #dc3545; background-color: white; color: #333; min-width: 300px;">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-danger"></i>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0 fw-bold" style="color: #1a1a1a;">Error!</h6>
+                    <span style="font-size: 0.9rem; color: #666;">{{ session('error') }}</span>
+                </div>
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close" style="font-size: 0.8rem;"></button>
+            </div>
         </div>
     </div>
     @endif
@@ -159,109 +170,39 @@
     @yield('content')
 
     <!-- Footer -->
-    <footer class="footer" id="footer">
-        <div class="footer-wave">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
-            </svg>
-        </div>
-        
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="footer-brand mb-4">
+    <footer class="footer" id="footer" style="padding-top: 0; padding-bottom: 0;">
+        <div style="background-color: var(--primary-green, #2E7D32); padding: 40px 0;">
+            <div class="container">
+                <div class="row align-items-center">
+                    <!-- Left Side: Logo & Name -->
+                    <div class="col-md-6 d-flex align-items-center justify-content-center justify-content-md-start mb-4 mb-md-0">
+                        <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sawotratap" class="me-3" style="width: 80px; height: 80px; object-fit: contain;">
+                        <div class="text-white text-center text-md-start">
+                            <div style="font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase;">Pemerintah Desa</div>
+                            <div style="font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin: 5px 0;">SAWOTRATAP</div>
+                            <div style="font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">Kec. Gedangan - Kab. Sidoarjo</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side: Contact Info -->
+                    <div class="col-md-6 d-flex flex-column align-items-center align-items-md-end text-white">
                         <div class="d-flex align-items-center mb-3">
-                            <img src="/Logo/logo pemda.png" alt="Logo" class="footer-logo me-3">
-                            <div>
-                                <h4 class="mb-0 fw-bold">Sawotratap</h4>
-                                <p class="mb-0 small">Gedangan, Sidoarjo</p>
-                            </div>
+                            <i class="bi bi-house-door-fill me-3" style="font-size: 1.3rem;"></i>
+                            <span style="font-size: 1rem; font-weight: 500;">Jl. Raya Sawotratap No. 123, Gedangan, Sidoarjo</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-mouse3-fill me-3" style="font-size: 1.3rem;"></i>
+                            <a href="https://sawotratap.desa.id" class="text-white text-decoration-none" style="font-size: 1rem; font-weight: 500;">https://sawotratap.desa.id</a>
                         </div>
                     </div>
-                    <p class="footer-desc mb-4">Desa yang terus berkembang menuju digitalisasi dengan tetap menjaga nilai-nilai budaya lokal dan kearifan tradisional.</p>
-                    
-                    <div class="footer-contact mb-4">
-                        <div class="contact-item mb-2">
-                            <i class="bi bi-geo-alt-fill me-2"></i>
-                            <span>Jl. Raya Sawotratap No. 123, Gedangan, Sidoarjo</span>
-                        </div>
-                        <div class="contact-item mb-2">
-                            <i class="bi bi-telephone-fill me-2"></i>
-                            <span>(031) 1234567</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="bi bi-envelope-fill me-2"></i>
-                            <span>info@sawotratap.desa.id</span>
-                        </div>
-                    </div>
-                    
-                    <div class="social-links">
-                        <a href="#" class="social-link" title="Facebook">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Instagram">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Twitter">
-                            <i class="bi bi-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link" title="YouTube">
-                            <i class="bi bi-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h5 class="footer-title mb-4">Profil Desa</h5>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Sejarah</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Visi Misi</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Struktur</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Demografi</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h5 class="footer-title mb-4">Layanan</h5>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Surat</a></li>
-                        <li><a href="{{ route('pengaduan.index') }}"><i class="bi bi-chevron-right me-2"></i>Pengaduan</a></li>
-                        <li><a href="{{ route('perizinan.index') }}"><i class="bi bi-chevron-right me-2"></i>Perizinan</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Bantuan</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h5 class="footer-title mb-4">Informasi</h5>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Berita</a></li>
-                        <li><a href="{{ route('announcements') }}"><i class="bi bi-chevron-right me-2"></i>Pengumuman</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Agenda</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>UMKM</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Galeri</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h5 class="footer-title mb-4">Lainnya</h5>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>APBDes</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Peta Desa</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>Kontak</a></li>
-                        <li><a href="#"><i class="bi bi-chevron-right me-2"></i>FAQ</a></li>
-                    </ul>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <div class="row align-items-center">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <p class="mb-0">&copy; {{ date('Y') }} <strong>Desa Sawotratap</strong>. All Rights Reserved.</p>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0">Made with <i class="bi bi-heart-fill text-danger"></i> for the Community</p>
-                    </div>
-                </div>
+        </div>
+        
+        <!-- Bottom Copyright Band -->
+        <div style="background-color: rgba(0, 0, 0, 0.15); padding: 15px 0;">
+            <div class="container text-center text-white" style="font-size: 0.85rem; font-weight: 500;">
+                &copy; {{ date('Y') }} Pemerintah Desa Sawotratap. Hak cipta dilindungi undang-undang. Jejaring Desa Daring Sidoarjo.
             </div>
         </div>
         

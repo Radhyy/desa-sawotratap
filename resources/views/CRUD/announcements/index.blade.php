@@ -6,99 +6,122 @@
 
 @push('styles')
 <style>
-    .action-buttons {
-        display: flex;
-        gap: 8px;
-    }
-    
-    .action-btn {
-        width: 36px;
-        height: 36px;
+    .tbl-action-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
         border: none;
-        border-radius: 8px;
+        font-size: 0.85rem;
         cursor: pointer;
-        font-size: 16px;
-        transition: all 0.3s ease;
         text-decoration: none;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.18s ease;
     }
-    
-    .view-btn {
-        background: linear-gradient(135deg, #17a2b8, #138496);
-        color: white;
+    .tbl-action-btn.view  { background: #e0f2fe; color: #0369a1; }
+    .tbl-action-btn.edit  { background: #fef9c3; color: #854d0e; }
+    .tbl-action-btn.del   { background: #fee2e2; color: #b91c1c; }
+    .tbl-action-btn:hover { transform: translateY(-2px); filter: brightness(0.92); }
+    .tbl-action-btn.view:hover { color: #0369a1; }
+    .tbl-action-btn.edit:hover { color: #854d0e; }
+    .tbl-action-btn.del:hover  { color: #b91c1c; }
+
+    .badge-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 99px;
     }
-    
-    .view-btn:hover {
-        background: linear-gradient(135deg, #138496, #117a8b);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
-        color: white;
+    .badge-status.active   { background: #dcfce7; color: #15803d; }
+    .badge-status.inactive { background: #f1f5f9; color: #64748b; }
+
+    thead th {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: #9ca3af;
+        border-bottom: 1px solid #f3f4f6 !important;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+        background: transparent;
     }
-    
-    .edit-btn {
-        background: linear-gradient(135deg, #007bff, #0056b3);
-        color: white;
+
+    tbody tr {
+        border-bottom: 1px solid #f9fafb;
+        transition: background 0.15s;
     }
-    
-    .edit-btn:hover {
-        background: linear-gradient(135deg, #0056b3, #004085);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-        color: white;
+    tbody tr:hover { background: #f9fafb; }
+    tbody td { vertical-align: middle; padding: 0.85rem 0.75rem; }
+
+    .ann-thumb {
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+        object-fit: cover;
+        flex-shrink: 0;
+        background: #f3f4f6;
     }
-    
-    .delete-btn {
-        background: linear-gradient(135deg, #dc3545, #c82333);
-        color: white;
+    .ann-thumb-placeholder {
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+        background: #f3f4f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #d1d5db;
+        font-size: 1.2rem;
+        flex-shrink: 0;
     }
-    
-    .delete-btn:hover {
-        background: linear-gradient(135deg, #c82333, #bd2130);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+
+    .btn-add {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #152c0a;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 0.55rem 1.2rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.2s;
     }
-    
-    .action-btn:active {
-        transform: translateY(0);
+    .btn-add:hover { background: #2d5016; color: #fff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(21,44,10,0.25); }
+
+    /* Modal delete */
+    .del-modal-overlay {
+        display: none;
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 9998;
+        align-items: center;
+        justify-content: center;
     }
-    
-    /* Pagination Styles */
-    .pagination {
-        gap: 6px;
+    .del-modal-overlay.show { display: flex; }
+    .del-modal {
+        background: #fff;
+        border-radius: 18px;
+        padding: 2rem;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
     }
-    
-    .pagination .page-item .page-link {
-        border: 1px solid #dee2e6;
-        color: #2d5016;
-        border-radius: 8px;
-        padding: 8px 14px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        margin: 0 2px;
-    }
-    
-    .pagination .page-item .page-link:hover {
-        background: #2d5016;
-        color: white;
-        border-color: #2d5016;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(45, 80, 22, 0.3);
-    }
-    
-    .pagination .page-item.active .page-link {
-        background: linear-gradient(135deg, #2d5016, #3d6b1f);
-        border-color: #2d5016;
-        color: white;
-        box-shadow: 0 4px 8px rgba(45, 80, 22, 0.3);
-    }
-    
-    .pagination .page-item.disabled .page-link {
-        background: #f8f9fa;
-        border-color: #dee2e6;
-        color: #6c757d;
+    .del-modal .icon-wrap {
+        width: 60px; height: 60px;
+        background: #fee2e2;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.6rem;
+        color: #b91c1c;
     }
 </style>
 @endpush
@@ -106,79 +129,84 @@
 @section('content')
 <div class="admin-card">
     <div class="card-header-custom">
-        <h5><i class="bi bi-megaphone me-2"></i>Daftar Pengumuman</h5>
-        <a href="{{ route('admin.announcements.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle me-2"></i>Tambah Pengumuman
+        <div>
+            <h5 style="font-family:'Sora',sans-serif; font-weight:700; margin:0; color:#111827;">Daftar Pengumuman</h5>
+            <small class="text-muted">{{ $announcements->total() }} pengumuman tersimpan</small>
+        </div>
+        <a href="{{ route('admin.announcements.create') }}" class="btn-add">
+            <i class="bi bi-plus-lg"></i> Tambah Pengumuman
         </a>
     </div>
 
     @if($announcements->count() > 0)
     <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead class="table-light">
+        <table class="table mb-0" style="border-collapse:separate; border-spacing:0;">
+            <thead>
                 <tr>
-                    <th width="5%">#</th>
-                    <th width="35%">Judul</th>
-                    <th width="15%">Tanggal</th>
-                    <th width="10%">Status</th>
-                    <th width="15%">Dibuat</th>
-                    <th width="20%">Aksi</th>
+                    <th width="4%">#</th>
+                    <th width="38%">Pengumuman</th>
+                    <th width="14%">Tanggal</th>
+                    <th width="11%">Status</th>
+                    <th width="16%">Dibuat</th>
+                    <th width="17%">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($announcements as $index => $announcement)
                 <tr>
-                    <td>{{ $announcements->firstItem() + $index }}</td>
+                    <td class="text-muted" style="font-size:0.85rem;">{{ $announcements->firstItem() + $index }}</td>
                     <td>
-                        <div class="d-flex align-items-start">
+                        <div class="d-flex align-items-center gap-3">
                             @if($announcement->image)
-                            <img src="{{ asset('storage/' . $announcement->image) }}" 
-                                 alt="{{ $announcement->title }}"
-                                 class="me-3"
-                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                                <img src="{{ asset('storage/' . $announcement->image) }}" alt="" class="ann-thumb">
+                            @else
+                                <div class="ann-thumb-placeholder"><i class="bi bi-image"></i></div>
                             @endif
-                            <div>
-                                <strong class="d-block">{{ $announcement->title }}</strong>
-                                <small class="text-muted">{{ Str::limit($announcement->description, 100) }}</small>
+                            <div style="min-width:0;">
+                                <div class="fw-semibold text-dark" style="font-size:0.92rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:280px;">
+                                    {{ $announcement->title }}
+                                </div>
+                                <div class="text-muted" style="font-size:0.78rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:280px;">
+                                    {{ Str::limit($announcement->description, 80) }}
+                                </div>
                             </div>
                         </div>
                     </td>
-                    <td>{{ $announcement->date->format('d M Y') }}</td>
+                    <td style="font-size:0.88rem; color:#374151;">{{ $announcement->date->format('d M Y') }}</td>
                     <td>
                         @if($announcement->status == 'active')
-                            <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Aktif</span>
+                            <span class="badge-status active"><i class="bi bi-circle-fill" style="font-size:0.4rem;"></i> Aktif</span>
                         @else
-                            <span class="badge bg-secondary"><i class="bi bi-x-circle me-1"></i>Nonaktif</span>
+                            <span class="badge-status inactive"><i class="bi bi-circle-fill" style="font-size:0.4rem;"></i> Nonaktif</span>
                         @endif
                     </td>
                     <td>
-                        <small class="text-muted">{{ $announcement->created_at->diffForHumans() }}</small>
+                        <div style="font-size:0.82rem; color:#6b7280;">{{ $announcement->created_at->diffForHumans() }}</div>
                     </td>
                     <td>
-                        <div class="action-buttons">
-                            <a href="{{ route('announcements.show', $announcement) }}" 
-                               class="action-btn view-btn" 
-                               title="Lihat"
+                        <div class="d-flex gap-1 align-items-center">
+                            <a href="{{ route('announcements.show', $announcement) }}"
+                               class="tbl-action-btn view"
+                               title="Lihat di Website"
                                target="_blank">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{ route('admin.announcements.edit', $announcement) }}" 
-                               class="action-btn edit-btn" 
+                            <a href="{{ route('admin.announcements.edit', $announcement) }}"
+                               class="tbl-action-btn edit"
                                title="Edit">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <button type="button" 
-                                    class="action-btn delete-btn" 
+                            <button type="button"
+                                    class="tbl-action-btn del"
                                     title="Hapus"
-                                    onclick="confirmDelete({{ $announcement->id }})">
-                                <i class="bi bi-trash"></i>
+                                    onclick="openDeleteModal({{ $announcement->id }})">
+                                <i class="bi bi-trash3"></i>
                             </button>
                         </div>
-                        
-                        <!-- Delete Form -->
-                        <form id="delete-form-{{ $announcement->id }}" 
-                              action="{{ route('admin.announcements.destroy', $announcement) }}" 
-                              method="POST" 
+
+                        <form id="delete-form-{{ $announcement->id }}"
+                              action="{{ route('admin.announcements.destroy', $announcement) }}"
+                              method="POST"
                               class="d-none">
                             @csrf
                             @method('DELETE')
@@ -190,29 +218,58 @@
         </table>
     </div>
 
-    <!-- Pagination -->
     <div class="d-flex justify-content-center mt-4">
         {{ $announcements->links() }}
     </div>
+
     @else
     <div class="text-center py-5">
-        <i class="bi bi-inbox" style="font-size: 5rem; color: #ccc;"></i>
-        <h4 class="mt-3 text-muted">Belum ada pengumuman</h4>
-        <p class="text-muted">Mulai tambahkan pengumuman pertama Anda</p>
-        <a href="{{ route('admin.announcements.create') }}" class="btn btn-primary mt-3">
-            <i class="bi bi-plus-circle me-2"></i>Tambah Pengumuman
+        <div style="width:80px;height:80px;background:#f3f4f6;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+            <i class="bi bi-megaphone" style="font-size:2rem;color:#d1d5db;"></i>
+        </div>
+        <h5 class="fw-bold text-dark mb-1">Belum ada pengumuman</h5>
+        <p class="text-muted mb-4" style="font-size:0.9rem;">Mulai tambahkan pengumuman pertama untuk website desa.</p>
+        <a href="{{ route('admin.announcements.create') }}" class="btn-add">
+            <i class="bi bi-plus-lg"></i> Tambah Pengumuman
         </a>
     </div>
     @endif
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="del-modal-overlay" id="deleteModal">
+    <div class="del-modal">
+        <div class="icon-wrap"><i class="bi bi-trash3"></i></div>
+        <h5 class="fw-bold mb-1" style="font-family:'Sora',sans-serif;">Hapus Pengumuman?</h5>
+        <p class="text-muted mb-4" style="font-size:0.9rem;">Pengumuman ini akan dihapus permanen dan tidak bisa dikembalikan.</p>
+        <div class="d-flex gap-2 justify-content-center">
+            <button onclick="closeDeleteModal()" class="btn btn-light fw-semibold px-4" style="border-radius:10px;">Batal</button>
+            <button onclick="submitDelete()" class="btn btn-danger fw-semibold px-4" style="border-radius:10px;">Ya, Hapus</button>
+        </div>
+    </div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
-function confirmDelete(id) {
-    if (confirm('Apakah Anda yakin ingin menghapus pengumuman ini?')) {
-        document.getElementById('delete-form-' + id).submit();
+let deleteTargetId = null;
+
+function openDeleteModal(id) {
+    deleteTargetId = id;
+    document.getElementById('deleteModal').classList.add('show');
+}
+function closeDeleteModal() {
+    deleteTargetId = null;
+    document.getElementById('deleteModal').classList.remove('show');
+}
+function submitDelete() {
+    if (deleteTargetId) {
+        document.getElementById('delete-form-' + deleteTargetId).submit();
     }
 }
+// close on overlay click
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDeleteModal();
+});
 </script>
 @endpush

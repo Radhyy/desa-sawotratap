@@ -8,6 +8,7 @@ use App\Http\Controllers\PengajuanSuratController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
+use App\Http\Controllers\Admin\BeritaController as AdminBeritaController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -59,4 +60,5 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('announcements', AdminAnnouncementController::class);
+    Route::resource('berita', AdminBeritaController::class);
 });

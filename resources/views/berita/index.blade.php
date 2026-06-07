@@ -279,14 +279,14 @@
     <div class="container">
         <div class="row" id="newsContainer">
             @forelse($allNews as $news)
-            <div class="col-md-6 col-lg-4 mb-4 news-item" data-category="{{ $news['category'] }}">
+            <div class="col-md-6 col-lg-4 mb-4 news-item" data-category="{{ $news->category }}">
                 <div class="card news-card-enhanced h-100">
                     <div class="position-relative">
-                        <img src="{{ $news['image'] }}" 
+                        <img src="{{ Str::startsWith($news->image, ['http://', 'https://']) ? $news->image : asset('storage/' . $news->image) }}" 
                              class="news-card-image" 
-                             alt="{{ $news['title'] }}">
-                        <span class="news-category-badge">{{ $news['category'] }}</span>
-                        @if($news['trending'] ?? false)
+                             alt="{{ $news->title }}">
+                        <span class="news-category-badge">{{ $news->category }}</span>
+                        @if($news->trending)
                         <span class="trending-badge">
                             <i class="bi bi-fire"></i> Trending
                         </span>
@@ -297,21 +297,21 @@
                         <div class="news-date-info">
                             <div class="d-flex align-items-center">
                                 <i class="bi bi-calendar3 me-2"></i>
-                                <small class="text-muted">{{ date('d F Y', strtotime($news['date'])) }}</small>
+                                <small class="text-muted">{{ $news->date->format('d F Y') }}</small>
                             </div>
                             <div class="d-flex align-items-center">
                                 <i class="bi bi-clock me-2"></i>
-                                <small class="text-muted">{{ $news['read_time'] ?? '5 menit' }}</small>
+                                <small class="text-muted">{{ $news->read_time ?? '5 menit' }}</small>
                             </div>
                         </div>
 
-                        <h5 class="news-title-enhanced">{{ $news['title'] }}</h5>
+                        <h5 class="news-title-enhanced">{{ $news->title }}</h5>
                         
                         <p class="news-excerpt flex-grow-1">
-                            {{ $news['excerpt'] }}
+                            {{ $news->excerpt }}
                         </p>
 
-                        <a href="#" class="read-more-btn">
+                        <a href="{{ route('berita.show', $news->id) }}" class="read-more-btn">
                             Baca Selengkapnya 
                             <i class="bi bi-arrow-right"></i>
                         </a>
@@ -319,11 +319,11 @@
                         <div class="news-meta-info">
                             <small class="text-muted">
                                 <i class="bi bi-eye me-1"></i>
-                                {{ $news['views'] ?? rand(100, 500) }} views
+                                {{ $news->views ?? rand(100, 500) }} views
                             </small>
                             <small class="text-muted">
                                 <i class="bi bi-person me-1"></i>
-                                {{ $news['author'] ?? 'Admin' }}
+                                {{ $news->author ?? 'Admin' }}
                             </small>
                         </div>
                     </div>

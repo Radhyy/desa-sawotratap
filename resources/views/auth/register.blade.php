@@ -1,181 +1,222 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - Desa Sawotratap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #2E7D32;
+            --secondary-green: #4CAF50;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-@section('title', 'Daftar - Desa Sawotratap')
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 15px;
+        }
 
-@section('content')
-<div class="auth-container" style="margin-top: 100px; min-height: calc(100vh - 200px);">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="auth-card">
-                    <!-- Logo & Title -->
-                    <div class="text-center mb-4">
-                        <div class="auth-logo mb-3">
-                            <i class="bi bi-person-plus"></i>
-                        </div>
-                        <h2 class="auth-title">Daftar</h2>
-                        <p class="text-muted">Buat akun baru untuk mengakses layanan</p>
-                    </div>
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(46, 125, 50, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
 
-                    <!-- Error Messages -->
-                    @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="bi bi-exclamation-triangle me-2"></i>
-                        <strong>Oops!</strong>
-                        <ul class="mb-0 mt-2">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                    @endif
+        .auth-logo img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            margin-bottom: 1rem;
+        }
 
-                    <!-- Register Form -->
-                    <form action="{{ route('register') }}" method="POST">
-                        @csrf
-                        
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nama Lengkap</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                <input type="text" 
-                                        class="form-control @error('name') is-invalid @enderror" 
-                                        id="name" 
-                                        name="name" 
-                                        value="{{ old('name') }}"
-                                        placeholder="Nama lengkap Anda"
-                                        required 
-                                        autofocus>
-                            </div>
-                        </div>
+        .auth-title {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.2rem;
+            font-size: 1.8rem;
+        }
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input type="email" 
-                                        class="form-control @error('email') is-invalid @enderror" 
-                                        id="email" 
-                                        name="email" 
-                                        value="{{ old('email') }}"
-                                        placeholder="nama@email.com"
-                                        required>
-                            </div>
-                        </div>
+        .auth-subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
 
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" 
-                                        class="form-control @error('password') is-invalid @enderror" 
-                                        id="password" 
-                                        name="password" 
-                                        placeholder="Minimal 8 karakter"
-                                        required>
-                            </div>
-                            <small class="text-muted">Password minimal 8 karakter</small>
-                        </div>
+        .form-floating > .form-control {
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding-left: 1rem;
+        }
+        
+        .form-floating > .form-control:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+        }
 
-                        <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                                <input type="password" 
-                                        class="form-control" 
-                                        id="password_confirmation" 
-                                        name="password_confirmation" 
-                                        placeholder="Ulangi password"
-                                        required>
-                            </div>
-                        </div>
+        .form-floating > label {
+            padding-left: 1rem;
+            color: #64748b;
+        }
 
-                        <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
-                            <i class="bi bi-person-plus me-2"></i>Daftar
-                        </button>
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            border: none;
+            border-radius: 12px;
+            padding: 0.8rem;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+        }
 
-                        <div class="text-center">
-                            <p class="mb-0">
-                                Sudah punya akun? 
-                                <a href="{{ route('login') }}" class="text-decoration-none fw-semibold">
-                                    Masuk sekarang
-                                </a>
-                            </p>
-                        </div>
-                    </form>
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(46, 125, 50, 0.3);
+            color: white;
+        }
+
+        .back-link {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-link:hover {
+            color: var(--primary-green);
+        }
+
+        .register-link {
+            color: var(--primary-green);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .register-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container my-4">
+        <!-- Back to Home -->
+        <div class="text-center mb-4">
+            <a href="{{ route('home') }}" class="back-link">
+                <i class="bi bi-arrow-left"></i> Kembali ke Beranda
+            </a>
+        </div>
+
+        <div class="auth-card">
+            <!-- Logo & Title -->
+            <div class="text-center">
+                <div class="auth-logo">
+                    <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sawotratap">
                 </div>
+                <h2 class="auth-title">Daftar Akun</h2>
+                <p class="auth-subtitle">Buat akun untuk layanan desa</p>
             </div>
+
+            <!-- Error Messages -->
+            @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" style="border-radius: 12px; font-size: 0.85rem;" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                Ada kesalahan:
+                <ul class="mb-0 mt-1 ps-3">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" style="font-size: 0.75rem;"></button>
+            </div>
+            @endif
+
+            <!-- Register Form -->
+            <form action="{{ route('register') }}" method="POST">
+                @csrf
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap" required autofocus>
+                    <label for="name"><i class="bi bi-person me-2"></i>Nama Lengkap</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="name@example.com" required>
+                    <label for="email"><i class="bi bi-envelope me-2"></i>Alamat Email</label>
+                </div>
+
+                <div class="form-floating mb-3 position-relative">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" required>
+                    <label for="password"><i class="bi bi-lock me-2"></i>Kata Sandi</label>
+                    <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-0 text-muted" onclick="togglePassword('password', this)" style="z-index: 10; border: none; background: transparent;">
+                        <i class="bi bi-eye-slash fs-5"></i>
+                    </button>
+                </div>
+
+                <div class="form-floating mb-4 position-relative">
+                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password" required>
+                    <label for="password_confirmation"><i class="bi bi-lock-fill me-2"></i>Konfirmasi Kata Sandi</label>
+                    <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-0 text-muted" onclick="togglePassword('password_confirmation', this)" style="z-index: 10; border: none; background: transparent;">
+                        <i class="bi bi-eye-slash fs-5"></i>
+                    </button>
+                </div>
+
+                <button type="submit" class="btn btn-login w-100 mb-4">
+                    Buat Akun <i class="bi bi-person-plus ms-2"></i>
+                </button>
+
+                <div class="text-center">
+                    <p class="mb-0 text-muted" style="font-size: 0.95rem;">
+                        Sudah punya akun? 
+                        <a href="{{ route('login') }}" class="register-link">
+                            Masuk di sini
+                        </a>
+                    </p>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 
-<style>
-    .auth-card {
-        background: white;
-        border-radius: 20px;
-        padding: 2.5rem;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        border: 1px solid #e0e0e0;
-    }
-
-    .auth-logo {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto;
-        background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 2.5rem;
-    }
-
-    .auth-title {
-        font-family: 'Sora', sans-serif;
-        font-weight: 700;
-        color: var(--primary-green);
-        margin-bottom: 0.5rem;
-    }
-
-    .input-group-text {
-        background: #f8f9fa;
-        border-right: none;
-        color: var(--primary-green);
-    }
-
-    .form-control {
-        border-left: none;
-        padding: 0.75rem;
-    }
-
-    .form-control:focus {
-        border-color: var(--primary-green);
-        box-shadow: 0 0 0 0.2rem rgba(45, 80, 22, 0.1);
-    }
-
-    .input-group-text,
-    .form-control {
-        border-color: #dee2e6;
-    }
-
-    .form-control:focus + .input-group-text,
-    .input-group:focus-within .input-group-text {
-        border-color: var(--primary-green);
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-        border: none;
-        font-weight: 600;
-        font-size: 1.05rem;
-        transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(45, 80, 22, 0.3);
-    }
-</style>
-@endsection
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        }
+    </script>
+</body>
+</html>

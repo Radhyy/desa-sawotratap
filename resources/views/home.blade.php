@@ -919,65 +919,128 @@
 </section>
 
 <!-- Berita Terkini -->
-<section class="py-5" id="berita">
+<section class="py-5" id="berita" style="background: #fafafa;">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="section-title-center">Berita Terkini</h2>
+            <h2 class="section-title-center" style="font-family: 'Playfair Display', serif; font-weight: 700; color: #2d5016;">Berita Terkini</h2>
             <p class="text-muted mt-3" style="font-size: 1.05rem; font-weight: 400; letter-spacing: 0.01em;">Update Informasi dan Kegiatan Terbaru</p>
         </div>
-        <div class="row">
-            @foreach($news as $item)
-            <div class="col-md-4 mb-4">
-                <div class="news-card h-100">
-                    <div class="news-card-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800" 
-                             class="news-card-img" alt="{{ $item['title'] }}">
-                        <div class="news-card-overlay">
-                            <span class="news-badge">{{ $item['category'] }}</span>
+
+        @if($news->count() > 0)
+        <div class="row g-4 align-items-stretch">
+
+            {{-- Featured / Card Pertama (Besar) --}}
+            @php $featured = $news->first(); @endphp
+            <div class="col-lg-6">
+                <a href="{{ route('berita.show', $featured->id) }}" class="text-decoration-none d-block h-100" style="border-radius:20px; overflow:hidden; position:relative;">
+                    <div style="position:relative; height:100%; min-height:380px; border-radius:20px; overflow:hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
+                        @if($featured->image)
+                            <img src="{{ Str::startsWith($featured->image, ['http://', 'https://']) ? $featured->image : asset('storage/' . $featured->image) }}" alt="{{ $featured->title }}"
+                                 style="width:100%; height:100%; object-fit:cover; position:absolute; inset:0; transition:transform 0.5s ease;">
+                        @else
+                            <div style="width:100%; height:100%; background: linear-gradient(135deg,#2d5016,#4a7c24); position:absolute; inset:0;"></div>
+                        @endif
+                        {{-- Dark gradient overlay --}}
+                        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.35) 55%, transparent 100%);"></div>
+
+                        {{-- Content --}}
+                        <div style="position:absolute; bottom:0; left:0; right:0; padding:2rem;">
+                            <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                <span style="background:#2d5016; color:#fff; font-size:0.7rem; font-weight:700; padding:3px 12px; border-radius:99px; letter-spacing:0.5px; text-transform:uppercase;">{{ $featured->category }}</span>
+                                @if($featured->trending)
+                                <span style="background:#ea580c; color:#fff; font-size:0.7rem; font-weight:700; padding:3px 10px; border-radius:99px;">🔥 Trending</span>
+                                @endif
+                            </div>
+                            <h3 style="color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:1.35rem; line-height:1.3; margin-bottom:0.75rem;">
+                                {{ $featured->title }}
+                            </h3>
+                            <p style="color:rgba(255,255,255,0.75); font-size:0.88rem; line-height:1.5; margin-bottom:1rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                                {{ $featured->excerpt }}
+                            </p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3" style="color:rgba(255,255,255,0.6); font-size:0.78rem;">
+                                    <span><i class="bi bi-calendar3 me-1"></i>{{ $featured->date->format('d M Y') }}</span>
+                                    @if($featured->author)
+                                    <span><i class="bi bi-person me-1"></i>{{ $featured->author }}</span>
+                                    @endif
+                                    @if($featured->read_time)
+                                    <span><i class="bi bi-clock me-1"></i>{{ $featured->read_time }}</span>
+                                    @endif
+                                </div>
+                                <span style="color:#fff; font-size:0.82rem; font-weight:600;">Baca →</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="news-card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="bi bi-calendar3 text-success me-2"></i>
-                            <small class="text-muted">{{ date('d F Y', strtotime($item['date'])) }}</small>
-                        </div>
-                        <h5 class="news-card-title">{{ $item['title'] }}</h5>
-                        <a href="#" class="news-card-link">
-                            Baca Selengkapnya <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-                    
-                </div>
+                </a>
             </div>
-            @endforeach
-            <div class="col-md-4 mb-4">
-                <div class="news-card h-100">
-                    <div class="news-card-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800" 
-                            class="news-card-img" alt="Program Pelatihan Digital">
-                        <div class="news-card-overlay">
-                            <span class="news-badge">Program</span>
+
+            {{-- 2 Card Kecil --}}
+            <div class="col-lg-6">
+                <div class="d-flex flex-column gap-4 h-100">
+                    @foreach($news->skip(1) as $item)
+                    <a href="{{ route('berita.show', $item->id) }}" class="text-decoration-none" style="flex:1;">
+                        <div class="d-flex gap-0 h-100" style="background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.07); transition:all 0.25s; border:1px solid rgba(0,0,0,0.05);"
+                             onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'"
+                             onmouseout="this.style.transform=''; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.07)'">
+
+                            {{-- Thumbnail --}}
+                            <div style="width:160px; flex-shrink:0; position:relative; overflow:hidden;">
+                                @if($item->image)
+                                    <img src="{{ Str::startsWith($item->image, ['http://', 'https://']) ? $item->image : asset('storage/' . $item->image) }}" alt="{{ $item->title }}"
+                                         style="width:100%; height:100%; object-fit:cover;">
+                                @else
+                                    <div style="width:100%; height:100%; background:linear-gradient(135deg,#e9f5e1,#c8e6b2); display:flex; align-items:center; justify-content:center;">
+                                        <i class="bi bi-newspaper" style="font-size:2rem; color:#2d5016; opacity:0.4;"></i>
+                                    </div>
+                                @endif
+                                {{-- Category overlay --}}
+                                <div style="position:absolute; top:10px; left:10px;">
+                                    <span style="background:rgba(45,80,22,0.9); color:#fff; font-size:0.65rem; font-weight:700; padding:2px 8px; border-radius:99px; letter-spacing:0.4px; text-transform:uppercase;">{{ $item->category }}</span>
+                                </div>
+                                @if($item->trending)
+                                <div style="position:absolute; bottom:10px; left:10px;">
+                                    <span style="background:rgba(234,88,12,0.9); color:#fff; font-size:0.63rem; font-weight:700; padding:2px 8px; border-radius:99px;">🔥 Trending</span>
+                                </div>
+                                @endif
+                            </div>
+
+                            {{-- Content --}}
+                            <div style="padding:1.1rem 1.25rem; display:flex; flex-direction:column; justify-content:space-between; flex:1; min-width:0;">
+                                <div>
+                                    <h5 style="font-family:'Sora',sans-serif; font-weight:700; font-size:0.95rem; color:#111827; line-height:1.35; margin-bottom:0.5rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                                        {{ $item->title }}
+                                    </h5>
+                                    <p style="font-size:0.82rem; color:#6b7280; line-height:1.5; margin-bottom:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                                        {{ $item->excerpt }}
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-2">
+                                    <div style="font-size:0.75rem; color:#9ca3af;">
+                                        <i class="bi bi-calendar3 me-1"></i>{{ $item->date->format('d M Y') }}
+                                        @if($item->author)
+                                        &nbsp;·&nbsp;<i class="bi bi-person me-1"></i>{{ $item->author }}
+                                        @endif
+                                    </div>
+                                    <span style="color:#2d5016; font-size:0.78rem; font-weight:700;">Baca →</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="news-card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="bi bi-calendar3 text-success me-2"></i>
-                            <small class="text-muted">09 February 2026</small>
-                        </div>
-                        <h5 class="news-card-title">Program Pelatihan Digital Marketing untuk UMKM Desa</h5>
-                        <a href="#" class="news-card-link">
-                            Baca Selengkapnya <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
+                    </a>
+                    @endforeach
                 </div>
             </div>
         </div>
-        <div class="text-center mt-5">
-            <a href="{{ route('berita') }}" class="shiny-button" style="text-decoration: none; display: inline-block;">
-                <span class="button-text">
-                    Lihat Semua Berita
-                    <i class="bi bi-arrow-right"></i>
-                </span>
+
+        @else
+        <div class="text-center py-5">
+            <i class="bi bi-newspaper" style="font-size:3rem; color:#d1d5db;"></i>
+            <p class="text-muted mt-3">Belum ada berita tersedia.</p>
+        </div>
+        @endif
+
+        <div class="text-center mt-5 pt-2">
+            <a href="{{ route('berita') }}" class="modern-btn-all">
+                Lihat Semua Berita <i class="bi bi-arrow-right"></i>
             </a>
         </div>
     </div>
@@ -987,80 +1050,76 @@
 <section class="py-5 bg-light" id="galeri">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="section-title-center">Galeri Desa</h2>
-            <p class="text-muted mt-3" style="font-size: 1.05rem; font-weight: 400; letter-spacing: 0.01em;">Dokumentasi Kegiatan dan Keindahan Desa</p>
+            <h2 class="section-title-center" style="font-family: 'Playfair Display', serif; font-weight: 700; color: #2d5016;">Galeri Desa</h2>
+            <p class="text-muted mt-3 mx-auto" style="max-width: 600px; font-size: 1.05rem; line-height: 1.6;">Dokumentasi Kegiatan dan Keindahan Desa</p>
         </div>
         <div class="row g-4">
             <div class="col-md-6">
-                <div class="gallery-item gallery-item-large">
+                <div class="gallery-item gallery-item-large" style="border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
                     <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800" 
-                         alt="Sawah Desa">
+                         alt="Sawah Desa" style="transition: transform 0.5s ease;">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h5 class="gallery-title">Pemandangan Sawah</h5>
+                            <h5 class="gallery-title" style="font-family: 'Playfair Display', serif;">Pemandangan Sawah</h5>
                             <p class="gallery-desc">Hamparan sawah hijau yang asri</p>
-                            <button class="gallery-btn"><i class="bi bi-eye"></i> Lihat</button>
+                            <a href="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block;"><i class="bi bi-eye"></i> Lihat</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="gallery-item gallery-item-medium mb-4">
+                <div class="gallery-item gallery-item-medium mb-4" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
                     <img src="https://images.unsplash.com/photo-1464207687429-7505649dae38?w=400" 
-                         alt="Balai Desa">
+                         alt="Balai Desa" style="transition: transform 0.5s ease;">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h5 class="gallery-title">Balai Desa</h5>
-                            <p class="gallery-desc">Pusat pemerintahan desa</p>
-                            <button class="gallery-btn"><i class="bi bi-eye"></i> Lihat</button>
+                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">Balai Desa</h5>
+                            <p class="gallery-desc" style="font-size: 0.85rem;">Pusat pemerintahan desa</p>
+                            <a href="https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
                         </div>
                     </div>
                 </div>
-                <div class="gallery-item gallery-item-medium">
+                <div class="gallery-item gallery-item-medium" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
                     <img src="https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=400" 
-                         alt="Wisata Desa">
+                         alt="Wisata Desa" style="transition: transform 0.5s ease;">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h5 class="gallery-title">Wisata Desa</h5>
-                            <p class="gallery-desc">Destinasi wisata lokal</p>
-                            <button class="gallery-btn"><i class="bi bi-eye"></i> Lihat</button>
+                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">Wisata Desa</h5>
+                            <p class="gallery-desc" style="font-size: 0.85rem;">Destinasi wisata lokal</p>
+                            <a href="https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="gallery-item gallery-item-medium mb-4">
+                <div class="gallery-item gallery-item-medium mb-4" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
                     <img src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=400" 
-                         alt="Produk UMKM">
+                         alt="Produk UMKM" style="transition: transform 0.5s ease;">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h5 class="gallery-title">Produk UMKM</h5>
-                            <p class="gallery-desc">Hasil karya warga desa</p>
-                            <button class="gallery-btn"><i class="bi bi-eye"></i> Lihat</button>
+                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">Produk UMKM</h5>
+                            <p class="gallery-desc" style="font-size: 0.85rem;">Hasil karya warga desa</p>
+                            <a href="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=800" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
                         </div>
                     </div>
                 </div>
-                <div class="gallery-item gallery-item-medium">
+                <div class="gallery-item gallery-item-medium" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
                     <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400" 
-                         alt="Kegiatan Warga">
+                         alt="Kegiatan Warga" style="transition: transform 0.5s ease;">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h5 class="gallery-title">Kegiatan Warga</h5>
-                            <p class="gallery-desc">Aktivitas masyarakat desa</p>
-                            <button class="gallery-btn"><i class="bi bi-eye"></i> Lihat</button>
+                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">Kegiatan Warga</h5>
+                            <p class="gallery-desc" style="font-size: 0.85rem;">Aktivitas masyarakat desa</p>
+                            <a href="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="text-center mt-5">
-            <a href="{{ route('galeri') }}" class="shiny-button" style="text-decoration: none; display: inline-block;">
-                <span class="button-text">
-                    Lihat Semua Galeri
-                    <i class="bi bi-arrow-right"></i>
-                </span>
+        <div class="text-center mt-5 pt-2">
+            <a href="{{ route('galeri') }}" class="modern-btn-all">
+                Lihat Semua Galeri <i class="bi bi-arrow-right"></i>
             </a>
-            </button>
         </div>
     </div>
 </section>

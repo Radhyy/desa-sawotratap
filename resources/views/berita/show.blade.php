@@ -321,7 +321,7 @@
                         <i class="bi bi-newspaper"></i> Berita
                     </a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($news['title'], 50) }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($news->title, 50) }}</li>
             </ol>
         </nav>
     </div>
@@ -340,75 +340,75 @@
                 <div class="berita-detail-content">
                     <!-- Category Badge -->
                     <span class="berita-category-badge">
-                        @if($news['category'] === 'Sosial')
+                        @if($news->category === 'Sosial')
                             <i class="bi bi-people me-2"></i>
-                        @elseif($news['category'] === 'Budaya')
+                        @elseif($news->category === 'Budaya')
                             <i class="bi bi-mortarboard me-2"></i>
-                        @elseif($news['category'] === 'Ekonomi')
+                        @elseif($news->category === 'Ekonomi')
                             <i class="bi bi-currency-dollar me-2"></i>
-                        @elseif($news['category'] === 'Pembangunan')
+                        @elseif($news->category === 'Pembangunan')
                             <i class="bi bi-building me-2"></i>
-                        @elseif($news['category'] === 'Program')
+                        @elseif($news->category === 'Program')
                             <i class="bi bi-clipboard-check me-2"></i>
                         @else
                             <i class="bi bi-bookmark me-2"></i>
                         @endif
-                        {{ $news['category'] }}
+                        {{ $news->category }}
                     </span>
                     
-                    @if($news['trending'] ?? false)
+                    @if($news->trending)
                     <span class="trending-badge-detail">
                         <i class="bi bi-fire me-2"></i>Trending
                     </span>
                     @endif
 
                     <!-- Title -->
-                    <h1 class="berita-detail-title">{{ $news['title'] }}</h1>
+                    <h1 class="berita-detail-title">{{ $news->title }}</h1>
 
                     <!-- Meta Information -->
                     <div class="berita-meta">
                         <div class="berita-meta-item">
                             <i class="bi bi-calendar3"></i>
-                            <span>{{ date('d F Y', strtotime($news['date'])) }}</span>
+                            <span>{{ $news->date->format('d F Y') }}</span>
                         </div>
                         <div class="berita-meta-item">
                             <i class="bi bi-clock"></i>
-                            <span>{{ $news['read_time'] ?? '5 menit' }} baca</span>
+                            <span>{{ $news->read_time ?? '5 menit' }} baca</span>
                         </div>
                         <div class="berita-meta-item">
                             <i class="bi bi-eye"></i>
-                            <span>{{ $news['views'] ?? rand(100, 500) }} views</span>
+                            <span>{{ $news->views ?? rand(100, 500) }} views</span>
                         </div>
                         <div class="berita-meta-item">
                             <i class="bi bi-person"></i>
-                            <span>{{ $news['author'] ?? 'Admin Desa' }}</span>
+                            <span>{{ $news->author ?? 'Admin Desa' }}</span>
                         </div>
                     </div>
 
                     <!-- Featured Image -->
-                    <img src="{{ $news['image'] }}" 
-                         alt="{{ $news['title'] }}"
+                    <img src="{{ Str::startsWith($news->image, ['http://', 'https://']) ? $news->image : asset('storage/' . $news->image) }}" 
+                         alt="{{ $news->title }}"
                          class="berita-detail-image">
 
                     <!-- Excerpt/Lead -->
                     <div class="berita-detail-text">
                         <p class="lead">
-                            {{ $news['excerpt'] }}
+                            {{ $news->excerpt }}
                         </p>
                     </div>
 
                     <!-- Full Content -->
                     <div class="berita-detail-text">
-                        {!! nl2br(e($news['content'])) !!}
+                        {!! nl2br(e($news->content)) !!}
                     </div>
 
                     <!-- Tags -->
-                    @if(isset($news['tags']))
+                    @if($news->tags)
                     <div class="mb-4">
                         <strong style="color: #666; margin-right: 10px;">
                             <i class="bi bi-tags me-2"></i>Tags:
                         </strong>
-                        @foreach($news['tags'] as $tag)
+                        @foreach($news->tags as $tag)
                         <span class="badge bg-light text-dark" style="font-size: 0.85rem; padding: 6px 12px; margin-right: 5px;">
                             {{ $tag }}
                         </span>
@@ -424,12 +424,12 @@
                             class="share-btn share-btn-facebook">
                             <i class="bi bi-facebook"></i> Facebook
                         </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($news['title']) }}" 
+                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($news->title) }}" 
                             target="_blank" 
                             class="share-btn share-btn-twitter">
                             <i class="bi bi-twitter"></i> Twitter
                         </a>
-                        <a href="https://wa.me/?text={{ urlencode($news['title'] . ' - ' . url()->current()) }}" 
+                        <a href="https://wa.me/?text={{ urlencode($news->title . ' - ' . url()->current()) }}" 
                             target="_blank" 
                             class="share-btn share-btn-whatsapp">
                             <i class="bi bi-whatsapp"></i> WhatsApp
@@ -446,18 +446,18 @@
                         <div class="row">
                             @foreach($relatedNews as $related)
                             <div class="col-md-4 mb-4">
-                                <a href="{{ route('berita.show', $related['id']) }}" class="related-card">
+                                <a href="{{ route('berita.show', $related->id) }}" class="related-card">
                                     <div class="related-card-body">
                                         <div class="related-card-icon mb-3">
                                             <i class="bi bi-newspaper"></i>
                                         </div>
-                                        <h5 class="related-card-title">{{ $related['title'] }}</h5>
+                                        <h5 class="related-card-title">{{ $related->title }}</h5>
                                         <p class="related-card-description text-muted mb-2">
-                                            {{ Str::limit($related['excerpt'], 80) }}
+                                            {{ Str::limit($related->excerpt, 80) }}
                                         </p>
                                         <div class="related-card-date">
                                             <i class="bi bi-calendar3"></i>
-                                            {{ date('d M Y', strtotime($related['date'])) }}
+                                            {{ $related->date->format('d M Y') }}
                                         </div>
                                     </div>
                                 </a>

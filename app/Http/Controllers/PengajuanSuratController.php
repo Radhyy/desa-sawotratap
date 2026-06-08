@@ -58,7 +58,7 @@ class PengajuanSuratController extends Controller
                 'jenis_surat' => $validated['jenis_surat'],
                 'tanggal_pengambilan' => $validated['tanggal_pengambilan'],
                 'keperluan' => $validated['keperluan'],
-                'status' => 'pending',
+                'status' => 'menunggu_admin',
                 'user_id' => auth()->id()
             ]);
 
@@ -113,8 +113,8 @@ class PengajuanSuratController extends Controller
      */
     public function update(Request $request, PengajuanSurat $pengajuanSurat)
     {
-        // Only allow update if status is still pending
-        if ($pengajuanSurat->status !== 'pending') {
+        // Only allow update if status is still menunggu_admin
+        if ($pengajuanSurat->status !== 'menunggu_admin') {
             return redirect()->back()->with('error', 'Pengajuan yang sudah diproses tidak dapat diubah.');
         }
 
@@ -139,8 +139,8 @@ class PengajuanSuratController extends Controller
      */
     public function destroy(PengajuanSurat $pengajuanSurat)
     {
-        // Only allow delete if status is pending
-        if ($pengajuanSurat->status !== 'pending') {
+        // Only allow delete if status is menunggu_admin
+        if ($pengajuanSurat->status !== 'menunggu_admin') {
             return redirect()->back()->with('error', 'Pengajuan yang sudah diproses tidak dapat dihapus.');
         }
 

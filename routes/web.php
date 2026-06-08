@@ -6,9 +6,21 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PengajuanSuratController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\PerizinanController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 use App\Http\Controllers\Admin\BeritaController as AdminBeritaController;
+use App\Http\Controllers\Admin\GaleriController as AdminGaleriController;
+use App\Http\Controllers\Admin\UmkmController as AdminUmkmController;
+use App\Http\Controllers\Admin\KategoriUmkmController as AdminKategoriUmkmController;
+use App\Http\Controllers\Admin\PengajuanSuratController as AdminPengajuanSuratController;
+use App\Http\Controllers\Admin\PengaduanController as AdminPengaduanController;
+use App\Http\Controllers\Admin\PerizinanController as AdminPerizinanController;
+
+use App\Http\Controllers\Kades\DashboardController as KadesDashboardController;
+use App\Http\Controllers\Kades\PengajuanSuratController as KadesPengajuanSuratController;
+use App\Http\Controllers\Kades\PengaduanController as KadesPengaduanController;
+use App\Http\Controllers\Kades\PerizinanController as KadesPerizinanController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -23,7 +35,8 @@ Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/galeri/{id}', [HomeController::class, 'showGaleri'])->name('galeri.show');
 Route::view('/profile-desa', 'profile-desa.index')->name('profile-desa.index');
 Route::view('/pemerintahan', 'pemerintahan.index')->name('pemerintahan.index');
-Route::view('/perizinan', 'perizinan.index')->name('perizinan.index');
+Route::get('/perizinan', [PerizinanController::class, 'index'])->name('perizinan.index');
+Route::post('/perizinan', [PerizinanController::class, 'store'])->name('perizinan.store');
 Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
 Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
@@ -62,4 +75,42 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('announcements', AdminAnnouncementController::class);
     Route::resource('berita', AdminBeritaController::class);
+    Route::resource('galeri', AdminGaleriController::class);
+    Route::resource('umkm', AdminUmkmController::class);
+    Route::resource('kategori-umkm', AdminKategoriUmkmController::class);
+
+    // Pengajuan Surat Admin
+    Route::get('/pengajuan-surat', [AdminPengajuanSuratController::class, 'index'])->name('pengajuan-surat.index');
+    Route::get('/pengajuan-surat/{pengajuanSurat}', [AdminPengajuanSuratController::class, 'show'])->name('pengajuan-surat.show');
+    Route::put('/pengajuan-surat/{pengajuanSurat}/status', [AdminPengajuanSuratController::class, 'updateStatus'])->name('pengajuan-surat.update-status');
+
+    // Pengaduan Admin
+    Route::get('/pengaduan', [AdminPengaduanController::class, 'index'])->name('pengaduan.index');
+    Route::get('/pengaduan/{pengaduan}', [AdminPengaduanController::class, 'show'])->name('pengaduan.show');
+    Route::put('/pengaduan/{pengaduan}/status', [AdminPengaduanController::class, 'updateStatus'])->name('pengaduan.update-status');
+
+    // Perizinan Admin
+    Route::get('/perizinan', [AdminPerizinanController::class, 'index'])->name('perizinan.index');
+    Route::get('/perizinan/{perizinan}', [AdminPerizinanController::class, 'show'])->name('perizinan.show');
+    Route::put('/perizinan/{perizinan}/status', [AdminPerizinanController::class, 'updateStatus'])->name('perizinan.update-status');
+});
+
+// Kades Routes
+Route::middleware(['auth', 'kades'])->prefix('kades')->name('kades.')->group(function () {
+    Route::get('/dashboard', [KadesDashboardController::class, 'index'])->name('dashboard');
+    
+    // Pengajuan Surat Kades
+    Route::get('/pengajuan-surat', [KadesPengajuanSuratController::class, 'index'])->name('pengajuan-surat.index');
+    Route::get('/pengajuan-surat/{pengajuanSurat}', [KadesPengajuanSuratController::class, 'show'])->name('pengajuan-surat.show');
+    Route::put('/pengajuan-surat/{pengajuanSurat}/status', [KadesPengajuanSuratController::class, 'updateStatus'])->name('pengajuan-surat.update-status');
+
+    // Pengaduan Kades
+    Route::get('/pengaduan', [KadesPengaduanController::class, 'index'])->name('pengaduan.index');
+    Route::get('/pengaduan/{pengaduan}', [KadesPengaduanController::class, 'show'])->name('pengaduan.show');
+    Route::put('/pengaduan/{pengaduan}/status', [KadesPengaduanController::class, 'updateStatus'])->name('pengaduan.update-status');
+
+    // Perizinan Kades
+    Route::get('/perizinan', [KadesPerizinanController::class, 'index'])->name('perizinan.index');
+    Route::get('/perizinan/{perizinan}', [KadesPerizinanController::class, 'show'])->name('perizinan.show');
+    Route::put('/perizinan/{perizinan}/status', [KadesPerizinanController::class, 'updateStatus'])->name('perizinan.update-status');
 });

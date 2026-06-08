@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\User;
 use App\Models\PengajuanSurat;
+use App\Models\Pengaduan;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -28,32 +30,14 @@ class DashboardController extends Controller
         
         $recent_surat = PengajuanSurat::with('user')->latest()->take(5)->get();
 
-        $recent_pengaduan = collect([
-            (object)[
-                'id' => 1,
-                'nama_pelapor' => 'Budi Santoso',
-                'kategori' => 'Fasilitas Umum',
-                'judul' => 'Lampu Jalan Mati di RT 03',
-                'tanggal' => now()->subDays(1),
-                'status' => 'Pending'
-            ],
-            (object)[
-                'id' => 2,
-                'nama_pelapor' => 'Siti Aminah',
-                'kategori' => 'Pelayanan',
-                'judul' => 'Antrean panjang di balai desa',
-                'tanggal' => now()->subDays(2),
-                'status' => 'Diproses'
-            ],
-            (object)[
-                'id' => 3,
-                'nama_pelapor' => 'Agus Pratama',
-                'kategori' => 'Keamanan',
-                'judul' => 'Ronda malam tidak aktif',
-                'tanggal' => now()->subDays(4),
-                'status' => 'Selesai'
-            ]
-        ]);
+        $recent_pengaduan = Pengaduan::latest()->take(5)->get()
+            ->map(fn($p) => (object)[
+                'nama_pelapor' => $p->nama,
+                'kategori'     => $p->kategori,
+                'judul'        => Str::limit($p->deskripsi, 40),
+                'tanggal'      => $p->created_at,
+                'status'       => $p->status,
+            ]);
 
         return view('CRUD.dashboard', compact('stats', 'chartData', 'recent_announcements', 'recent_surat', 'recent_pengaduan'));
     }

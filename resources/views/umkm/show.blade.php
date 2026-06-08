@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $product['name'] . ' - UMKM Sawotratap')
+@section('title', $product->name . ' - UMKM Sawotratap')
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/announcements.css') }}">
@@ -131,7 +131,7 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('umkm') }}"><i class="bi bi-shop"></i> UMKM</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($product['name'], 32) }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($product->name, 32) }}</li>
             </ol>
         </nav>
     </div>
@@ -148,19 +148,19 @@
         <div class="umkm-detail-card p-3 p-lg-4 mb-5">
             <div class="row g-4 align-items-start">
                 <div class="col-lg-6">
-                    <img src="{{ $product['image'] }}"
-                         alt="{{ $product['name'] }}"
+                    <img src="{{ Str::startsWith($product->image, ['http://', 'https://']) ? $product->image : asset('storage/' . $product->image) }}"
+                         alt="{{ $product->name }}"
                          class="umkm-detail-image rounded-3"
                          onerror="this.onerror=null;this.src='https://via.placeholder.com/900x600?text=Produk+UMKM';">
                 </div>
                 <div class="col-lg-6">
-                    <span class="umkm-badge">{{ $product['category'] }}</span>
-                    <h1 class="mb-3" style="color: #264d1f; font-weight: 800;">{{ $product['name'] }}</h1>
-                    <div class="umkm-price">Rp {{ number_format($product['price'], 0, ',', '.') }}</div>
+                    <span class="umkm-badge">{{ $product->kategori->name ?? 'Tanpa Kategori' }}</span>
+                    <h1 class="mb-3" style="color: #264d1f; font-weight: 800;">{{ $product->name }}</h1>
+                    <div class="umkm-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
 
-                    @if($product['stock'] > 0)
+                    @if($product->stock > 0)
                     <div class="stock-pill">
-                        <i class="bi bi-check-circle"></i> Stok tersedia: {{ $product['stock'] }}
+                        <i class="bi bi-check-circle"></i> Stok tersedia: {{ $product->stock }}
                     </div>
                     @else
                     <div class="stock-pill" style="background: #ffebee; color: #c62828;">
@@ -169,17 +169,17 @@
                     @endif
 
                     <p class="text-muted" style="line-height: 1.8;">
-                        {{ $product['full_description'] ?? $product['description'] }}
+                        {{ $product->description }}
                     </p>
 
                     <div class="umkm-meta">
                         <div class="umkm-meta-item">
                             <i class="bi bi-shop"></i>
-                            <span>Penjual: {{ $product['seller'] }}</span>
+                            <span>Penjual: {{ $product->seller }}</span>
                         </div>
                         <div class="umkm-meta-item">
                             <i class="bi bi-geo-alt"></i>
-                            <span>Lokasi: {{ $product['location'] }}</span>
+                            <span>Lokasi: {{ $product->location }}</span>
                         </div>
                     </div>
 
@@ -201,18 +201,18 @@
             <div class="row">
                 @foreach($relatedProducts as $related)
                 <div class="col-md-6 col-lg-4 mb-4">
-                    <a href="{{ route('umkm.show', $related['id']) }}" class="text-decoration-none text-dark">
+                    <a href="{{ route('umkm.show', $related->id) }}" class="text-decoration-none text-dark">
                         <div class="related-product-card">
-                            <img src="{{ $related['image'] }}"
+                            <img src="{{ Str::startsWith($related->image, ['http://', 'https://']) ? $related->image : asset('storage/' . $related->image) }}"
                                  class="related-product-image"
-                                 alt="{{ $related['name'] }}"
+                                 alt="{{ $related->name }}"
                                  onerror="this.onerror=null;this.src='https://via.placeholder.com/700x450?text=Produk+UMKM';">
                             <div class="p-3">
-                                <span class="badge bg-success mb-2">{{ $related['category'] }}</span>
-                                <h5 class="fw-bold mb-2">{{ $related['name'] }}</h5>
-                                <p class="text-muted small mb-2">{{ Str::limit($related['description'], 70) }}</p>
+                                <span class="badge bg-success mb-2">{{ $related->kategori->name ?? 'Tanpa Kategori' }}</span>
+                                <h5 class="fw-bold mb-2">{{ $related->name }}</h5>
+                                <p class="text-muted small mb-2">{{ Str::limit($related->description, 70) }}</p>
                                 <div class="fw-bold" style="color: var(--primary-green);">
-                                    Rp {{ number_format($related['price'], 0, ',', '.') }}
+                                    Rp {{ number_format($related->price, 0, ',', '.') }}
                                 </div>
                             </div>
                         </div>

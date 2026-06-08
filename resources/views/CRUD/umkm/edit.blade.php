@@ -28,16 +28,19 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-4">
-                        <label for="category" class="form-label fw-bold">Kategori <span class="text-danger">*</span></label>
-                        <select class="form-select @error('category') is-invalid @enderror" 
-                                id="category" 
-                                name="category" 
+                        <label for="kategori_umkm_id" class="form-label fw-bold">Kategori Produk <span class="text-danger">*</span></label>
+                        <select class="form-select @error('kategori_umkm_id') is-invalid @enderror" 
+                                id="kategori_umkm_id" 
+                                name="kategori_umkm_id" 
                                 required>
-                            <option value="">Pilih Kategori</option>
-                            <option value="Kuliner" {{ old('category', $umkm->category) == 'Kuliner' ? 'selected' : '' }}>Kuliner</option>
-                            <option value="Kerajinan" {{ old('category', $umkm->category) == 'Kerajinan' ? 'selected' : '' }}>Kerajinan</option>
+                            <option value="">-- Pilih Kategori --</option>
+                            @foreach($categories as $kategori)
+                            <option value="{{ $kategori->id }}" {{ old('kategori_umkm_id', $umkm->kategori_umkm_id) == $kategori->id ? 'selected' : '' }}>
+                                {{ $kategori->name }}
+                            </option>
+                            @endforeach
                         </select>
-                        @error('category')
+                        @error('kategori_umkm_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

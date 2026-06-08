@@ -1054,67 +1054,57 @@
             <p class="text-muted mt-3 mx-auto" style="max-width: 600px; font-size: 1.05rem; line-height: 1.6;">Dokumentasi Kegiatan dan Keindahan Desa</p>
         </div>
         <div class="row g-4">
+            @if($gallery->count() > 0)
             <div class="col-md-6">
                 <div class="gallery-item gallery-item-large" style="border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
-                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800" 
-                         alt="Sawah Desa" style="transition: transform 0.5s ease;">
+                    <img src="{{ Str::startsWith($gallery[0]->image, ['http://', 'https://']) ? $gallery[0]->image : asset('storage/' . $gallery[0]->image) }}" 
+                         alt="{{ $gallery[0]->title }}" style="transition: transform 0.5s ease;">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h5 class="gallery-title" style="font-family: 'Playfair Display', serif;">Pemandangan Sawah</h5>
-                            <p class="gallery-desc">Hamparan sawah hijau yang asri</p>
-                            <a href="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block;"><i class="bi bi-eye"></i> Lihat</a>
+                            <h5 class="gallery-title" style="font-family: 'Playfair Display', serif;">{{ $gallery[0]->title }}</h5>
+                            <p class="gallery-desc">{{ Str::limit($gallery[0]->description, 50) }}</p>
+                            <a href="{{ route('galeri.show', $gallery[0]->id) }}" class="gallery-btn" style="text-decoration: none; display: inline-block;"><i class="bi bi-eye"></i> Lihat</a>
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
+
+            @if($gallery->count() > 1)
             <div class="col-md-3">
-                <div class="gallery-item gallery-item-medium mb-4" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
-                    <img src="https://images.unsplash.com/photo-1464207687429-7505649dae38?w=400" 
-                         alt="Balai Desa" style="transition: transform 0.5s ease;">
+                @foreach($gallery->slice(1, 2) as $item)
+                <div class="gallery-item gallery-item-medium {{ $loop->first ? 'mb-4' : '' }}" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
+                    <img src="{{ Str::startsWith($item->image, ['http://', 'https://']) ? $item->image : asset('storage/' . $item->image) }}" 
+                         alt="{{ $item->title }}" style="transition: transform 0.5s ease;">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">Balai Desa</h5>
-                            <p class="gallery-desc" style="font-size: 0.85rem;">Pusat pemerintahan desa</p>
-                            <a href="https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
+                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">{{ $item->title }}</h5>
+                            <p class="gallery-desc" style="font-size: 0.85rem;">{{ Str::limit($item->description, 30) }}</p>
+                            <a href="{{ route('galeri.show', $item->id) }}" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
                         </div>
                     </div>
                 </div>
-                <div class="gallery-item gallery-item-medium" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
-                    <img src="https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=400" 
-                         alt="Wisata Desa" style="transition: transform 0.5s ease;">
-                    <div class="gallery-overlay">
-                        <div class="gallery-content">
-                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">Wisata Desa</h5>
-                            <p class="gallery-desc" style="font-size: 0.85rem;">Destinasi wisata lokal</p>
-                            <a href="https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
+            @endif
+
+            @if($gallery->count() > 3)
             <div class="col-md-3">
-                <div class="gallery-item gallery-item-medium mb-4" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
-                    <img src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=400" 
-                         alt="Produk UMKM" style="transition: transform 0.5s ease;">
-                    <div class="gallery-overlay">
-                        <div class="gallery-content">
-                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">Produk UMKM</h5>
-                            <p class="gallery-desc" style="font-size: 0.85rem;">Hasil karya warga desa</p>
-                            <a href="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=800" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
-                        </div>
-                    </div>
-                </div>
+                @foreach($gallery->slice(3, 1) as $item)
                 <div class="gallery-item gallery-item-medium" style="border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.06);">
-                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400" 
-                         alt="Kegiatan Warga" style="transition: transform 0.5s ease;">
+                    <img src="{{ Str::startsWith($item->image, ['http://', 'https://']) ? $item->image : asset('storage/' . $item->image) }}" 
+                         alt="{{ $item->title }}" style="transition: transform 0.5s ease;">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">Kegiatan Warga</h5>
-                            <p class="gallery-desc" style="font-size: 0.85rem;">Aktivitas masyarakat desa</p>
-                            <a href="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800" target="_blank" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
+                            <h5 class="gallery-title" style="font-size: 1.1rem; font-family: 'Playfair Display', serif;">{{ $item->title }}</h5>
+                            <p class="gallery-desc" style="font-size: 0.85rem;">{{ Str::limit($item->description, 30) }}</p>
+                            <a href="{{ route('galeri.show', $item->id) }}" class="gallery-btn" style="text-decoration: none; display: inline-block; padding: 6px 16px; font-size: 0.85rem;"><i class="bi bi-eye"></i> Lihat</a>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
+            @endif
         </div>
         <div class="text-center mt-5 pt-2">
             <a href="{{ route('galeri') }}" class="modern-btn-all">

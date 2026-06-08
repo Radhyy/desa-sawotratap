@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Umkm;
+use App\Models\KategoriUmkm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,7 +15,7 @@ class UmkmController extends Controller
      */
     public function index()
     {
-        $umkm = Umkm::latest()->paginate(10);
+        $umkm = Umkm::with('kategori')->latest()->paginate(10);
         return view('CRUD.umkm.index', compact('umkm'));
     }
 
@@ -23,7 +24,8 @@ class UmkmController extends Controller
      */
     public function create()
     {
-        return view('CRUD.umkm.create');
+        $categories = KategoriUmkm::all();
+        return view('CRUD.umkm.create', compact('categories'));
     }
 
     /**
@@ -33,7 +35,7 @@ class UmkmController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|in:Kuliner,Kerajinan',
+            'kategori_umkm_id' => 'required|exists:kategori_umkms,id',
             'price' => 'required|integer|min:0',
             'description' => 'required|string',
             'seller' => 'required|string|max:255',
@@ -60,7 +62,8 @@ class UmkmController extends Controller
      */
     public function edit(Umkm $umkm)
     {
-        return view('CRUD.umkm.edit', compact('umkm'));
+        $categories = KategoriUmkm::all();
+        return view('CRUD.umkm.edit', compact('umkm', 'categories'));
     }
 
     /**
@@ -70,7 +73,7 @@ class UmkmController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|in:Kuliner,Kerajinan',
+            'kategori_umkm_id' => 'required|exists:kategori_umkms,id',
             'price' => 'required|integer|min:0',
             'description' => 'required|string',
             'seller' => 'required|string|max:255',

@@ -460,12 +460,13 @@
                             </div>
                         @endif
 
+                        @auth
                         <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data" id="complaintForm">
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label for="nama" class="form-label">Nama Pelapor</label>
-                                    <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Contoh: Ahmad Fauzi" required>
+                                    <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama', Auth::user()->name) }}" placeholder="Contoh: Ahmad Fauzi" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="no_whatsapp" class="form-label">Nomor WhatsApp</label>
@@ -524,6 +525,14 @@
                                 </div>
                             </div>
                         </form>
+                        @else
+                        <div class="text-center py-5">
+                            <i class="bi bi-shield-lock text-muted fs-1 d-block mb-3"></i>
+                            <h5 class="fw-bold">Anda harus login terlebih dahulu</h5>
+                            <p class="text-muted">Untuk mengajukan laporan pengaduan infrastruktur, Anda diwajibkan masuk menggunakan akun terdaftar demi mencegah laporan fiktif.</p>
+                            <a href="{{ route('login') }}" class="btn btn-success mt-2 px-4">Login Sekarang</a>
+                        </div>
+                        @endauth
                     </div>
                 </div>
 

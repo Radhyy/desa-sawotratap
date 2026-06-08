@@ -147,7 +147,7 @@
                 <span class="stat-label">Tersedia Sekarang</span>
             </div>
             <div class="stat-box">
-                <span class="stat-number">{{ $products->pluck('category')->unique()->count() }}</span>
+                <span class="stat-number">{{ $products->pluck('kategori_umkm_id')->unique()->count() }}</span>
                 <span class="stat-label">Kategori Produk</span>
             </div>
         </div>
@@ -163,7 +163,7 @@
                 <i class="bi bi-funnel"></i> Semua Kategori
             </button>
             @php
-                $categories = $products->pluck('category')->unique()->values();
+                $categories = $products->pluck('kategori.name')->unique()->values();
             @endphp
             @foreach($categories as $category)
             <button class="filter-btn" onclick="filterProducts('{{ $category }}', this)">
@@ -175,62 +175,62 @@
         <!-- Products Grid -->
         <div class="row" id="productsContainer">
             @forelse($products as $product)
-            <div class="col-md-6 col-lg-4 mb-4 product-item" data-category="{{ $product['category'] }}">
+            <div class="col-md-6 col-lg-4 mb-4 product-item" data-category="{{ $product->kategori->name ?? 'Tanpa Kategori' }}">
                 <div class="card umkm-card h-100">
                     <div class="position-relative">
-                        <a href="{{ route('umkm.show', $product['id']) }}" class="d-block">
-                        <img src="{{ $product['image'] }}"
+                        <a href="{{ route('umkm.show', $product->id) }}" class="d-block">
+                        <img src="{{ Str::startsWith($product->image, ['http://', 'https://']) ? $product->image : asset('storage/' . $product->image) }}"
                              class="card-img-top umkm-card-img" 
-                            alt="{{ $product['name'] }}"
+                            alt="{{ $product->name }}"
                             onerror="this.onerror=null;this.src='https://via.placeholder.com/800x500?text=Produk+UMKM';">
                         </a>
-                        @if($product['stock'] <= 0)
+                        @if($product->stock <= 0)
                         <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
                              style="background: rgba(0,0,0,0.6);">
                             <span class="text-white fw-bold" style="font-size: 1.2rem;">Stok Habis</span>
                         </div>
                         @else
                         <span class="position-absolute top-0 end-0 badge bg-success m-3">
-                            Stok: {{ $product['stock'] }}
+                            Stok: {{ $product->stock }}
                         </span>
                         @endif
                     </div>
                     
                     <div class="card-body d-flex flex-column">
-                        <span class="umkm-category">{{ $product['category'] }}</span>
+                        <span class="umkm-category">{{ $product->kategori->name ?? 'Tanpa Kategori' }}</span>
                         
                         <h5 class="card-title fw-bold mb-2">
-                            <a href="{{ route('umkm.show', $product['id']) }}" class="text-decoration-none text-dark">
-                                {{ $product['name'] }}
+                            <a href="{{ route('umkm.show', $product->id) }}" class="text-decoration-none text-dark">
+                                {{ $product->name }}
                             </a>
                         </h5>
                         
                         <p class="card-text text-muted small flex-grow-1">
-                            {{ $product['description'] }}
+                            {{ $product->description }}
                         </p>
 
                         <div class="d-flex align-items-center mb-3 mt-3">
                             <i class="bi bi-shop text-success me-2"></i>
-                            <small class="text-muted">{{ $product['seller'] }}</small>
+                            <small class="text-muted">{{ $product->seller }}</small>
                         </div>
 
                         <div class="d-flex align-items-center mb-3">
                             <i class="bi bi-geo-alt text-success me-2"></i>
-                            <small class="text-muted">{{ $product['location'] }}</small>
+                            <small class="text-muted">{{ $product->location }}</small>
                         </div>
 
                         <hr class="my-3">
 
                         <div class="umkm-actions">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="umkm-price">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
+                                <span class="umkm-price">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                             </div>
 
-                            <a href="{{ route('umkm.show', $product['id']) }}" class="btn btn-outline-success w-100 umkm-detail-btn mb-2">
+                            <a href="{{ route('umkm.show', $product->id) }}" class="btn btn-outline-success w-100 umkm-detail-btn mb-2">
                                 <i class="bi bi-eye"></i> Lihat Selengkapnya
                             </a>
 
-                            @if($product['stock'] > 0)
+                            @if($product->stock > 0)
                             <button class="btn btn-success w-100 fw-semibold umkm-detail-btn">
                                 <i class="bi bi-cart-plus"></i> Pesan Sekarang
                             </button>

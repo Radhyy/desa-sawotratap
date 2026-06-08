@@ -337,6 +337,25 @@
     </section>
 
     <div class="container permit-shell section-wrap pt-4">
+
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 12px; margin-bottom: 2rem;">
+                <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="border-radius: 12px; margin-bottom: 2rem;">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="permit-grid">
             <div class="d-grid gap-3">
                 <section class="permit-card">
@@ -439,8 +458,8 @@
                         <div class="permit-cta">
                             <h3>Butuh surat administratif lain?</h3>
                             <p>Gunakan layanan pengajuan surat online untuk kebutuhan surat keterangan umum warga.</p>
-                            <a href="{{ route('pengajuan-surat.index') }}" class="btn btn-success">
-                                <i class="bi bi-send me-1"></i> Buka Pengajuan Surat
+                            <a href="#form-pengajuan" class="btn btn-success">
+                                <i class="bi bi-pencil-square me-1"></i> Isi Formulir Sekarang
                             </a>
                         </div>
                     </div>
@@ -468,6 +487,62 @@
                 </section>
             </div>
         </div>
+
+        <!-- Form Pengajuan -->
+        <div class="permit-card mt-4" id="form-pengajuan">
+            <div class="head">
+                <i class="bi bi-pencil-square"></i>
+                <h2>Formulir Pengajuan Perizinan</h2>
+            </div>
+            <div class="permit-body">
+                @auth
+                <form action="{{ route('perizinan.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Nama Pemohon</label>
+                            <input type="text" name="nama_pemohon" class="form-control" value="{{ old('nama_pemohon', Auth::user()->name) }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">NIK</label>
+                            <input type="text" name="nik" class="form-control" value="{{ old('nik') }}" required maxlength="16" minlength="16">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">Jenis Izin yang Diajukan</label>
+                            <select name="jenis_izin" class="form-select" required>
+                                <option value="" disabled selected>-- Pilih Jenis Izin --</option>
+                                @foreach($permitServices as $service)
+                                    <option value="{{ $service['name'] }}" {{ old('jenis_izin') == $service['name'] ? 'selected' : '' }}>{{ $service['name'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">Keterangan / Keperluan</label>
+                            <textarea name="keterangan" class="form-control" rows="4" required placeholder="Jelaskan secara detail keperluan dan informasi pendukung untuk perizinan Anda...">{{ old('keterangan') }}</textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">Lampiran Berkas (Opsional)</label>
+                            <input type="file" name="lampiran" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+                            <small class="text-muted">Format: PDF, JPG, PNG. Maksimal 5MB. (Misal: KTP, Surat Pengantar RT/RW, Proposal, dll)</small>
+                        </div>
+                        <div class="col-md-12 mt-4 text-end">
+                            <button type="submit" class="btn btn-success px-4 fw-bold">
+                                <i class="bi bi-send me-1"></i> Kirim Pengajuan Perizinan
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                @else
+                <div class="text-center py-5">
+                    <i class="bi bi-shield-lock text-muted fs-1 d-block mb-3"></i>
+                    <h5 class="fw-bold">Anda harus login terlebih dahulu</h5>
+                    <p class="text-muted">Untuk mengajukan perizinan, warga diwajibkan untuk masuk menggunakan akun terdaftar agar data dapat divalidasi dengan aman.</p>
+                    <a href="{{ route('login') }}" class="btn btn-success mt-2 px-4">Login Sekarang</a>
+                </div>
+                @endauth
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection

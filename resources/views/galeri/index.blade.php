@@ -33,15 +33,19 @@
     }
 
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: #2d5016;
+        margin-bottom: 12px;
     }
 
     .hero-subtitle {
         color: #6c757d;
         max-width: 760px;
         margin: 0 auto;
-        font-size: 1.08rem;
-        line-height: 1.6;
+        font-size: 1.1rem;
+        line-height: 1.7;
         font-weight: 400;
     }
 
@@ -53,33 +57,47 @@
     }
 
     .gallery-stat-box {
-        background: #fff;
-        border-radius: 14px;
-        padding: 16px;
-        border: 1px solid #dde7d6;
-        box-shadow: 0 6px 18px rgba(45, 80, 22, 0.06);
+        background: white;
+        border-radius: 20px;
+        padding: 24px 20px;
+        border: 1px solid rgba(45, 80, 22, 0.08);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
         text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .gallery-stat-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(45, 80, 22, 0.08);
+        border-color: rgba(45, 80, 22, 0.15);
     }
 
     .gallery-stat-icon {
-        font-size: 2rem;
-        margin-bottom: 8px;
-        display: block;
+        font-size: 1.8rem;
+        margin: 0 auto 15px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, rgba(45, 80, 22, 0.05), rgba(45, 80, 22, 0.1));
+        border-radius: 50%;
         color: var(--primary-green);
     }
 
     .gallery-stat-number {
-        font-size: 1.9rem;
+        font-size: 2rem;
+        font-family: 'Sora', sans-serif;
         font-weight: 800;
         display: block;
-        color: #22331d;
+        color: #2d5016;
         line-height: 1.1;
     }
 
     .gallery-stat-label {
-        font-size: 0.88rem;
-        margin-top: 5px;
-        color: #5e6d64;
+        font-size: 0.95rem;
+        margin-top: 8px;
+        color: #666;
         font-weight: 500;
     }
 
@@ -113,18 +131,23 @@
     }
 
     .gallery-card {
-        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
         border: 1px solid #e4ecdf;
         border-radius: 18px;
         box-shadow: 0 8px 24px rgba(45, 80, 22, 0.08);
         overflow: hidden;
         height: 100%;
         background: white;
+        transition: all 0.3s ease;
     }
 
     .gallery-card:hover {
         transform: translateY(-8px);
         box-shadow: 0 14px 28px rgba(45, 80, 22, 0.14);
+        color: inherit;
     }
 
     .gallery-media {
@@ -294,8 +317,8 @@
 
     <section class="gallery-header py-5">
         <div class="container">
-            <div class="hero-content-box text-center">
-                <h1 class="section-title-center hero-title">Galeri Desa</h1>
+            <div class="hero-content-box text-center mb-5">
+                <h1 class="hero-title">Galeri Desa</h1>
                 <p class="hero-subtitle">
                     Dokumentasi kegiatan dan keindahan Desa Sawotratap dalam tampilan yang lebih rapi, nyaman, dan mudah dijelajahi.
                 </p>
@@ -351,33 +374,30 @@
 
     <section class="py-5">
         <div class="container">
-            <div class="row" id="galleryContainer">
+            <div class="row g-4" id="galleryContainer">
                 @forelse($galleries as $gallery)
-                    @php
-                        $galleryImage = $gallery['image'] ?? '';
-                    @endphp
-                    <div class="col-md-6 col-lg-4 mb-4 gallery-item" data-category="{{ $gallery['category'] }}">
-                        <a href="{{ route('galeri.show', $gallery['id']) }}" class="gallery-card-link h-100">
-                            <div class="card gallery-card h-100">
-                                <div class="gallery-media">
-                                    <img src="{{ $galleryImage }}"
-                                         class="gallery-card-img"
-                                         alt="{{ $gallery['title'] }}"
-                                         loading="lazy"
-                                         onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600?text=Galeri+Desa';">
-                                    <span class="gallery-category-badge">{{ $gallery['category'] }}</span>
-                                </div>
+                    <div class="col-md-6 col-lg-4 galeri-grid-item d-flex" data-category="{{ $gallery->category }}">
+                        <a href="{{ route('galeri.show', $gallery->id) }}" class="gallery-card w-100">
+                            <div class="gallery-media">
+                                <img src="{{ Str::startsWith($gallery->image, ['http://', 'https://']) ? $gallery->image : asset('storage/' . $gallery->image) }}"
+                                     class="gallery-card-img"
+                                     alt="{{ $gallery->title }}"
+                                     loading="lazy"
+                                     onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600?text=Galeri+Desa';">
+                                <span class="gallery-category-badge">{{ $gallery->category }}</span>
+                            </div>
 
-                                <div class="gallery-info d-flex flex-column">
-                                    <h5 class="gallery-title">
-                                        {{ $gallery['title'] }}
-                                    </h5>
+                            <div class="gallery-info d-flex flex-column flex-grow-1">
+                                <h5 class="gallery-title">
+                                    {{ $gallery->title }}
+                                </h5>
 
-                                    <p class="gallery-description">
-                                        {{ $gallery['description'] }}
-                                    </p>
+                                <p class="gallery-description">
+                                    {{ $gallery->description }}
+                                </p>
 
-                                    <span class="view-detail-btn mt-auto">
+                                <div class="mt-auto">
+                                    <span class="view-detail-btn mb-3">
                                         Lihat Selengkapnya
                                         <i class="bi bi-arrow-right"></i>
                                     </span>
@@ -385,11 +405,11 @@
                                     <div class="gallery-meta">
                                         <div class="gallery-date">
                                             <i class="bi bi-calendar3"></i>
-                                            <span>{{ date('d F Y', strtotime($gallery['date'])) }}</span>
+                                            <span>{{ date('d M Y', strtotime($gallery->published_at)) }}</span>
                                         </div>
                                         <div>
                                             <i class="bi bi-camera me-1"></i>
-                                            {{ $gallery['photographer'] }}
+                                            {{ $gallery->author }}
                                         </div>
                                     </div>
                                 </div>
@@ -414,7 +434,7 @@
 @push('scripts')
 <script>
 function filterGallery(category, buttonElement) {
-    const galleries = document.querySelectorAll('.gallery-item');
+    const galleries = document.querySelectorAll('.galeri-grid-item');
     const buttons = document.querySelectorAll('.filter-category-btn');
 
     // Update active button
@@ -426,7 +446,7 @@ function filterGallery(category, buttonElement) {
     // Filter galleries
     galleries.forEach(gallery => {
         if (category === 'all' || gallery.dataset.category === category) {
-            gallery.style.display = 'block';
+            gallery.style.display = 'flex';
             setTimeout(() => {
                 gallery.style.opacity = '1';
                 gallery.style.transform = 'scale(1)';

@@ -58,8 +58,8 @@ class PengajuanSurat extends Model
     public function getStatusBadgeAttribute()
     {
         return match($this->status) {
-            'pending' => 'warning',
-            'diproses' => 'info',
+            'pending', 'menunggu_admin' => 'warning',
+            'menunggu_kades', 'diproses' => 'info',
             'selesai' => 'success',
             'ditolak' => 'danger',
             default => 'secondary'
@@ -72,8 +72,8 @@ class PengajuanSurat extends Model
     public function getStatusLabelAttribute()
     {
         return match($this->status) {
-            'pending' => 'Menunggu',
-            'diproses' => 'Diproses',
+            'pending', 'menunggu_admin' => 'Menunggu Admin',
+            'menunggu_kades', 'diproses' => 'Menunggu Kades',
             'selesai' => 'Selesai',
             'ditolak' => 'Ditolak',
             default => 'Tidak Diketahui'

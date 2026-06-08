@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\Pengaduan;
 
 class PengaduanController extends Controller
 {
@@ -13,24 +16,23 @@ class PengaduanController extends Controller
 
     public function index()
     {
-        $reports = collect($this->loadReports())
-            ->sortByDesc('submitted_at')
+        $this->migrateJsonToDatabase();
+
+        $reports = Pengaduan::latest('created_at')
             ->take(6)
-            ->map(function (array $report) {
+            ->get()
+            ->map(function ($report) {
                 return [
-                    'ticket' => $report['ticket'] ?? '-',
-                    'nama' => $report['nama'] ?? 'Warga',
-                    'kategori' => $report['kategori'] ?? '-',
-                    'lokasi' => $report['lokasi'] ?? '-',
-                    'status' => $report['status'] ?? 'Diproses',
-                    'urgensi' => $report['tingkat_urgensi'] ?? 'Sedang',
-                    'deskripsi' => $report['deskripsi'] ?? '-',
-                    'submitted_at' => isset($report['submitted_at'])
-                        ? Carbon::parse($report['submitted_at'])->locale('id')->translatedFormat('d M Y H:i')
-                        : '-',
+                    'ticket' => $report->ticket,
+                    'nama' => $report->nama,
+                    'kategori' => $report->kategori,
+                    'lokasi' => $report->lokasi,
+                    'status' => $report->status,
+                    'urgensi' => $report->tingkat_urgensi,
+                    'deskripsi' => $report->deskripsi,
+                    'submitted_at' => $report->created_at->locale('id')->translatedFormat('d M Y H:i'),
                 ];
-            })
-            ->values();
+            });
 
         $infrastrukturTypes = [
             [
@@ -64,6 +66,10 @@ class PengaduanController extends Controller
 
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk mengajukan pengaduan.');
+        }
+
         $validated = $request->validate([
             'nama' => 'required|string|max:120',
             'no_whatsapp' => 'required|string|max:25',
@@ -75,14 +81,24 @@ class PengaduanController extends Controller
             'lampiran' => 'nullable|image|max:4096',
             'setuju' => 'required|accepted',
         ], [
+            'deskripsi.min' => 'Deskripsi laporan terlalu singkat (minimal 20 karakter).',
+            'deskripsi.required' => 'Deskripsi laporan wajib diisi.',
+            'lokasi.required' => 'Lokasi kejadian wajib diisi.',
+            'kategori.required' => 'Jenis pengaduan wajib dipilih.',
+            'tingkat_urgensi.required' => 'Tingkat urgensi wajib dipilih.',
             'setuju.required' => 'Anda harus menyetujui pernyataan kebenaran laporan.',
             'setuju.accepted' => 'Anda harus menyetujui pernyataan kebenaran laporan.',
         ]);
 
-        $existingReports = $this->loadReports();
+        $ticket = 'PGD-' . now()->format('Ymd') . '-' . strtoupper(Str::random(5));
+        
+        $lampiranPath = null;
+        if ($request->hasFile('lampiran')) {
+            $lampiranPath = $request->file('lampiran')->store('pengaduan', 'public');
+        }
 
-        $report = [
-            'ticket' => 'PGD-' . now()->format('Ymd') . '-' . strtoupper(Str::random(5)),
+        Pengaduan::create([
+            'ticket' => $ticket,
             'nama' => $validated['nama'],
             'no_whatsapp' => $validated['no_whatsapp'],
             'kategori' => $validated['kategori'],
@@ -91,38 +107,38 @@ class PengaduanController extends Controller
             'waktu_kejadian' => $validated['waktu_kejadian'] ?? null,
             'deskripsi' => $validated['deskripsi'],
             'status' => 'Menunggu Verifikasi',
-            'submitted_at' => now()->toDateTimeString(),
-        ];
-
-        if ($request->hasFile('lampiran')) {
-            $report['lampiran_path'] = $request->file('lampiran')->store('pengaduan', 'public');
-        }
-
-        array_unshift($existingReports, $report);
-
-        $this->saveReports(array_slice($existingReports, 0, 50));
+            'lampiran_path' => $lampiranPath,
+        ]);
 
         return redirect()
             ->route('pengaduan.index')
-            ->with('success', 'Laporan Anda berhasil dikirim dengan nomor tiket ' . $report['ticket'] . '.');
+            ->with('success', 'Laporan Anda berhasil dikirim dengan nomor tiket ' . $ticket . '.');
     }
 
-    private function loadReports(): array
+    private function migrateJsonToDatabase(): void
     {
-        if (!Storage::exists(self::REPORTS_FILE)) {
-            return [];
+        if (Storage::exists(self::REPORTS_FILE)) {
+            $reports = json_decode((string) Storage::get(self::REPORTS_FILE), true);
+            if (is_array($reports)) {
+                foreach ($reports as $report) {
+                    if (!Pengaduan::where('ticket', $report['ticket'])->exists()) {
+                        Pengaduan::create([
+                            'ticket' => $report['ticket'],
+                            'nama' => $report['nama'],
+                            'no_whatsapp' => $report['no_whatsapp'] ?? '-',
+                            'kategori' => $report['kategori'],
+                            'lokasi' => $report['lokasi'],
+                            'tingkat_urgensi' => $report['tingkat_urgensi'] ?? 'Sedang',
+                            'waktu_kejadian' => $report['waktu_kejadian'] ?? null,
+                            'deskripsi' => $report['deskripsi'],
+                            'status' => $report['status'] ?? 'Menunggu Verifikasi',
+                            'lampiran_path' => $report['lampiran_path'] ?? null,
+                            'created_at' => Carbon::parse($report['submitted_at'] ?? now()),
+                        ]);
+                    }
+                }
+            }
+            Storage::move(self::REPORTS_FILE, self::REPORTS_FILE . '.bak');
         }
-
-        $decoded = json_decode((string) Storage::get(self::REPORTS_FILE), true);
-
-        return is_array($decoded) ? $decoded : [];
-    }
-
-    private function saveReports(array $reports): void
-    {
-        Storage::put(
-            self::REPORTS_FILE,
-            json_encode($reports, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
-        );
     }
 }

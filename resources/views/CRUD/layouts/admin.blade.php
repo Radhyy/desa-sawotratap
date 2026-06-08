@@ -417,24 +417,27 @@
             <a href="{{ route('admin.berita.index') }}" class="menu-item {{ request()->routeIs('admin.berita.*') ? 'active' : '' }}" title="Berita">
                 <i class="bi bi-newspaper"></i> <span>Berita</span>
             </a>
-            <a href="#" class="menu-item" title="Galeri">
+            <a href="{{ route('admin.galeri.index') }}" class="menu-item {{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}" title="Galeri">
                 <i class="bi bi-images"></i> <span>Galeri</span>
             </a>
             
             <div class="menu-section-title">Manajemen UMKM</div>
-            <a href="#" class="menu-item {{ request()->routeIs('admin.umkm.*') ? 'active' : '' }}" title="Data UMKM">
+            <a href="{{ route('admin.umkm.index') }}" class="menu-item {{ request()->routeIs('admin.umkm.*') ? 'active' : '' }}" title="Data UMKM">
                 <i class="bi bi-shop-window"></i> <span>Data UMKM</span>
             </a>
-            <a href="#" class="menu-item" title="Kategori UMKM">
+            <a href="{{ route('admin.kategori-umkm.index') }}" class="menu-item {{ request()->routeIs('admin.kategori-umkm.*') ? 'active' : '' }}" title="Kategori UMKM">
                 <i class="bi bi-tags-fill"></i> <span>Kategori UMKM</span>
             </a>
-
-            <div class="menu-section-title">Layanan Masyarakat</div>
-            <a href="#" class="menu-item" title="Pengajuan Surat">
-                <i class="bi bi-envelope-paper-fill"></i> <span>Pengajuan Surat</span>
+            <!-- Layanan Masyarakat -->
+            <div class="menu-header">Layanan Masyarakat</div>
+            <a href="{{ route('admin.pengajuan-surat.index') }}" class="menu-item {{ request()->routeIs('admin.pengajuan-surat.*') ? 'active' : '' }}" title="Pengajuan Surat">
+                <i class="bi bi-envelope-paper"></i> <span>Pengajuan Surat</span>
             </a>
-            <a href="#" class="menu-item" title="Pengaduan">
+            <a href="{{ route('admin.pengaduan.index') }}" class="menu-item {{ request()->routeIs('admin.pengaduan.*') ? 'active' : '' }}" title="Pengaduan Warga">
                 <i class="bi bi-chat-left-text-fill"></i> <span>Pengaduan</span>
+            </a>
+            <a href="{{ route('admin.perizinan.index') }}" class="menu-item {{ request()->routeIs('admin.perizinan.*') ? 'active' : '' }}" title="Perizinan">
+                <i class="bi bi-file-earmark-check-fill"></i> <span>Perizinan</span>
             </a>
 
             <div class="menu-section-title">Sistem</div>

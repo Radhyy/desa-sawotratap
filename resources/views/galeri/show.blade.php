@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $gallery['title'] . ' - Galeri Desa Sawotratap')
+@section('title', $gallery->title . ' - Galeri Desa Sawotratap')
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/announcements.css') }}">
@@ -296,7 +296,7 @@
                         <i class="bi bi-images"></i> Galeri
                     </a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($gallery['title'], 50) }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($gallery->title, 50) }}</li>
             </ol>
         </nav>
     </div>
@@ -315,44 +315,40 @@
                 <div class="gallery-detail-content">
                     <!-- Category Badge -->
                     <span class="gallery-category-badge-detail">
-                        @if($gallery['category'] === 'Alam')
+                        @if($gallery->category === 'Alam')
                             <i class="bi bi-tree me-2"></i>
-                        @elseif($gallery['category'] === 'Fasilitas')
+                        @elseif($gallery->category === 'Fasilitas')
                             <i class="bi bi-building me-2"></i>
-                        @elseif($gallery['category'] === 'Wisata')
+                        @elseif($gallery->category === 'Wisata')
                             <i class="bi bi-signpost me-2"></i>
-                        @elseif($gallery['category'] === 'UMKM')
+                        @elseif($gallery->category === 'UMKM')
                             <i class="bi bi-shop me-2"></i>
-                        @elseif($gallery['category'] === 'Kegiatan')
+                        @elseif($gallery->category === 'Kegiatan')
                             <i class="bi bi-people me-2"></i>
                         @else
                             <i class="bi bi-bookmark me-2"></i>
                         @endif
-                        {{ $gallery['category'] }}
+                        {{ $gallery->category }}
                     </span>
 
                     <!-- Title -->
-                    <h1 class="gallery-detail-title">{{ $gallery['title'] }}</h1>
+                    <h1 class="gallery-detail-title">{{ $gallery->title }}</h1>
 
                     <!-- Meta Information -->
                     <div class="gallery-meta">
                         <div class="gallery-meta-item">
                             <i class="bi bi-calendar3"></i>
-                            <span>{{ date('d F Y', strtotime($gallery['date'])) }}</span>
+                            <span>{{ date('d F Y', strtotime($gallery->published_at)) }}</span>
                         </div>
                         <div class="gallery-meta-item">
                             <i class="bi bi-camera"></i>
-                            <span>{{ $gallery['photographer'] }}</span>
-                        </div>
-                        <div class="gallery-meta-item">
-                            <i class="bi bi-geo-alt"></i>
-                            <span>{{ $gallery['location'] }}</span>
+                            <span>{{ $gallery->author }}</span>
                         </div>
                     </div>
 
                     <!-- Featured Image -->
-                    <img src="{{ $gallery['image'] }}" 
-                         alt="{{ $gallery['title'] }}"
+                    <img src="{{ Str::startsWith($gallery->image, ['http://', 'https://']) ? $gallery->image : asset('storage/' . $gallery->image) }}" 
+                         alt="{{ $gallery->title }}"
                          class="gallery-detail-image"
                          onclick="window.open(this.src, '_blank')"
                          onerror="this.onerror=null;this.src='https://via.placeholder.com/1200x800?text=Galeri+Desa';">
@@ -360,7 +356,7 @@
                     <!-- Description -->
                     <div class="gallery-detail-text">
                         <p>
-                            {{ $gallery['full_description'] ?? $gallery['description'] }}
+                            {{ $gallery->description }}
                         </p>
                     </div>
 
@@ -372,17 +368,17 @@
                             class="share-btn share-btn-facebook">
                             <i class="bi bi-facebook"></i> Facebook
                         </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($gallery['title']) }}" 
+                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($gallery->title) }}" 
                             target="_blank" 
                             class="share-btn share-btn-twitter">
                             <i class="bi bi-twitter"></i> Twitter
                         </a>
-                        <a href="https://wa.me/?text={{ urlencode($gallery['title'] . ' - ' . url()->current()) }}" 
+                        <a href="https://wa.me/?text={{ urlencode($gallery->title . ' - ' . url()->current()) }}" 
                             target="_blank" 
                             class="share-btn share-btn-whatsapp">
                             <i class="bi bi-whatsapp"></i> WhatsApp
                         </a>
-                        <a href="{{ $gallery['image'] }}" download class="share-btn share-btn-download">
+                        <a href="{{ Str::startsWith($gallery->image, ['http://', 'https://']) ? $gallery->image : asset('storage/' . $gallery->image) }}" download class="share-btn share-btn-download">
                             <i class="bi bi-download"></i> Unduh Foto
                         </a>
                     </div>
@@ -394,19 +390,19 @@
                         <div class="row">
                             @foreach($relatedGalleries as $related)
                             <div class="col-md-4 mb-4">
-                                <a href="{{ route('galeri.show', $related['id']) }}" class="related-card">
-                                    <img src="{{ $related['image'] }}" 
+                                <a href="{{ route('galeri.show', $related->id) }}" class="related-card">
+                                    <img src="{{ Str::startsWith($related->image, ['http://', 'https://']) ? $related->image : asset('storage/' . $related->image) }}" 
                                          class="related-card-img" 
-                                         alt="{{ $related['title'] }}"
+                                         alt="{{ $related->title }}"
                                          onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Galeri';">
                                     <div class="related-card-body">
-                                        <h5 class="related-card-title">{{ $related['title'] }}</h5>
+                                        <h5 class="related-card-title">{{ $related->title }}</h5>
                                         <p class="related-card-description">
-                                            {{ Str::limit($related['description'], 70) }}
+                                            {{ Str::limit($related->description, 70) }}
                                         </p>
                                         <div class="related-card-date">
                                             <i class="bi bi-calendar3"></i>
-                                            {{ date('d M Y', strtotime($related['date'])) }}
+                                            {{ date('d M Y', strtotime($related->published_at)) }}
                                         </div>
                                     </div>
                                 </a>

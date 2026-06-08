@@ -36,12 +36,7 @@ class HomeController extends Controller
                 'target' => 1450000000,
                 'realization' => 1258000000
             ],
-            'gallery' => [
-                ['image' => 'gallery1.jpg', 'title' => 'Sawah Desa'],
-                ['image' => 'gallery2.jpg', 'title' => 'Kegiatan Warga'],
-                ['image' => 'gallery3.jpg', 'title' => 'Landmark Desa'],
-                ['image' => 'gallery4.jpg', 'title' => 'Produk UMKM']
-            ],
+            'gallery' => \App\Models\Galeri::latest('published_at')->take(4)->get(),
             'demographics' => [
                 'total' => 8234,
                 'male' => 4123,
@@ -87,30 +82,31 @@ class HomeController extends Controller
 
     public function umkm()
     {
-        $products = $this->getUmkmProducts();
+        $products = Umkm::with('kategori')->where('status', 'active')->latest()->get();
 
         return view('umkm.index', compact('products'));
     }
 
     public function showUmkm($id)
     {
-        $products = $this->getUmkmProducts();
-        $product = $products->firstWhere('id', (int) $id);
+        $product = Umkm::with('kategori')->where('status', 'active')->findOrFail($id);
 
-        if (!$product) {
-            abort(404);
-        }
-
-        $relatedProducts = $products
-            ->where('id', '!=', $product['id'])
-            ->where('category', $product['category'])
-            ->take(3);
+        $relatedProducts = Umkm::with('kategori')
+            ->where('status', 'active')
+            ->where('id', '!=', $product->id)
+            ->where('kategori_umkm_id', $product->kategori_umkm_id)
+            ->latest()
+            ->take(3)
+            ->get();
 
         if ($relatedProducts->count() < 3) {
-            $additionalProducts = $products
-                ->where('id', '!=', $product['id'])
+            $additionalProducts = Umkm::with('kategori')
+                ->where('status', 'active')
+                ->where('id', '!=', $product->id)
                 ->whereNotIn('id', $relatedProducts->pluck('id'))
-                ->take(3 - $relatedProducts->count());
+                ->latest()
+                ->take(3 - $relatedProducts->count())
+                ->get();
 
             $relatedProducts = $relatedProducts->merge($additionalProducts);
         }
@@ -192,30 +188,25 @@ class HomeController extends Controller
 
     public function galeri()
     {
-        $galleries = $this->getGalleryData();
+        $galleries = \App\Models\Galeri::latest('published_at')->get();
         return view('galeri.index', compact('galleries'));
     }
 
     public function showGaleri($id)
     {
-        $galleries = $this->getGalleryData();
-        $gallery = $galleries->firstWhere('id', (int) $id);
-
-        if (!$gallery) {
-            abort(404);
-        }
+        $gallery = \App\Models\Galeri::findOrFail($id);
 
         // Get related galleries from same category
-        $relatedGalleries = $galleries
-            ->where('id', '!=', $gallery['id'])
-            ->where('category', $gallery['category'])
-            ->take(3);
+        $relatedGalleries = \App\Models\Galeri::where('id', '!=', $gallery->id)
+            ->where('category', $gallery->category)
+            ->take(3)
+            ->get();
 
         if ($relatedGalleries->count() < 3) {
-            $additionalGalleries = $galleries
-                ->where('id', '!=', $gallery['id'])
+            $additionalGalleries = \App\Models\Galeri::where('id', '!=', $gallery->id)
                 ->whereNotIn('id', $relatedGalleries->pluck('id'))
-                ->take(3 - $relatedGalleries->count());
+                ->take(3 - $relatedGalleries->count())
+                ->get();
 
             $relatedGalleries = $relatedGalleries->merge($additionalGalleries);
         }
@@ -360,155 +351,4 @@ class HomeController extends Controller
             ],
         ]);
     }
-
-    private function getUmkmProducts()
-    {
-        return collect([
-            [
-                'id' => 1,
-                'name' => 'Kerupuk Bola Tahu Sawotratap',
-                'category' => 'Kuliner',
-                'price' => 15000,
-                'image' => 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400',
-                'description' => 'Kerupuk bola tahu renyah khas Sawotratap dengan cita rasa yang nikmat dan gurih',
-                'full_description' => 'Kerupuk bola tahu ini dibuat dari bahan pilihan dengan resep keluarga turun-temurun. Teksturnya renyah di luar dan gurih di setiap gigitan, cocok untuk camilan keluarga atau oleh-oleh khas desa.',
-                'seller' => 'Ibu Siti',
-                'location' => 'RT 03 RW 05',
-                'stock' => 45,
-            ],
-            [
-                'id' => 2,
-                'name' => 'Batang Cabai Isi Teri',
-                'category' => 'Kuliner',
-                'price' => 25000,
-                'image' => 'https://images.unsplash.com/photo-1600886455078-e9b73c58f09f?w=400',
-                'description' => 'Camilan pedas dan gurih dengan isian teri pilihan, sempurna untuk dihidangkan',
-                'full_description' => 'Batang cabai isi teri menghadirkan kombinasi rasa pedas, gurih, dan sedikit manis. Isian teri segar dipadukan bumbu khas Sawotratap membuat produk ini jadi favorit untuk teman makan nasi maupun camilan.',
-                'seller' => 'Bapak Ahmad',
-                'location' => 'RT 02 RW 04',
-                'stock' => 32,
-            ],
-            [
-                'id' => 3,
-                'name' => 'Batik Tulis Khas Desa',
-                'category' => 'Kerajinan',
-                'price' => 150000,
-                'image' => 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400',
-                'description' => 'Batik tulis dengan motif tradisional yang indah, dibuat oleh pengrajin lokal',
-                'full_description' => 'Batik tulis ini dikerjakan manual oleh pengrajin lokal dengan motif terinspirasi dari kehidupan desa dan alam sekitar. Cocok untuk acara formal maupun koleksi, dengan kualitas warna yang tahan lama.',
-                'seller' => 'Ibu Ratih',
-                'location' => 'RT 01 RW 03',
-                'stock' => 12,
-            ],
-            [
-                'id' => 4,
-                'name' => 'Anyaman Bambu',
-                'category' => 'Kerajinan',
-                'price' => 35000,
-                'image' => 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400',
-                'description' => 'Kerajinan anyaman tangan dari bambu berkualitas, cocok untuk dekorasi rumah',
-                'full_description' => 'Anyaman bambu dibuat dengan teknik tradisional yang rapi dan kuat. Produk ini multifungsi, bisa digunakan untuk dekorasi, tempat buah, hingga perlengkapan rumah tangga.',
-                'seller' => 'Bapak Hendra',
-                'location' => 'RT 04 RW 05',
-                'stock' => 28,
-            ],
-            [
-                'id' => 5,
-                'name' => 'Tape Singkong Premium',
-                'category' => 'Kuliner',
-                'price' => 20000,
-                'image' => 'https://images.unsplash.com/photo-1590080876-6022d3a23896?w=400',
-                'description' => 'Tape singkong yang difermentasi dengan baik, manis dan lezat alami',
-                'full_description' => 'Tape singkong premium difermentasi dengan ragi pilihan selama waktu yang pas untuk menghasilkan rasa manis alami dan tekstur lembut. Nikmat disantap langsung atau diolah jadi aneka kudapan.',
-                'seller' => 'Ibu Marni',
-                'location' => 'RT 05 RW 02',
-                'stock' => 50,
-            ],
-            [
-                'id' => 6,
-                'name' => 'Tempe Goreng Crispy',
-                'category' => 'Kuliner',
-                'price' => 12000,
-                'image' => 'https://images.unsplash.com/photo-1599599810694-b5ac4dd577b7?w=400',
-                'description' => 'Tempe goreng dengan tepung khusus yang membuat tekstur super renyah',
-                'full_description' => 'Tempe goreng crispy menggunakan balutan tepung berbumbu racikan khusus. Cocok dijadikan lauk, camilan, atau pelengkap menu harian dengan rasa gurih yang konsisten.',
-                'seller' => 'Ibu Dewi',
-                'location' => 'RT 03 RW 04',
-                'stock' => 60,
-            ],
-            [
-                'id' => 7,
-                'name' => 'Tas Rajut Handmade',
-                'category' => 'Kerajinan',
-                'price' => 85000,
-                'image' => 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400',
-                'description' => 'Tas anyaman tangan dengan desain unik dan berwarna cerah, tahan lama',
-                'full_description' => 'Tas rajut handmade dibuat dengan benang berkualitas dan teknik rajut rapi. Desainnya modern namun tetap menonjolkan sentuhan lokal, cocok untuk penggunaan harian maupun hadiah.',
-                'seller' => 'Ibu Eni',
-                'location' => 'RT 02 RW 02',
-                'stock' => 18,
-            ],
-            [
-                'id' => 8,
-                'name' => 'Dodol Nangka Sawotratap',
-                'category' => 'Kuliner',
-                'price' => 30000,
-                'image' => 'https://images.unsplash.com/photo-1599599810964-92ff8742f3f3?w=400',
-                'description' => 'Dodol dengan isi nangka segar, lembut dan nikmat di lidah',
-                'full_description' => 'Dodol nangka ini menggunakan daging buah nangka matang berkualitas. Teksturnya lembut dengan aroma buah yang khas, cocok sebagai camilan tradisional dan oleh-oleh.',
-                'seller' => 'Bapak Sugiono',
-                'location' => 'RT 01 RW 05',
-                'stock' => 25,
-            ],
-            [
-                'id' => 9,
-                'name' => 'Keramik Gerabah',
-                'category' => 'Kerajinan',
-                'price' => 40000,
-                'image' => 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400',
-                'description' => 'Gerabah buatan tangan dengan desain artistik, cocok untuk koleksi',
-                'full_description' => 'Keramik gerabah ini diproses secara manual mulai dari pembentukan hingga pembakaran. Setiap produk memiliki karakter unik, menjadikannya pilihan tepat untuk dekorasi dan koleksi.',
-                'seller' => 'Bapak Toto',
-                'location' => 'RT 04 RW 03',
-                'stock' => 15,
-            ],
-            [
-                'id' => 10,
-                'name' => 'Minyak Kelapa Murni',
-                'category' => 'Kuliner',
-                'price' => 45000,
-                'image' => 'https://images.unsplash.com/photo-1599022051969-91e6c3b35797?w=400',
-                'description' => 'Minyak kelapa murni tanpa pengawet, menggunakan proses tradisional',
-                'full_description' => 'Minyak kelapa murni diproduksi dengan proses tradisional tanpa bahan tambahan. Cocok untuk kebutuhan memasak sehat, perawatan rambut, maupun perawatan kulit alami.',
-                'seller' => 'Ibu Rohani',
-                'location' => 'RT 03 RW 01',
-                'stock' => 35,
-            ],
-            [
-                'id' => 11,
-                'name' => 'Boneka Kain Tradisional',
-                'category' => 'Kerajinan',
-                'price' => 50000,
-                'image' => 'https://images.unsplash.com/photo-1595777712802-46a16b984e58?w=400',
-                'description' => 'Boneka buatan tangan dengan kain batik lokal, unik dan bercerita',
-                'full_description' => 'Boneka kain tradisional ini dijahit manual dengan detail khas dan sentuhan kain batik lokal. Cocok dijadikan koleksi, hadiah, maupun mainan edukatif untuk anak-anak.',
-                'seller' => 'Ibu Tri',
-                'location' => 'RT 02 RW 03',
-                'stock' => 22,
-            ],
-            [
-                'id' => 12,
-                'name' => 'Kacang Goreng Pedas',
-                'category' => 'Kuliner',
-                'price' => 18000,
-                'image' => 'https://images.unsplash.com/photo-1585707002059-3b73199cff31?w=400',
-                'description' => 'Kacang goreng dengan bumbu pedas khas yang membuat ketagihan',
-                'full_description' => 'Kacang goreng pedas ini diolah dari kacang pilihan dan bumbu rempah khas. Renyah dan gurih pedasnya pas untuk camilan sehari-hari atau sajian saat berkumpul bersama keluarga.',
-                'seller' => 'Ibu Sunik',
-                'location' => 'RT 05 RW 04',
-                'stock' => 55,
-            ]
-        ]);
-    }
 }
-

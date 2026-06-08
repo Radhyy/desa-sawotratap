@@ -162,13 +162,13 @@
                         </div>
                     </td>
                     <td>
-                        @if($product->category == 'Kuliner')
+                        @if(($product->kategori->name ?? '') == 'Kuliner')
                             <span class="badge bg-warning text-dark">
-                                <i class="bi bi-cup-hot me-1"></i>{{ $product->category }}
+                                <i class="bi bi-cup-hot me-1"></i>{{ $product->kategori->name ?? 'Tanpa Kategori' }}
                             </span>
                         @else
                             <span class="badge bg-info">
-                                <i class="bi bi-hammer me-1"></i>{{ $product->category }}
+                                <i class="bi bi-hammer me-1"></i>{{ $product->kategori->name ?? 'Tanpa Kategori' }}
                             </span>
                         @endif
                     </td>

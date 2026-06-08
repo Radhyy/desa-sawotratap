@@ -13,7 +13,7 @@ class Umkm extends Model
 
     protected $fillable = [
         'name',
-        'category',
+        'kategori_umkm_id',
         'price',
         'image',
         'description',
@@ -38,12 +38,20 @@ class Umkm extends Model
     }
 
     /**
+     * Relasi ke KategoriUmkm
+     */
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriUmkm::class, 'kategori_umkm_id');
+    }
+
+    /**
      * Scope untuk filter berdasarkan kategori
      */
-    public function scopeByCategory($query, $category)
+    public function scopeByCategory($query, $categoryId)
     {
-        if ($category && $category !== 'Semua') {
-            return $query->where('category', $category);
+        if ($categoryId && $categoryId !== 'Semua') {
+            return $query->where('kategori_umkm_id', $categoryId);
         }
         return $query;
     }

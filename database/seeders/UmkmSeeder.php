@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\KategoriUmkm;
 use App\Models\Umkm;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class UmkmSeeder extends Seeder
 {
@@ -196,6 +198,14 @@ class UmkmSeeder extends Seeder
         ];
 
         foreach ($umkmData as $data) {
+            $category = KategoriUmkm::firstOrCreate(
+                ['slug' => Str::slug($data['category'])],
+                ['name' => $data['category']]
+            );
+
+            $data['kategori_umkm_id'] = $category->id;
+            unset($data['category']);
+
             Umkm::create($data);
         }
     }

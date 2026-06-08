@@ -57,99 +57,189 @@
 
     .permit-grid {
         display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 1rem;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 1.4rem;
+        align-items: start;
     }
 
     .permit-card {
-        background: #fff;
-        border: 1px solid #e4ecdf;
-        border-radius: 18px;
-        box-shadow: 0 8px 24px rgba(45, 80, 22, 0.08);
+        background: #f8fdf5;
+        border: 1px solid rgba(34, 139, 80, 0.14);
+        border-radius: 24px;
         overflow: hidden;
+        box-shadow: 0 18px 40px rgba(31, 59, 27, 0.08);
     }
 
-    .permit-card .head {
-        padding: 22px 24px;
-        background: linear-gradient(135deg, rgba(74, 124, 36, 0.12), rgba(45, 80, 22, 0.08));
-        border-bottom: 1px solid #e9f0e3;
-        display: flex;
-        align-items: center;
-        gap: 0.55rem;
-    }
-
-    .permit-card .head h2 {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #24381f;
-        margin: 0;
-    }
-
-    .permit-body {
-        padding: 22px 24px 24px;
-        height: 100%;
+    .permit-card .permit-body {
+        background: transparent;
     }
 
     .permit-list {
         margin: 0;
-        padding-left: 1.1rem;
+        padding-left: 0;
+        list-style: none;
     }
 
     .permit-list li {
-        margin-bottom: 0.55rem;
-        color: #374151;
-        line-height: 1.6;
+        position: relative;
+        margin-bottom: 1rem;
+        padding-left: 1.55rem;
+        color: #2f4d2f;
+        line-height: 1.8;
+        font-weight: 500;
     }
 
-    .service-item {
-        border: 1px solid #e5ece0;
-        background: #fff;
+    .permit-list li::before {
+        content: '\2022';
+        position: absolute;
+        left: 0;
+        top: 0.25rem;
+        color: #16a34a;
+        font-size: 1.6rem;
+        line-height: 1;
+    }
+
+    .permit-card .head,
+    .section-block .head,
+    .permit-form .head {
+        padding: 16px 22px;
+        background: #f5faf5;
+        border-bottom: 1px solid #e5ece0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .permit-card .head h2,
+    .section-block .head h2,
+    .permit-form .head h2 {
+        font-size: 1.35rem;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+        line-height: 1.28;
+    }
+
+    .permit-card .head i,
+    .section-block .head i,
+    .permit-form .head i {
+        width: 44px;
+        height: 44px;
         border-radius: 14px;
-        padding: 0.95rem;
-        margin-bottom: 0.75rem;
-        box-shadow: 0 5px 16px rgba(45, 80, 22, 0.07);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #d6f0d6;
+        color: #166534;
+        font-size: 1.2rem;
     }
 
-    .service-item h3 {
-        margin: 0 0 0.45rem;
-        color: #24381f;
-        font-size: 0.98rem;
+    .permit-body,
+    .permit-form .permit-body {
+        padding: 26px;
+    }
+
+    .section-block {
+        background: transparent;
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .section-block .head {
+        background: transparent;
+        border-bottom: none;
+        padding-left: 0;
+    }
+
+    .user-flow {
+        position: relative;
+        display: grid;
+        gap: 1.5rem;
+        padding-left: 0;
+    }
+
+    .user-flow::before {
+        content: '';
+        position: absolute;
+        left: 18px;
+        top: 12px;
+        bottom: 12px;
+        width: 2px;
+        background: rgba(34, 139, 80, 0.18);
+        border-radius: 1px;
+    }
+
+    .user-flow-step {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        position: relative;
+    }
+
+    .step-badge {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #1f3b1b;
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+        border: 3px solid #f8fbf7;
+        box-shadow: 0 0 0 4px rgba(255,255,255,0.7);
+    }
+
+    .user-flow-step .step-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .step-content h4 {
+        margin: 0 0 0.35rem;
+        color: #1f3b1b;
+        font-size: 1rem;
         font-weight: 700;
     }
 
-    .service-item p {
+    .step-content p {
         margin: 0;
         color: #4b5563;
-        font-size: 0.88rem;
-        line-height: 1.55;
+        font-size: 0.92rem;
+        line-height: 1.65;
     }
 
     .meta-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0.75rem;
+        gap: 0.85rem;
     }
 
     .meta-box {
-        border-radius: 12px;
-        border: 1px solid #dce9d2;
-        background: #f7fbf3;
-        padding: 0.8rem;
+        border-radius: 16px;
+        border: 1px solid #d6e8d7;
+        background: #f7fbf5;
+        padding: 1rem;
     }
 
     .meta-box .label {
         font-size: 0.75rem;
-        color: #355027;
+        color: #2f4d2f;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
-        margin-bottom: 0.3rem;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.35rem;
     }
 
     .meta-box .value {
-        color: #22331d;
+        color: #1f3b1b;
         font-weight: 700;
-        line-height: 1.35;
+        line-height: 1.5;
     }
 
     .step-list {
@@ -159,92 +249,139 @@
     }
 
     .step-list li {
-        display: flex;
-        gap: 0.75rem;
-        margin-bottom: 0.75rem;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        align-items: start;
     }
 
     .step-number {
-        width: 28px;
-        height: 28px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #16a34a, #22c55e);
+        background: #1f3b1b;
         color: #fff;
-        font-size: 0.82rem;
+        font-size: 0.85rem;
         font-weight: 700;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        box-shadow: 0 6px 14px rgba(22, 163, 74, 0.25);
     }
 
     .step-content h4 {
-        margin: 0 0 0.2rem;
-        color: #22331d;
-        font-size: 0.94rem;
+        margin: 0 0 0.3rem;
+        color: #1f3b1b;
+        font-size: 1rem;
         font-weight: 700;
     }
 
     .step-content p {
         margin: 0;
         color: #4b5563;
-        font-size: 0.86rem;
-        line-height: 1.5;
-    }
-
-    .faq-item {
-        border-top: 1px dashed #dce9d2;
-        padding-top: 0.75rem;
-        margin-top: 0.75rem;
-    }
-
-    .faq-item:first-child {
-        border-top: none;
-        margin-top: 0;
-        padding-top: 0;
-    }
-
-    .faq-item h4 {
-        margin: 0 0 0.35rem;
-        color: #24381f;
         font-size: 0.92rem;
-        font-weight: 700;
-    }
-
-    .faq-item p {
-        margin: 0;
-        color: #4b5563;
-        font-size: 0.86rem;
-        line-height: 1.5;
+        line-height: 1.7;
     }
 
     .permit-cta {
         margin-top: 1rem;
-        border-radius: 16px;
-        border: 1px solid #dce9d2;
-        background: linear-gradient(135deg, #f7fbf3, #eef5e8);
-        padding: 1rem;
+        border-radius: 18px;
+        border: 1px solid #cfe5d0;
+        background: #f4fbf6;
+        padding: 1.15rem 1rem;
     }
 
     .permit-cta h3 {
-        margin: 0 0 0.25rem;
-        color: #22331d;
+        margin: 0 0 0.35rem;
+        color: #1f3b1b;
         font-size: 1rem;
         font-weight: 700;
     }
 
     .permit-cta p {
-        margin: 0 0 0.8rem;
+        margin: 0 0 0.85rem;
         color: #4b5563;
-        font-size: 0.9rem;
+        font-size: 0.93rem;
+        line-height: 1.6;
     }
 
     .permit-cta .btn {
-        border-radius: 10px;
+        border-radius: 12px;
         font-weight: 700;
-        padding: 0.58rem 0.95rem;
+        padding: 0.65rem 1rem;
+    }
+
+    .permit-form {
+        background: #fff;
+        border: 1px solid #d9e4d6;
+        border-radius: 20px;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .permit-form .head {
+        padding: 20px 24px;
+        background: #f5faf5;
+        border-bottom: 1px solid #e5ece0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .permit-form .head h2 {
+        font-size: 1.25rem;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: #1f3b1b;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .permit-form .head i {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #d6f0d6;
+        color: #166534;
+        font-size: 1.2rem;
+    }
+
+    .permit-form .permit-body {
+        padding: 30px;
+    }
+
+    .permit-form .form-control,
+    .permit-form .form-select,
+    .permit-form textarea.form-control {
+        border-radius: 14px;
+        border-color: #d1ddce;
+        min-height: 48px;
+        box-shadow: none;
+    }
+
+    .permit-form .form-control:focus,
+    .permit-form .form-select:focus,
+    .permit-form textarea.form-control:focus {
+        border-color: #78b082;
+        box-shadow: 0 0 0 0.15rem rgba(34, 140, 80, 0.12);
+    }
+
+    .permit-form .form-label {
+        font-weight: 700;
+        color: #22331d;
+    }
+
+    .permit-form .form-text {
+        color: #5a6b58;
+    }
+
+    .permit-form .btn-submit {
+        border-radius: 14px;
+        padding: 0.75rem 1.5rem;
     }
 
     @media (max-width: 992px) {
@@ -329,8 +466,7 @@
             <div class="hero-content-box text-center">
                 <h1 class="section-title-center hero-title">Layanan Perizinan Desa</h1>
                 <p class="hero-subtitle">
-                    Halaman ini memuat jenis perizinan yang difasilitasi Pemerintah Desa Sawotratap,
-                    beserta alur pengajuan, syarat dokumen, dan estimasi waktu layanan.
+                    Halaman ini menampilkan alur pengajuan perizinan desa, syarat dokumen, dan informasi waktu layanan agar proses lebih mudah dan teratur.
                 </p>
             </div>
         </div>
@@ -357,139 +493,64 @@
         @endif
 
         <div class="permit-grid">
-            <div class="d-grid gap-3">
-                <section class="permit-card">
-                    <div class="head">
-                        <i class="bi bi-folder2-open"></i>
-                        <h2>Jenis Layanan Perizinan</h2>
-                    </div>
-                    <div class="permit-body">
-                    @foreach($permitServices as $service)
-                        <article class="service-item">
-                            <h3>{{ $service['name'] }}</h3>
-                            <p>{{ $service['desc'] }}</p>
-                        </article>
-                    @endforeach
-                    </div>
-                </section>
-
-                <section class="permit-card">
-                    <div class="head">
-                        <i class="bi bi-diagram-3"></i>
-                        <h2>Alur Pengajuan</h2>
-                    </div>
-                    <div class="permit-body">
-                    <ol class="step-list">
-                        <li>
-                            <span class="step-number">1</span>
+            <section class="section-block">
+                <div class="head">
+                    <i class="bi bi-diagram-3"></i>
+                    <h2>Alur Pengajuan</h2>
+                </div>
+                <div class="permit-body">
+                    <div class="user-flow">
+                        <div class="user-flow-step">
+                            <span class="step-badge">1</span>
                             <div class="step-content">
                                 <h4>Persiapan Berkas</h4>
                                 <p>Siapkan KTP, KK, dan dokumen pendukung sesuai jenis perizinan yang diajukan.</p>
                             </div>
-                        </li>
-                        <li>
-                            <span class="step-number">2</span>
+                        </div>
+                        <div class="user-flow-step">
+                            <span class="step-badge">2</span>
                             <div class="step-content">
                                 <h4>Ajukan Permohonan</h4>
-                                <p>Warga datang ke kantor desa atau menghubungi petugas layanan untuk registrasi pengajuan.</p>
+                                <p>Datang langsung ke kantor desa atau ajukan melalui petugas layanan desa.</p>
                             </div>
-                        </li>
-                        <li>
-                            <span class="step-number">3</span>
+                        </div>
+                        <div class="user-flow-step">
+                            <span class="step-badge">3</span>
                             <div class="step-content">
                                 <h4>Verifikasi Data</h4>
                                 <p>Petugas memeriksa kelengkapan berkas dan melakukan validasi administrasi.</p>
                             </div>
-                        </li>
-                        <li>
-                            <span class="step-number">4</span>
+                        </div>
+                        <div class="user-flow-step">
+                            <span class="step-badge">4</span>
                             <div class="step-content">
                                 <h4>Penerbitan Surat</h4>
-                                <p>Surat izin/rekomendasi diterbitkan dan dapat diambil sesuai jadwal yang ditentukan.</p>
+                                <p>Surat izin diterbitkan dan bisa diambil sesuai jadwal yang disepakati.</p>
                             </div>
-                        </li>
-                    </ol>
+                        </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
 
-            <div class="d-grid gap-3">
-                <section class="permit-card">
-                    <div class="head">
-                        <i class="bi bi-card-checklist"></i>
-                        <h2>Persyaratan Umum</h2>
-                    </div>
-                    <div class="permit-body">
-                        <ul class="permit-list">
-                            <li>Fotokopi KTP pemohon (masih berlaku).</li>
-                            <li>Fotokopi Kartu Keluarga.</li>
-                            <li>Surat pengantar RT/RW (jika diperlukan).</li>
-                            <li>Dokumen pendukung sesuai jenis izin.</li>
-                            <li>Nomor kontak aktif untuk konfirmasi.</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section class="permit-card">
-                    <div class="head">
-                        <i class="bi bi-clock-history"></i>
-                        <h2>Informasi Layanan</h2>
-                    </div>
-                    <div class="permit-body">
-                        <div class="meta-grid">
-                            <div class="meta-box">
-                                <div class="label">Estimasi Waktu</div>
-                                <div class="value">1 - 3 Hari Kerja</div>
-                            </div>
-                            <div class="meta-box">
-                                <div class="label">Jam Layanan</div>
-                                <div class="value">Senin - Jumat, 08.00 - 14.00</div>
-                            </div>
-                            <div class="meta-box">
-                                <div class="label">Lokasi</div>
-                                <div class="value">Kantor Desa Sawotratap</div>
-                            </div>
-                            <div class="meta-box">
-                                <div class="label">Biaya</div>
-                                <div class="value">Sesuai ketentuan yang berlaku</div>
-                            </div>
-                        </div>
-
-                        <div class="permit-cta">
-                            <h3>Butuh surat administratif lain?</h3>
-                            <p>Gunakan layanan pengajuan surat online untuk kebutuhan surat keterangan umum warga.</p>
-                            <a href="#form-pengajuan" class="btn btn-success">
-                                <i class="bi bi-pencil-square me-1"></i> Isi Formulir Sekarang
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="permit-card">
-                    <div class="head">
-                        <i class="bi bi-question-circle"></i>
-                        <h2>Tanya Jawab Singkat</h2>
-                    </div>
-                    <div class="permit-body">
-                        <div class="faq-item">
-                            <h4>Apakah bisa diwakilkan?</h4>
-                            <p>Bisa, dengan membawa surat kuasa sederhana dan identitas pemberi serta penerima kuasa.</p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>Bagaimana jika berkas belum lengkap?</h4>
-                            <p>Petugas akan memberikan catatan kekurangan, dan pemohon dapat melengkapi tanpa mengulang dari awal.</p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>Apakah ada layanan percepatan?</h4>
-                            <p>Untuk kondisi mendesak, silakan konsultasi langsung dengan petugas layanan desa.</p>
-                        </div>
-                    </div>
-                </section>
-            </div>
+            <section class="permit-card">
+                <div class="head">
+                    <i class="bi bi-card-checklist"></i>
+                    <h2>Persyaratan Umum</h2>
+                </div>
+                <div class="permit-body">
+                    <ul class="permit-list">
+                        <li>Fotokopi KTP pemohon (masih berlaku).</li>
+                        <li>Fotokopi Kartu Keluarga.</li>
+                        <li>Surat pengantar RT/RW bila diminta.</li>
+                        <li>Dokumen pendukung sesuai jenis izin.</li>
+                        <li>Nomor kontak aktif untuk konfirmasi.</li>
+                    </ul>
+                </div>
+            </section>
         </div>
 
         <!-- Form Pengajuan -->
-        <div class="permit-card mt-4" id="form-pengajuan">
+        <div class="permit-form mt-4" id="form-pengajuan">
             <div class="head">
                 <i class="bi bi-pencil-square"></i>
                 <h2>Formulir Pengajuan Perizinan</h2>
@@ -526,7 +587,7 @@
                             <small class="text-muted">Format: PDF, JPG, PNG. Maksimal 5MB. (Misal: KTP, Surat Pengantar RT/RW, Proposal, dll)</small>
                         </div>
                         <div class="col-md-12 mt-4 text-end">
-                            <button type="submit" class="btn btn-success px-4 fw-bold">
+                            <button type="submit" class="btn btn-success btn-submit px-4 fw-bold">
                                 <i class="bi bi-send me-1"></i> Kirim Pengajuan Perizinan
                             </button>
                         </div>
@@ -542,6 +603,41 @@
                 @endauth
             </div>
         </div>
+
+        <section class="permit-card mt-4">
+            <div class="head">
+                <i class="bi bi-clock-history"></i>
+                <h2>Informasi Layanan</h2>
+            </div>
+            <div class="permit-body">
+                <div class="meta-grid">
+                    <div class="meta-box">
+                        <div class="label">Estimasi Waktu</div>
+                        <div class="value">1 - 3 Hari Kerja</div>
+                    </div>
+                    <div class="meta-box">
+                        <div class="label">Jam Layanan</div>
+                        <div class="value">Senin - Jumat, 08.00 - 14.00</div>
+                    </div>
+                    <div class="meta-box">
+                        <div class="label">Lokasi</div>
+                        <div class="value">Kantor Desa Sawotratap</div>
+                    </div>
+                    <div class="meta-box">
+                        <div class="label">Biaya</div>
+                        <div class="value">Sesuai ketentuan yang berlaku</div>
+                    </div>
+                </div>
+
+                <div class="permit-cta">
+                    <h3>Perizinan lebih mudah dengan data lengkap</h3>
+                    <p>Pastikan semua dokumen sudah siap sebelum mengisi formulir agar proses berjalan lancar.</p>
+                    <a href="#form-pengajuan" class="btn btn-success">
+                        <i class="bi bi-pencil-square me-1"></i> Buka Formulir Perizinan
+                    </a>
+                </div>
+            </div>
+        </section>
 
     </div>
 </div>

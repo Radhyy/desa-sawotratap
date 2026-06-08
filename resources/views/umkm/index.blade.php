@@ -8,35 +8,45 @@
     .umkm-card {
         transition: all 0.3s ease;
         border: none;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 12px 30px rgba(34, 60, 20, 0.08);
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        background: #ffffff;
     }
 
     .umkm-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 18px 35px rgba(34, 60, 20, 0.14);
     }
 
     .umkm-card-img {
-        height: 250px;
+        height: 260px;
         object-fit: cover;
+        width: 100%;
+        display: block;
     }
 
     .umkm-price {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
         color: var(--primary-green);
-        font-weight: bold;
+        font-weight: 800;
     }
 
     .umkm-category {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         background: linear-gradient(135deg, var(--primary-green), var(--light-green));
         color: white;
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-size: 0.85rem;
+        padding: 7px 16px;
+        border-radius: 999px;
+        font-size: 0.82rem;
         margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
     }
 
     .filter-btn {
@@ -106,6 +116,33 @@
         padding: 10px;
         font-weight: 600;
     }
+
+    .umkm-cta-section {
+        background: white;
+        color: #1d3620;
+        border-radius: 24px;
+        box-shadow: 0 18px 40px rgba(25, 60, 20, 0.08);
+        padding: 4rem 2rem;
+    }
+
+    .umkm-cta-section h2,
+    .umkm-cta-section p {
+        color: #1d3620;
+    }
+
+    .umkm-cta-section .btn-cta {
+        background: var(--primary-green);
+        color: white;
+        padding: 12px 40px;
+        border-radius: 12px;
+        border: none;
+        font-weight: 700;
+        box-shadow: 0 10px 25px rgba(44, 105, 36, 0.16);
+    }
+
+    .umkm-cta-section .btn-cta:hover {
+        background: #1b5c2b;
+    }
 </style>
 @endsection
 
@@ -173,9 +210,9 @@
         </div>
 
         <!-- Products Grid -->
-        <div class="row" id="productsContainer">
+        <div class="row g-4" id="productsContainer">
             @forelse($products as $product)
-            <div class="col-md-6 col-lg-4 mb-4 product-item" data-category="{{ $product->kategori->name ?? 'Tanpa Kategori' }}">
+            <div class="col-md-6 col-lg-4 product-item" data-category="{{ $product->kategori->name ?? 'Tanpa Kategori' }}">
                 <div class="card umkm-card h-100">
                     <div class="position-relative">
                         <a href="{{ route('umkm.show', $product->id) }}" class="d-block">
@@ -199,13 +236,13 @@
                     <div class="card-body d-flex flex-column">
                         <span class="umkm-category">{{ $product->kategori->name ?? 'Tanpa Kategori' }}</span>
                         
-                        <h5 class="card-title fw-bold mb-2">
+                        <h5 class="card-title fw-bold mb-2" style="min-height: 3.4rem; line-height: 1.2;">
                             <a href="{{ route('umkm.show', $product->id) }}" class="text-decoration-none text-dark">
                                 {{ $product->name }}
                             </a>
                         </h5>
                         
-                        <p class="card-text text-muted small flex-grow-1">
+                        <p class="card-text text-muted small flex-grow-1" style="min-height: 4.6rem;">
                             {{ $product->description }}
                         </p>
 
@@ -221,7 +258,7 @@
 
                         <hr class="my-3">
 
-                        <div class="umkm-actions">
+                        <div class="umkm-actions mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="umkm-price">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                             </div>
@@ -257,11 +294,11 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-5" style="background: linear-gradient(135deg, var(--primary-green), var(--light-green)); color: white;">
+<section class="py-5 umkm-cta-section">
     <div class="container text-center">
         <h2 class="mb-4">Ingin Menjual Produk Anda?</h2>
-        <p class="mb-4" style="font-size: 1.1rem;">Bergabunglah dengan UMKM Sawotratap dan perluas jangkauan produk Anda</p>
-        <button class="btn btn-light fw-bold" style="padding: 12px 40px; border-radius: 8px;">
+        <p class="mb-4" style="font-size: 1.1rem;">Bergabunglah dengan UMKM Sawotratap untuk menjual produk Anda dan dukung ekonomi desa.</p>
+        <button class="btn btn-cta">
             <i class="bi bi-person-plus"></i> Daftar Sebagai Penjual
         </button>
     </div>

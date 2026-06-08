@@ -57,18 +57,19 @@
     }
 
     .hero-stat-grid {
-        margin-top: 26px;
+        margin-top: 34px;
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
+        gap: 22px;
+        margin-bottom: 24px;
     }
 
     .hero-stat-card {
         background: #fff;
-        border-radius: 14px;
-        padding: 16px;
-        border: 1px solid #dde7d6;
-        box-shadow: 0 6px 18px rgba(45, 80, 22, 0.06);
+        border-radius: 18px;
+        padding: 22px;
+        border: 1px solid #e4efe2;
+        box-shadow: 0 10px 28px rgba(45, 80, 22, 0.08);
         text-align: center;
         transition: all 0.3s ease;
     }
@@ -82,17 +83,17 @@
         display: block;
         font-family: 'Sora', sans-serif;
         color: var(--primary-green);
-        font-size: 1.7rem;
-        font-weight: 700;
+        font-size: 1.85rem;
+        font-weight: 800;
         line-height: 1.1;
     }
 
     .hero-stat-label {
-        margin-top: 6px;
+        margin-top: 10px;
         display: block;
         color: #5e6d64;
-        font-size: 0.88rem;
-        font-weight: 500;
+        font-size: 0.9rem;
+        font-weight: 600;
     }
 
     .section-wrap {
@@ -430,18 +431,6 @@
 
     <section class="section-wrap">
         <div class="container">
-            <div class="infra-grid">
-                @foreach($infrastrukturTypes as $item)
-                <article class="infra-card is-reveal" data-delay="{{ $loop->index * 90 }}">
-                    <div class="infra-icon">
-                        <i class="bi {{ $item['icon'] }}"></i>
-                    </div>
-                    <h3 class="infra-title">{{ $item['title'] }}</h3>
-                    <p class="infra-desc">{{ $item['description'] }}</p>
-                </article>
-                @endforeach
-            </div>
-
             <div class="content-grid">
                 <div class="panel-card is-reveal" data-delay="120">
                     <div class="panel-head">

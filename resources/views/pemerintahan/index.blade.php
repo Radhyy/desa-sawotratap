@@ -47,47 +47,77 @@
 
     .hero-title {
         font-size: 2.5rem;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
     }
 
     .hero-subtitle {
-        color: #6c757d;
+        color: #5e6d64 !important;
         max-width: 780px;
         margin: 0 auto;
         font-size: 1.08rem;
         line-height: 1.6;
-        font-weight: 400;
+        font-weight: 400 !important;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        margin-top: 0.25rem !important;
     }
 
     .gov-stats {
-        margin-top: 28px;
+        margin-top: 32px;
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
+        gap: 18px;
     }
 
     .gov-stat-card {
         background: #fff;
-        border-radius: 14px;
-        padding: 16px;
+        border-radius: 18px;
+        padding: 22px;
         border: 1px solid #dde7d6;
-        box-shadow: 0 6px 18px rgba(45, 80, 22, 0.06);
+        box-shadow: 0 10px 28px rgba(39, 107, 60, 0.08);
         text-align: center;
+        min-height: 170px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .gov-stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 34px rgba(39, 107, 60, 0.14);
+    }
+
+    .gov-stat-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 0.75rem;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #16a34a, #4ade80);
+        color: #fff;
+        box-shadow: 0 10px 24px rgba(36, 117, 60, 0.18);
+        font-size: 1.15rem;
     }
 
     .gov-stat-number {
         display: block;
         font-family: 'Sora', sans-serif;
-        color: var(--primary-green);
-        font-size: 1.35rem;
+        color: #1f3b1b;
+        font-size: 1.18rem;
         font-weight: 800;
+        margin-top: 0.25rem;
     }
 
     .gov-stat-label {
-        margin-top: 6px;
+        margin-top: 8px;
         display: block;
-        color: #5e6d64;
-        font-size: 0.88rem;
-        font-weight: 500;
+        color: #52615d;
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.5;
     }
 
     .gov-pill-nav {
@@ -95,23 +125,23 @@
         flex-wrap: wrap;
         gap: 0.75rem;
         justify-content: center;
-        margin: 1.2rem 0 0;
+        margin: 1.5rem 0 0;
     }
 
     .gov-pill-nav a {
         text-decoration: none;
-        color: #355027;
-        background: #eef5e8;
-        border: 1px solid #dce9d2;
+        color: #1f3b1b;
+        background: #f1f8f2;
+        border: 1px solid #d2e7d0;
         border-radius: 999px;
-        padding: 0.58rem 1rem;
-        font-size: 0.86rem;
+        padding: 0.65rem 1rem;
+        font-size: 0.9rem;
         font-weight: 700;
-        transition: all 0.2s ease;
+        transition: transform 0.2s ease, background 0.2s ease;
     }
 
     .gov-pill-nav a:hover {
-        background: #dcfce7;
+        background: #d9f1dc;
         transform: translateY(-1px);
     }
 
@@ -128,30 +158,44 @@
     .gov-card {
         background: #fff;
         border: 1px solid #e4ecdf;
-        border-radius: 18px;
-        box-shadow: 0 8px 24px rgba(45, 80, 22, 0.08);
+        border-radius: 20px;
+        box-shadow: 0 10px 28px rgba(45, 80, 22, 0.08);
         overflow: hidden;
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
     }
 
     .gov-card .head {
-        padding: 22px 24px;
-        background: linear-gradient(135deg, rgba(74, 124, 36, 0.12), rgba(45, 80, 22, 0.08));
+        padding: 24px 26px;
+        background: #f5fbf5;
         border-bottom: 1px solid #e9f0e3;
         display: flex;
         align-items: center;
-        gap: 0.58rem;
+        gap: 0.85rem;
+    }
+
+    .gov-card .head i {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #d4f0d4;
+        color: #166534;
+        font-size: 1.1rem;
+        border: 1px solid rgba(22, 101, 52, 0.16);
     }
 
     .gov-card .head h2 {
-        font-size: 1.15rem;
-        color: #24381f;
+        font-size: 1.22rem;
+        color: #1f3b1b;
         font-weight: 700;
         margin: 0;
+        font-family: 'Playfair Display', serif;
     }
 
     .gov-card .body {
-        padding: 22px 24px 24px;
+        padding: 26px;
     }
 
     .gov-muted {
@@ -161,13 +205,23 @@
 
     .org-flow {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
+        gap: 16px;
     }
 
     .org-row {
         display: grid;
-        gap: 0.75rem;
+        gap: 16px;
+    }
+
+    .org-row--single {
+        grid-template-columns: 1fr;
+    }
+
+    .org-row--two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .org-row--three {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
@@ -391,16 +445,19 @@
 
             <div class="gov-stats">
                 <div class="gov-stat-card">
-                    <span class="gov-stat-number">Struktur</span>
-                    <span class="gov-stat-label">Alur organisasi desa</span>
+                    <span class="gov-stat-icon"><i class="bi bi-diagram-3"></i></span>
+                    <span class="gov-stat-number">1 Struktur</span>
+                    <span class="gov-stat-label">Alur organisasi pemerintahan desa</span>
                 </div>
                 <div class="gov-stat-card">
-                    <span class="gov-stat-number">Perangkat</span>
-                    <span class="gov-stat-label">Tim pelayanan desa</span>
+                    <span class="gov-stat-icon"><i class="bi bi-people"></i></span>
+                    <span class="gov-stat-number">5 Perangkat</span>
+                    <span class="gov-stat-label">Fungsi pelayanan dan administrasi desa</span>
                 </div>
                 <div class="gov-stat-card">
-                    <span class="gov-stat-number">BPD</span>
-                    <span class="gov-stat-label">Mitra pengawasan desa</span>
+                    <span class="gov-stat-icon"><i class="bi bi-building"></i></span>
+                    <span class="gov-stat-number">4 BPD</span>
+                    <span class="gov-stat-label">Mitra pengawasan dan aspirasi masyarakat</span>
                 </div>
             </div>
 
@@ -426,13 +483,13 @@
                     </p>
 
                     <div class="org-flow">
-                        <div class="org-row" style="grid-template-columns: 1fr;">
+                        <div class="org-row org-row--single">
                             <div class="org-node">
                                 <span class="title">Kepala Desa</span>
                                 <span class="name">H. Santoso Wibowo</span>
                             </div>
                         </div>
-                        <div class="org-row" style="grid-template-columns: 1fr 1fr;">
+                        <div class="org-row org-row--two">
                             <div class="org-node">
                                 <span class="title">Sekretaris Desa</span>
                                 <span class="name">Rina Maharani, S.Sos.</span>
@@ -442,7 +499,7 @@
                                 <span class="name">Agus Priyanto</span>
                             </div>
                         </div>
-                        <div class="org-row">
+                        <div class="org-row org-row--three">
                             <div class="org-node">
                                 <span class="title">Kasi Pelayanan</span>
                                 <span class="name">Dewi Lestari</span>

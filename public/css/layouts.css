@@ -11,6 +11,13 @@
             scroll-behavior: smooth;
         }
 
+        /* Force all h2 headings to use landing page font (Playfair Display) */
+        h2 {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 700 !important;
+            line-height: 1.25 !important;
+        }
+
         * {
             margin: 0;
             padding: 0;

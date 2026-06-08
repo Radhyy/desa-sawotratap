@@ -1,3 +1,37 @@
+/* Shared announcement typography */
+.announcement-page,
+.announcement-detail-page {
+    font-family: 'Inter', 'Sora', sans-serif;
+    color: #243129;
+}
+
+/* Override global hero subtitle gradient/bold used in layouts.css
+   so announcement subtitle remains regular weight and solid color */
+.announcement-page .hero-subtitle {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    color: #5e6d64 !important;
+    font-weight: 400 !important;
+    font-size: 1.08rem !important;
+    line-height: 1.6 !important;
+    margin-top: 0.25rem !important;
+}
+
+.announcement-page h1,
+.announcement-page h2,
+.announcement-page h3,
+.announcement-detail-page h1,
+.announcement-detail-page h2,
+.announcement-detail-page h3,
+.announcement-card-title,
+.announcement-detail-title,
+.related-announcements h3,
+.announcement-hero-title {
+    font-family: 'Playfair Display', 'Sora', serif;
+}
+
 /* Breadcrumb Styling */
 .breadcrumb {
     background: transparent;
@@ -23,23 +57,23 @@
 /* Announcement Card Styling */
 .announcement-card {
     background: white;
-    border-radius: 20px;
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 26px rgba(45, 80, 22, 0.08);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 2px solid transparent;
+    border: 1px solid #e4ecdf;
 }
 
 .announcement-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(45, 80, 22, 0.2);
-    border-color: var(--light-green);
+    box-shadow: 0 16px 32px rgba(45, 80, 22, 0.14);
+    border-color: #b6d0a3;
 }
 
 .announcement-card-img-wrapper {
     position: relative;
     overflow: hidden;
-    height: 250px;
+    aspect-ratio: 16 / 10;
     background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%);
 }
 
@@ -55,14 +89,13 @@
 }
 
 .announcement-card-body {
-    padding: 30px;
+    padding: 24px;
 }
 
 .announcement-card-title {
-    font-family: 'Sora', sans-serif;
     color: #1a1a1a;
     font-weight: 700;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     line-height: 1.4;
     transition: color 0.3s;
 }
@@ -81,10 +114,9 @@
 
 .announcement-content {
     border-left: 3px solid var(--primary-green);
-    padding-left: 15px;
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 14px 14px 14px 15px;
+    background: #f7fbf3;
+    border-radius: 12px;
 }
 
 .badge {
@@ -127,11 +159,10 @@
 
 /* Announcement Detail Page Styling */
 .announcement-detail-header {
-    margin-top: 80px;
-    background: white;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #e0e0e0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-top: 60px;
+    background: #f8f9fa;
+    padding: 1.0rem 0;
+    border-bottom: 1px solid #e8ecef;
 }
 
 .announcement-detail-header .breadcrumb-item a:hover {
@@ -140,9 +171,10 @@
 
 .announcement-detail-content {
     background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    padding: 2.5rem;
+    border-radius: 18px;
+    box-shadow: 0 10px 26px rgba(45, 80, 22, 0.08);
+    border: 1px solid #e4ecdf;
+    padding: 2rem;
     position: relative;
     z-index: 10;
 }
@@ -179,23 +211,24 @@
 }
 
 .announcement-detail-title {
-    font-family: 'Sora', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.35rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: #22331d;
     line-height: 1.3;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.1rem;
 }
 
 .announcement-detail-text {
-    font-size: 1.1rem;
-    line-height: 1.9;
+    font-size: 1.05rem;
+    line-height: 1.85;
     color: #444;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .announcement-detail-text p {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 400 !important;
+    color: #4a4a4a;
 }
 
 .share-buttons {
@@ -260,29 +293,28 @@
 }
 
 .related-announcements h3 {
-    font-family: 'Sora', sans-serif;
     font-weight: 700;
-    color: var(--primary-green);
+    color: #22331d;
     margin-bottom: 2rem;
     font-size: 1.8rem;
 }
 
 .related-card {
     background: white;
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 18px rgba(45, 80, 22, 0.08);
     height: 100%;
     text-decoration: none;
     display: block;
-    border: 2px solid transparent;
+    border: 1px solid #e4ecdf;
 }
 
 .related-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    border-color: var(--light-green);
+    box-shadow: 0 14px 24px rgba(45, 80, 22, 0.12);
+    border-color: #b6d0a3;
 }
 
 .related-card-icon {
@@ -298,14 +330,13 @@
 }
 
 .related-card-body {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
 }
 
 .related-card-title {
-    font-family: 'Sora', sans-serif;
     font-weight: 600;
     font-size: 1.05rem;
-    color: #2c3e50;
+    color: #22331d;
     margin-bottom: 0.8rem;
     line-height: 1.4;
     display: -webkit-box;
@@ -342,10 +373,28 @@
     }
 
     .announcement-detail-content {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
     .announcement-meta {
         gap: 1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .announcement-card-body {
+        padding: 20px;
+    }
+
+    .announcement-card-title {
+        font-size: 1.15rem;
+    }
+
+    .announcement-detail-title {
+        font-size: 1.7rem;
+    }
+
+    .announcement-detail-image {
+        height: 260px;
     }
 }

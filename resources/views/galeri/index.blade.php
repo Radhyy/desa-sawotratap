@@ -38,15 +38,27 @@
         font-weight: 700;
         color: #2d5016;
         margin-bottom: 12px;
+        line-height: 1.25;
+    }
+
+    .gallery-page h2 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        line-height: 1.25;
     }
 
     .hero-subtitle {
-        color: #6c757d;
+        color: #5e6d64 !important;
         max-width: 760px;
         margin: 0 auto;
         font-size: 1.1rem;
         line-height: 1.7;
         font-weight: 400;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        margin-top: 0.25rem;
     }
 
     .gallery-stats {
@@ -203,6 +215,7 @@
         color: #22331d;
         margin-bottom: 10px;
         line-height: 1.45;
+        font-family: 'Playfair Display', serif;
     }
 
     .gallery-description {

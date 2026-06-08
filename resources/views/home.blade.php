@@ -1128,8 +1128,8 @@
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="section-title-center">Demografi Desa</h2>
-            <p class="text-muted mt-3" style="font-size: 1.05rem; font-weight: 400; letter-spacing: 0.01em;">Data Kependudukan dan Peta Wilayah</p>
+            <h2 class="section-title-center" style="font-family: 'Playfair Display', serif; font-weight: 700; color: #2d5016;">Demografi Desa</h2>
+            <p class="text-muted mt-3 mx-auto" style="max-width: 600px; font-size: 1.05rem; line-height: 1.6;">Data Kependudukan dan Peta Wilayah</p>
         </div>
         <div class="row">
             <div class="col-lg-4">
@@ -1187,7 +1187,7 @@
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11616.9548051795!2d112.7299005261466!3d-7.3695107493137435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e495b3986b59%3A0x88b42aee982571fd!2sSawotratap%2C%20Kec.%20Gedangan%2C%20Kabupaten%20Sidoarjo%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1772784335202!5m2!1sid!2sid"
                             width="100%" 
                             height="100%" 
-                            style="border:0; border-radius: 15px;" 
+                            style="border:0;" 
                             allowfullscreen="" 
                             loading="lazy">
                         </iframe>

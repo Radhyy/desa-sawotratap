@@ -92,15 +92,14 @@
                     @else
                     <!-- User Dropdown when Authenticated -->
                     <li class="nav-item dropdown ms-3">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center user-dropdown" 
+                        <a class="nav-link dropdown-toggle nav-user-profile" 
                            href="#" 
                            role="button" 
-                           data-bs-toggle="dropdown"
-                           style="color: var(--primary-green); font-weight: 600;">
-                            <div class="user-avatar me-2">
-                                <i class="bi bi-person-circle"></i>
+                           data-bs-toggle="dropdown">
+                            <div class="nav-user-avatar">
+                                <i class="bi bi-person-fill"></i>
                             </div>
-                            {{ Auth::user()->name }}
+                            <span class="nav-user-name">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             @if(Auth::user()->isAdmin())

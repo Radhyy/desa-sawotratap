@@ -18,6 +18,7 @@ Route::get('/umkm', [HomeController::class, 'umkm'])->name('umkm');
 Route::get('/umkm/{id}', [HomeController::class, 'showUmkm'])->name('umkm.show');
 Route::get('/berita', [HomeController::class, 'berita'])->name('berita');
 Route::get('/berita/{id}', [HomeController::class, 'showBerita'])->name('berita.show');
+Route::get('/agenda', [HomeController::class, 'agenda'])->name('agenda');
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/galeri/{id}', [HomeController::class, 'showGaleri'])->name('galeri.show');
 Route::view('/profile-desa', 'profile-desa.index')->name('profile-desa.index');

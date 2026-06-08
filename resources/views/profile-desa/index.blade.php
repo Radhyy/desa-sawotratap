@@ -4,174 +4,178 @@
 
 @section('styles')
 <style>
-    .desa-profile-page {
-        padding-top: 138px;
-        padding-bottom: 56px;
+    .profile-page {
+        margin-top: 0;
+        padding-bottom: 70px;
         min-height: 100vh;
-        background:
-            radial-gradient(circle at top right, rgba(22, 163, 74, 0.08), transparent 40%),
-            radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.07), transparent 38%),
-            #f5faf6;
+        background: linear-gradient(180deg, #f8fbf7 0%, #f4f7fa 100%);
         position: relative;
         overflow: hidden;
     }
 
-    .desa-profile-page::before {
-        content: '';
-        position: absolute;
-        top: -120px;
-        left: -120px;
-        width: 320px;
-        height: 320px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(22, 163, 74, 0.15), transparent 70%);
-        pointer-events: none;
+    html {
+        scroll-behavior: smooth;
     }
 
-    .desa-profile-page::after {
-        content: '';
-        position: absolute;
-        bottom: -140px;
-        right: -90px;
-        width: 360px;
-        height: 360px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(34, 197, 94, 0.14), transparent 68%);
-        pointer-events: none;
+    .profile-breadcrumb {
+        margin-top: 80px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e8ecef;
     }
 
-    .desa-shell {
+    .profile-header {
+        background: #f8f9fa;
+        border-bottom: 1px solid #e8ecef;
+    }
+
+    .profile-header .container {
+        padding-top: 44px;
+        padding-bottom: 44px;
+    }
+
+    .profile-page-shell {
         position: relative;
         z-index: 1;
     }
 
-    .desa-hero {
-        background: linear-gradient(135deg, #166534 0%, #15803d 50%, #22c55e 100%);
-        color: #fff;
-        border-radius: 20px;
-        padding: 2.5rem;
-        box-shadow: 0 16px 40px rgba(22, 101, 52, 0.24);
-        margin-bottom: 1.6rem;
-        position: relative;
-        overflow: hidden;
+    .hero-content-box {
+        padding: 0;
+        margin-bottom: 0;
     }
 
-    .desa-hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-        background-size: 28px 28px;
-        opacity: 0.2;
+    .hero-title {
+        font-size: 2.5rem;
     }
 
-    .desa-hero-deco {
-        position: absolute;
-        right: 34px;
-        top: 50%;
-        transform: translateY(-50%) rotate(-18deg);
-        font-size: 9.5rem;
-        color: rgba(255, 255, 255, 0.16);
-        z-index: 1;
-        pointer-events: none;
-        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.12));
+    .hero-subtitle {
+        color: #6c757d;
+        max-width: 780px;
+        margin: 0 auto;
+        font-size: 1.08rem;
+        line-height: 1.6;
+        font-weight: 400;
     }
 
-    .desa-hero-content {
-        position: relative;
-        z-index: 1;
+    .profile-stats {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
     }
 
-    .desa-hero h1 {
-        font-size: 2.1rem;
-        font-weight: 800;
-        margin-bottom: 0.6rem;
-    }
-
-    .desa-hero p {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.9);
-        max-width: 760px;
-        font-size: 1rem;
-    }
-
-    .desa-anchor-nav {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-        margin-top: 1.3rem;
-    }
-
-    .desa-anchor-nav a {
-        text-decoration: none;
-        color: #14532d;
-        background: #ecfdf5;
-        border: 1px solid #a7f3d0;
-        padding: 0.55rem 0.95rem;
-        border-radius: 999px;
-        font-weight: 600;
-        font-size: 0.86rem;
-        transition: all 0.2s ease;
-    }
-
-    .desa-anchor-nav a:hover {
-        background: #dcfce7;
-        transform: translateY(-1px);
-    }
-
-    .desa-card {
+    .profile-stat-card {
         background: #fff;
-        border: 1px solid #dcfce7;
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
-        margin-bottom: 1rem;
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid #dde7d6;
+        box-shadow: 0 6px 18px rgba(45, 80, 22, 0.06);
+        text-align: center;
     }
 
-    #sejarah,
-    #visi-misi,
-    #geografis {
-        scroll-margin-top: 120px;
-    }
-
-    .desa-card h2 {
-        font-size: 1.25rem;
+    .profile-stat-number {
+        display: block;
+        font-family: 'Sora', sans-serif;
+        color: var(--primary-green);
+        font-size: 1.4rem;
         font-weight: 700;
-        color: #166534;
-        margin-bottom: 0.9rem;
+        line-height: 1.1;
+    }
+
+    .profile-stat-label {
+        margin-top: 6px;
+        display: block;
+        color: #5e6d64;
+        font-size: 0.88rem;
+        font-weight: 500;
+    }
+
+    .profile-card {
+        background: #fff;
+        border: 1px solid #e4ecdf;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(45, 80, 22, 0.08);
+        overflow: hidden;
+    }
+
+    .profile-card .head {
+        padding: 22px 24px;
+        background: linear-gradient(135deg, rgba(74, 124, 36, 0.12), rgba(45, 80, 22, 0.08));
+        border-bottom: 1px solid #e9f0e3;
         display: flex;
         align-items: center;
         gap: 0.55rem;
     }
 
-    .desa-card p,
-    .desa-card li {
+    .profile-card .head h2 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #24381f;
+        margin: 0;
+    }
+
+    .profile-card .body {
+        padding: 22px 24px 24px;
+    }
+
+    .anchor-nav {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 1.2rem;
+    }
+
+    .anchor-nav a {
+        text-decoration: none;
+        color: #355027;
+        background: #eef5e8;
+        border: 1px solid #dce9d2;
+        padding: 0.58rem 1rem;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.86rem;
+        transition: all 0.2s ease;
+    }
+
+    .anchor-nav a:hover {
+        background: #dcfce7;
+        transform: translateY(-1px);
+    }
+
+    .section-card {
+        margin-bottom: 1rem;
+    }
+
+    .section-card[id] {
+        scroll-margin-top: 130px;
+    }
+
+    .section-card p,
+    .section-card li {
         color: #374151;
         line-height: 1.75;
         margin: 0;
     }
 
-    .desa-grid {
+    .info-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
     }
 
-    .desa-list {
+    .info-list {
         margin: 0;
         padding-left: 1.15rem;
     }
 
-    .desa-list li {
+    .info-list li {
         margin-bottom: 0.55rem;
     }
 
     .map-wrap {
         border-radius: 14px;
         overflow: hidden;
-        border: 1px solid #bbf7d0;
+        border: 1px solid #dce9d2;
         box-shadow: 0 8px 24px rgba(22, 163, 74, 0.12);
     }
 
@@ -187,113 +191,189 @@
         color: #4b5563;
     }
 
-    @media (max-width: 992px) {
-        .desa-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .desa-hero {
-            padding: 2rem;
-        }
-
-        .desa-hero-deco {
-            font-size: 7.2rem;
-            right: 22px;
-            opacity: 0.8;
-        }
-
-        .desa-hero h1 {
-            font-size: 1.65rem;
+    @media (max-width: 1199.98px) {
+        .profile-stats {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
-    @media (max-width: 768px) {
-        .desa-hero-deco {
-            font-size: 5.2rem;
-            right: 14px;
-            top: 22px;
-            transform: rotate(-15deg);
-            color: rgba(255, 255, 255, 0.12);
+    @media (max-width: 992px) {
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-header .container {
+            padding-top: 34px;
+            padding-bottom: 34px;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            line-height: 1.24;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.97rem;
+            line-height: 1.62;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .profile-page {
+            padding-bottom: 40px;
+        }
+
+        .profile-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-card .head,
+        .profile-card .body {
+            padding: 18px;
+        }
+
+        .map-wrap iframe {
+            height: 300px;
         }
     }
 </style>
 @endsection
 
 @section('content')
-<div class="desa-profile-page">
-    <div class="container desa-shell">
-        <section class="desa-hero">
-            <i class="bi bi-building-fill desa-hero-deco"></i>
-            <div class="desa-hero-content">
-                <h1>Profil Desa Sawotratap</h1>
-                <p>
+<div class="profile-page">
+    <div class="profile-breadcrumb py-3">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}" class="text-decoration-none" style="color: var(--primary-green);">
+                            <i class="bi bi-house-door"></i> Beranda
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Profil Desa</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <section class="profile-header py-5">
+        <div class="container">
+            <div class="hero-content-box text-center">
+                <h1 class="section-title-center hero-title">Profil Desa Sawotratap</h1>
+                <p class="hero-subtitle">
                     Halaman ini memuat informasi umum mengenai desa, meliputi sejarah desa, visi dan misi,
                     serta gambaran geografis wilayah Desa Sawotratap.
                 </p>
             </div>
-        </section>
 
-        <div class="desa-anchor-nav">
-            <a href="#sejarah"><i class="bi bi-book me-1"></i>Sejarah Desa</a>
-            <a href="#visi-misi"><i class="bi bi-bullseye me-1"></i>Visi & Misi</a>
-            <a href="#geografis"><i class="bi bi-geo-alt me-1"></i>Geografis</a>
+            <div class="profile-stats">
+                <div class="profile-stat-card">
+                    <span class="profile-stat-number">Sejarah</span>
+                    <span class="profile-stat-label">Latar perkembangan desa</span>
+                </div>
+                <div class="profile-stat-card">
+                    <span class="profile-stat-number">Visi & Misi</span>
+                    <span class="profile-stat-label">Arah pembangunan desa</span>
+                </div>
+                <div class="profile-stat-card">
+                    <span class="profile-stat-number">Geografis</span>
+                    <span class="profile-stat-label">Letak wilayah desa</span>
+                </div>
+            </div>
+
+            <div class="anchor-nav">
+                <a href="#sejarah"><i class="bi bi-book me-1"></i>Sejarah Desa</a>
+                <a href="#visi-misi"><i class="bi bi-bullseye me-1"></i>Visi & Misi</a>
+                <a href="#geografis"><i class="bi bi-geo-alt me-1"></i>Geografis</a>
+            </div>
         </div>
+    </section>
 
-        <section id="sejarah" class="desa-card mt-3">
-            <h2><i class="bi bi-book"></i>Sejarah Desa</h2>
-            <p>
-                Desa Sawotratap merupakan salah satu wilayah yang berkembang dari kawasan agraris
-                menjadi desa yang terus bertransformasi dalam pelayanan publik dan digitalisasi informasi.
-                Secara historis, masyarakat desa membangun kehidupan berdasarkan nilai gotong royong,
-                budaya lokal, serta kekuatan komunitas yang kuat antarwarga.
-            </p>
-            <p class="mt-3">
-                Seiring perkembangan zaman, desa terus melakukan pembenahan pada sektor infrastruktur,
-                tata kelola pemerintahan, dan pelayanan kepada masyarakat untuk mewujudkan desa
-                yang maju, mandiri, dan berdaya saing.
-            </p>
-        </section>
-
-        <section id="visi-misi" class="desa-card">
-            <h2><i class="bi bi-bullseye"></i>Visi & Misi Desa</h2>
-            <div class="desa-grid">
-                <div class="desa-card" style="margin-bottom:0; background:#f0fdf4;">
-                    <h2 style="font-size:1.05rem; margin-bottom:0.6rem;"><i class="bi bi-eye"></i>Visi</h2>
+    <section class="profile-page-shell pt-4">
+        <div class="container">
+            <section id="sejarah" class="profile-card section-card">
+                <div class="head">
+                    <i class="bi bi-book"></i>
+                    <h2>Sejarah Desa</h2>
+                </div>
+                <div class="body">
                     <p>
-                        Terwujudnya Desa Sawotratap yang maju, sejahtera, berbudaya, dan
-                        berbasis pelayanan publik yang transparan serta partisipatif.
+                        Desa Sawotratap merupakan salah satu wilayah yang berkembang dari kawasan agraris
+                        menjadi desa yang terus bertransformasi dalam pelayanan publik dan digitalisasi informasi.
+                        Secara historis, masyarakat desa membangun kehidupan berdasarkan nilai gotong royong,
+                        budaya lokal, serta kekuatan komunitas yang kuat antarwarga.
+                    </p>
+                    <p class="mt-3">
+                        Seiring perkembangan zaman, desa terus melakukan pembenahan pada sektor infrastruktur,
+                        tata kelola pemerintahan, dan pelayanan kepada masyarakat untuk mewujudkan desa
+                        yang maju, mandiri, dan berdaya saing.
                     </p>
                 </div>
-                <div class="desa-card" style="margin-bottom:0; background:#f7fee7;">
-                    <h2 style="font-size:1.05rem; margin-bottom:0.6rem;"><i class="bi bi-list-check"></i>Misi</h2>
-                    <ul class="desa-list">
-                        <li>Meningkatkan kualitas pelayanan pemerintahan desa.</li>
-                        <li>Mendorong pertumbuhan ekonomi masyarakat dan UMKM lokal.</li>
-                        <li>Meningkatkan kualitas SDM melalui pendidikan dan pelatihan.</li>
-                        <li>Memperkuat infrastruktur desa dan tata lingkungan yang berkelanjutan.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="geografis" class="desa-card">
-            <h2><i class="bi bi-geo-alt"></i>Geografis Desa</h2>
-            <p class="mb-3">
-                Desa Sawotratap berada di Kecamatan Gedangan, Kabupaten Sidoarjo.
-                Peta berikut memberikan gambaran lokasi geografis desa.
-            </p>
-            <div class="map-wrap">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15827.411091290962!2d112.72474024399585!3d-7.3703938822210375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e495b3986b59%3A0x88b42aee982571fd!2sSawotratap%2C%20Kec.%20Gedangan%2C%20Kabupaten%20Sidoarjo%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1773199130099!5m2!1sid!2sid"                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    allowfullscreen>
-                </iframe>
-            </div>
-            <div class="geo-meta">
-                <i class="bi bi-info-circle me-1"></i>
-                Peta bersifat informatif dan dapat diperbesar langsung melalui Google Maps.
-            </div>
-        </section>
-    </div>
+            <section id="visi-misi" class="profile-card section-card">
+                <div class="head">
+                    <i class="bi bi-bullseye"></i>
+                    <h2>Visi & Misi Desa</h2>
+                </div>
+                <div class="body">
+                    <div class="info-grid">
+                        <div class="profile-card" style="margin-bottom:0; background:#f7fbf3;">
+                            <div class="head">
+                                <i class="bi bi-eye"></i>
+                                <h2 style="font-size:1.05rem;">Visi</h2>
+                            </div>
+                            <div class="body">
+                                <p>
+                                    Terwujudnya Desa Sawotratap yang maju, sejahtera, berbudaya, dan
+                                    berbasis pelayanan publik yang transparan serta partisipatif.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="profile-card" style="margin-bottom:0; background:#fffdf2;">
+                            <div class="head">
+                                <i class="bi bi-list-check"></i>
+                                <h2 style="font-size:1.05rem;">Misi</h2>
+                            </div>
+                            <div class="body">
+                                <ul class="info-list">
+                                    <li>Meningkatkan kualitas pelayanan pemerintahan desa.</li>
+                                    <li>Mendorong pertumbuhan ekonomi masyarakat dan UMKM lokal.</li>
+                                    <li>Meningkatkan kualitas SDM melalui pendidikan dan pelatihan.</li>
+                                    <li>Memperkuat infrastruktur desa dan tata lingkungan yang berkelanjutan.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="geografis" class="profile-card section-card">
+                <div class="head">
+                    <i class="bi bi-geo-alt"></i>
+                    <h2>Geografis Desa</h2>
+                </div>
+                <div class="body">
+                    <p class="mb-3">
+                        Desa Sawotratap berada di Kecamatan Gedangan, Kabupaten Sidoarjo.
+                        Peta berikut memberikan gambaran lokasi geografis desa.
+                    </p>
+                    <div class="map-wrap">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15827.411091290962!2d112.72474024399585!3d-7.3703938822210375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e495b3986b59%3A0x88b42aee982571fd!2sSawotratap%2C%20Kec.%20Gedangan%2C%20Kabupaten%20Sidoarjo%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1773199130099!5m2!1sid!2sid"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="geo-meta">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Peta bersifat informatif dan dapat diperbesar langsung melalui Google Maps.
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
 </div>
 @endsection

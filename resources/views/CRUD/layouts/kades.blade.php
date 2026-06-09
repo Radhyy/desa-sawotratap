@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
             --sidebar-width: 280px;
@@ -392,6 +393,36 @@
                 }
             });
         });
+
+        // SweetAlert2 Global Confirmation function
+        function confirmAction(event, message) {
+            event.preventDefault();
+            const button = event.currentTarget;
+            const form = button.closest('form');
+            
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: message,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#2d5016',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Lanjutkan',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (button.name && button.value) {
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = button.name;
+                        hiddenInput.value = button.value;
+                        form.appendChild(hiddenInput);
+                    }
+                    form.submit();
+                }
+            });
+        }
     </script>
     @stack('scripts')
 </body>

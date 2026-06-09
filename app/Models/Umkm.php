@@ -22,6 +22,8 @@ class Umkm extends Model
         'stock',
         'phone',
         'status',
+        'approval_status',
+        'user_id',
     ];
 
     protected $casts = [

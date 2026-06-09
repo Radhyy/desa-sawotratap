@@ -98,6 +98,7 @@ class PengaduanController extends Controller
         }
 
         Pengaduan::create([
+            'user_id' => Auth::id(),
             'ticket' => $ticket,
             'nama' => $validated['nama'],
             'no_whatsapp' => $validated['no_whatsapp'],

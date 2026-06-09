@@ -13,6 +13,21 @@
     <link rel="stylesheet" href="{{ asset('css/layouts.css') }}">
     @yield('styles')
     @stack('styles')
+    <style>
+        /* Responsive Navbar Brand */
+        .brand-logo-img { width: 45px; height: 45px; object-fit: contain; }
+        .brand-text-1 { font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; line-height: 1; margin-bottom: 2px; color: #333; }
+        .brand-text-2 { font-size: 1.3rem; font-weight: 800; line-height: 1; text-transform: uppercase; color: #333; }
+        .brand-text-3 { font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: #666; font-weight: 600; line-height: 1; margin-top: 2px; }
+
+        @media (max-width: 768px) {
+            .brand-logo-img { width: 35px; height: 35px; }
+            .brand-text-1 { font-size: 0.45rem; letter-spacing: 1px; }
+            .brand-text-2 { font-size: 1rem; }
+            .brand-text-3 { font-size: 0.45rem; letter-spacing: 0.5px; }
+            .navbar-brand { margin-right: 0; }
+        }
+    </style>
 
 </head>
 <body>
@@ -20,11 +35,11 @@
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sawotratap" class="me-2" style="width: 45px; height: 45px; object-fit: contain;">
-                <div class="d-flex flex-column justify-content-center" style="color: #333;">
-                    <span style="font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; line-height: 1; margin-bottom: 2px;">Pemerintah Desa</span>
-                    <span style="font-size: 1.3rem; font-weight: 800; line-height: 1; text-transform: uppercase;">SAWOTRATAP</span>
-                    <span style="font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: #666; font-weight: 600; line-height: 1; margin-top: 2px;">Kec. Gedangan - Kab. Sidoarjo</span>
+                <img src="{{ asset('Logo/IMG_1650.GIF') }}" alt="Logo Sawotratap" class="me-2 brand-logo-img">
+                <div class="d-flex flex-column justify-content-center">
+                    <span class="brand-text-1">Pemerintah Desa</span>
+                    <span class="brand-text-2">SAWOTRATAP</span>
+                    <span class="brand-text-3">Kec. Gedangan - Kab. Sidoarjo</span>
                 </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -63,7 +78,6 @@
                             <li><a class="dropdown-item" href="{{ route('berita') }}">Berita</a></li>
                             <li><a class="dropdown-item" href="{{ route('announcements') }}">Pengumuman</a></li>
                             <li><a class="dropdown-item" href="{{ route('galeri') }}">Galeri</a></li>
-                            <li><a class="dropdown-item" href="{{ route('agenda') }}">Agenda</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -110,13 +124,27 @@
                             </li>
                             <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
                             <li><a class="dropdown-item" href="{{ route('admin.announcements.index') }}"><i class="bi bi-megaphone me-2"></i>Kelola Pengumuman</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-newspaper me-2"></i>Kelola Berita</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-shop me-2"></i>Kelola UMKM</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-people me-2"></i>Kelola Pengguna</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.berita.index') }}"><i class="bi bi-newspaper me-2"></i>Kelola Berita</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.umkm.index') }}"><i class="bi bi-shop me-2"></i>Kelola UMKM</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.users.index') }}"><i class="bi bi-people me-2"></i>Kelola Pengguna</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            @elseif(Auth::user()->isKades())
+                            <li>
+                                <h6 class="dropdown-header">
+                                    <i class="bi bi-award text-success"></i> Panel Kepala Desa
+                                </h6>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('kades.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard Kades</a></li>
                             <li><hr class="dropdown-divider"></li>
                             @endif
                             <li>
                                 <a class="dropdown-item" href="{{ route('profile.index') }}"><i class="bi bi-person me-2"></i>Profil Saya</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('laporan-saya.index') }}"><i class="bi bi-file-earmark-text me-2"></i>Laporan Saya</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('umkm-saya.index') }}"><i class="bi bi-shop-window me-2"></i>Produk Anda</a>
                             </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST" class="d-inline">

@@ -83,10 +83,12 @@
 
                 @if($pengajuanSurat->status == 'menunggu_kades')
                 <div class="d-grid gap-2">
-                    <button type="submit" name="action" value="setujui" class="btn btn-warning fw-bold text-dark">
-                        <i class="bi bi-pen me-1"></i> Tanda Tangani Elektronik
+                    <button type="submit" name="action" value="setujui" class="btn btn-primary"
+                        onclick="confirmAction(event, 'Setujui dan teruskan pengajuan surat ini?')">
+                        <i class="bi bi-check-circle me-1"></i> Setujui & TTD
                     </button>
-                    <button type="submit" name="action" value="tolak" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin menolak pengajuan ini?')">
+                    <button type="submit" name="action" value="tolak" class="btn btn-outline-danger"
+                        onclick="confirmAction(event, 'Tolak pengajuan surat ini?')">
                         <i class="bi bi-x-circle me-1"></i> Tolak Pengajuan
                     </button>
                 </div>

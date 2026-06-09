@@ -114,4 +114,19 @@ class UmkmController extends Controller
         return redirect()->route('admin.umkm.index')
             ->with('success', 'Produk UMKM berhasil dihapus!');
     }
+
+    /**
+     * Update approval status of an UMKM
+     */
+    public function updateStatus(Request $request, Umkm $umkm)
+    {
+        $validated = $request->validate([
+            'approval_status' => 'required|in:pending,approved,rejected'
+        ]);
+
+        $umkm->update(['approval_status' => $validated['approval_status']]);
+
+        return redirect()->route('admin.umkm.index')
+            ->with('success', 'Status pengajuan UMKM berhasil diperbarui!');
+    }
 }

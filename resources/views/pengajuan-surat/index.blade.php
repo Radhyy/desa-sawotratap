@@ -338,12 +338,20 @@
                             <div class="col-md-6">
                                 <label class="form-label">Jenis Surat <span class="text-danger">*</span></label>
                                 <select name="jenis_surat" class="form-select" required>
-                                    <option value="" selected disabled>Pilih jenis surat</option>
-                                    <option value="Surat Keterangan Domisili" {{ old('jenis_surat') == 'Surat Keterangan Domisili' ? 'selected' : '' }}>Surat Keterangan Domisili</option>
-                                    <option value="Surat Keterangan Usaha" {{ old('jenis_surat') == 'Surat Keterangan Usaha' ? 'selected' : '' }}>Surat Keterangan Usaha</option>
-                                    <option value="Surat Keterangan Tidak Mampu" {{ old('jenis_surat') == 'Surat Keterangan Tidak Mampu' ? 'selected' : '' }}>Surat Keterangan Tidak Mampu</option>
-                                    <option value="Surat Pengantar SKCK" {{ old('jenis_surat') == 'Surat Pengantar SKCK' ? 'selected' : '' }}>Surat Pengantar SKCK</option>
-                                    <option value="Surat Pengantar Nikah" {{ old('jenis_surat') == 'Surat Pengantar Nikah' ? 'selected' : '' }}>Surat Pengantar Nikah</option>
+                                    <optgroup label="Tidak Butuh TTD Kades">
+                                        <option value="Surat Keterangan Domisili" {{ old('jenis_surat') == 'Surat Keterangan Domisili' ? 'selected' : '' }}>Surat Keterangan Domisili</option>
+                                        <option value="Surat Keterangan Usaha" {{ old('jenis_surat') == 'Surat Keterangan Usaha' ? 'selected' : '' }}>Surat Keterangan Usaha</option>
+                                        <option value="Surat Keterangan Tidak Mampu" {{ old('jenis_surat') == 'Surat Keterangan Tidak Mampu' ? 'selected' : '' }}>Surat Keterangan Tidak Mampu</option>
+                                        <option value="Surat Pengantar SKCK" {{ old('jenis_surat') == 'Surat Pengantar SKCK' ? 'selected' : '' }}>Surat Pengantar SKCK</option>
+                                    </optgroup>
+                                    <optgroup label="Butuh TTD Kades">
+                                        <option value="Surat Pengantar Nikah" {{ old('jenis_surat') == 'Surat Pengantar Nikah' ? 'selected' : '' }}>Surat Pengantar Nikah</option>
+                                        <option value="Surat Keterangan Ahli Waris" {{ old('jenis_surat') == 'Surat Keterangan Ahli Waris' ? 'selected' : '' }}>Surat Keterangan Ahli Waris</option>
+                                        <option value="Surat Keterangan Tanah" {{ old('jenis_surat') == 'Surat Keterangan Tanah' ? 'selected' : '' }}>Surat Keterangan Tanah</option>
+                                        <option value="Surat Hibah Tanah" {{ old('jenis_surat') == 'Surat Hibah Tanah' ? 'selected' : '' }}>Surat Hibah Tanah</option>
+                                        <option value="Surat Pernyataan Penguasaan Fisik Tanah" {{ old('jenis_surat') == 'Surat Pernyataan Penguasaan Fisik Tanah' ? 'selected' : '' }}>Surat Pernyataan Penguasaan Fisik Tanah</option>
+                                        <option value="Surat Rekomendasi tertentu" {{ old('jenis_surat') == 'Surat Rekomendasi tertentu' ? 'selected' : '' }}>Surat Rekomendasi tertentu</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="col-md-6">

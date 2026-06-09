@@ -80,31 +80,54 @@
 
     .stat-box {
         text-align: center;
-        padding: 20px;
-        background: linear-gradient(135deg, var(--primary-green), var(--light-green));
-        color: white;
-        border-radius: 12px;
+        padding: 24px 15px;
+        background: #fff;
+        color: #2d5016;
+        border-radius: 16px;
+        border: 1px solid rgba(0,0,0,0.05);
         transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(45, 80, 22, 0.2);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.03);
     }
 
     .stat-box:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 24px rgba(45, 80, 22, 0.3);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(45, 80, 22, 0.1);
+        border-color: rgba(45, 80, 22, 0.2);
     }
 
     .stat-number {
         font-size: 2.5rem;
-        font-weight: bold;
+        font-weight: 800;
         display: block;
-        color: white;
+        color: #2d5016;
+        line-height: 1;
+        margin-bottom: 8px;
     }
 
     .stat-label {
         font-size: 0.95rem;
-        margin-top: 8px;
-        color: white;
-        font-weight: 500;
+        color: #6c757d;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 768px) {
+        .umkm-stats {
+            gap: 10px;
+        }
+        .stat-box {
+            padding: 15px 10px;
+            border-radius: 12px;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 0.65rem;
+            letter-spacing: 0;
+        }
     }
 
     .umkm-actions {
@@ -167,10 +190,11 @@
 <section class="py-5 bg-light">
     <div class="container">
         <div class="text-center mb-5">
-            <h1 class="section-title-center" style="font-size: 2.5rem;">UMKM Sawotratap</h1>
-            <p class="text-muted mt-3" style="font-size: 1.1rem; font-weight: 400;">
+            <h2 class="section-title-center" style="font-family: 'Playfair Display', serif; font-weight: 700; color: #2d5016;">UMKM Sawotratap</h2>
+            <p class="text-muted mt-3 mb-4" style="font-size: 1.1rem; font-weight: 400;">
                 Dukung produk lokal desa kami untuk kesejahteraan bersama masyarakat
             </p>
+            
         </div>
 
         <!-- Statistics -->
@@ -298,9 +322,9 @@
     <div class="container text-center">
         <h2 class="mb-4">Ingin Menjual Produk Anda?</h2>
         <p class="mb-4" style="font-size: 1.1rem;">Bergabunglah dengan UMKM Sawotratap untuk menjual produk Anda dan dukung ekonomi desa.</p>
-        <button class="btn btn-cta">
-            <i class="bi bi-person-plus"></i> Daftar Sebagai Penjual
-        </button>
+        <a href="{{ route('umkm.create') }}" class="btn btn-cta text-decoration-none d-inline-block">
+            <i class="bi bi-shop-window"></i> Daftarkan UMKM
+        </a>
     </div>
 </section>
 

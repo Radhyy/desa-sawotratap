@@ -269,9 +269,21 @@ function previewImage(input) {
 }
 
 function confirmDelete() {
-    if (confirm('Apakah Anda yakin ingin menghapus produk ini? Tindakan ini tidak dapat dibatalkan.')) {
-        document.getElementById('delete-form').submit();
-    }
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: 'Apakah Anda yakin ingin menghapus produk ini? Tindakan ini tidak dapat dibatalkan.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#2d5016',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-form').submit();
+        }
+    });
 }
 </script>
 @endpush

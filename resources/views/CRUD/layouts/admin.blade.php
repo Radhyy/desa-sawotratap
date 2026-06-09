@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
             --sidebar-width: 280px;
@@ -384,6 +385,7 @@
             }
         }
     </style>
+    @yield('styles')
     @stack('styles')
 </head>
 <body>
@@ -420,6 +422,9 @@
             <a href="{{ route('admin.galeri.index') }}" class="menu-item {{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}" title="Galeri">
                 <i class="bi bi-images"></i> <span>Galeri</span>
             </a>
+            <a href="{{ route('admin.apbdes.index') }}" class="menu-item {{ request()->routeIs('admin.apbdes.*') ? 'active' : '' }}" title="APBDes">
+                <i class="bi bi-bar-chart-steps"></i> <span>APBDes</span>
+            </a>
             
             <div class="menu-section-title">Manajemen UMKM</div>
             <a href="{{ route('admin.umkm.index') }}" class="menu-item {{ request()->routeIs('admin.umkm.*') ? 'active' : '' }}" title="Data UMKM">
@@ -429,7 +434,7 @@
                 <i class="bi bi-tags-fill"></i> <span>Kategori UMKM</span>
             </a>
             <!-- Layanan Masyarakat -->
-            <div class="menu-header">Layanan Masyarakat</div>
+            <div class="menu-section-title">Layanan Masyarakat</div>
             <a href="{{ route('admin.pengajuan-surat.index') }}" class="menu-item {{ request()->routeIs('admin.pengajuan-surat.*') ? 'active' : '' }}" title="Pengajuan Surat">
                 <i class="bi bi-envelope-paper"></i> <span>Pengajuan Surat</span>
             </a>
@@ -441,10 +446,10 @@
             </a>
 
             <div class="menu-section-title">Sistem</div>
-            <a href="#" class="menu-item" title="Pengguna">
+            <a href="{{ route('admin.users.index') }}" class="menu-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" title="Pengguna">
                 <i class="bi bi-people-fill"></i> <span>Pengguna</span>
             </a>
-            <a href="#" class="menu-item" title="Pengaturan">
+            <a href="{{ route('admin.settings.index') }}" class="menu-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" title="Pengaturan">
                 <i class="bi bi-gear-fill"></i> <span>Pengaturan</span>
             </a>
 
@@ -536,7 +541,38 @@
                 }
             });
         });
+
+        // SweetAlert2 Global Confirmation function
+        function confirmAction(event, message) {
+            event.preventDefault();
+            const button = event.currentTarget;
+            const form = button.closest('form');
+            
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: message,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#2d5016',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Lanjutkan',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (button.name && button.value) {
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = button.name;
+                        hiddenInput.value = button.value;
+                        form.appendChild(hiddenInput);
+                    }
+                    form.submit();
+                }
+            });
+        }
     </script>
+    @yield('scripts')
     @stack('scripts')
 </body>
 </html>

@@ -17,8 +17,24 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
-        // Ambil 4 UMKM terbaru
-        $umkms = Umkm::latest()->take(4)->get();
+        // Ambil 4 UMKM terbaru yang disetujui
+        $umkms = Umkm::where('approval_status', 'approved')->latest()->take(4)->get();
+
+        $activeApbdes = \App\Models\Apbdes::where('is_active', true)->first();
+        if (!$activeApbdes) {
+            $activeApbdes = (object) [
+                'year' => date('Y'),
+                'target_amount' => 0,
+                'realization_amount' => 0,
+                'pie_belanja' => 0,
+                'pie_pendapatan' => 0,
+                'pie_pembiayaan' => 0,
+                'chart_months' => [],
+                'chart_pendapatan' => [],
+                'chart_belanja' => [],
+                'chart_surplus' => []
+            ];
+        }
 
         $data = [
             'village_name' => 'Desa Sawotratap',
@@ -30,12 +46,8 @@ class HomeController extends Controller
             'announcements' => $announcements,
             'umkm' => $umkms,
             'news' => Berita::latest('date')->take(3)->get(),
-            'apbdes' => [
-                'year' => 2026,
-                'total' => 2708000000,
-                'target' => 1450000000,
-                'realization' => 1258000000
-            ],
+            'apbdes' => collect($activeApbdes)->toArray(),
+            'apbdesObj' => $activeApbdes,
             'gallery' => \App\Models\Galeri::latest('published_at')->take(4)->get(),
             'demographics' => [
                 'total' => 8234,
@@ -82,17 +94,18 @@ class HomeController extends Controller
 
     public function umkm()
     {
-        $products = Umkm::with('kategori')->where('status', 'active')->latest()->get();
+        $products = Umkm::with('kategori')->where('status', 'active')->where('approval_status', 'approved')->latest()->get();
 
         return view('umkm.index', compact('products'));
     }
 
     public function showUmkm($id)
     {
-        $product = Umkm::with('kategori')->where('status', 'active')->findOrFail($id);
+        $product = Umkm::with('kategori')->where('status', 'active')->where('approval_status', 'approved')->findOrFail($id);
 
         $relatedProducts = Umkm::with('kategori')
             ->where('status', 'active')
+            ->where('approval_status', 'approved')
             ->where('id', '!=', $product->id)
             ->where('kategori_umkm_id', $product->kategori_umkm_id)
             ->latest()
@@ -112,6 +125,41 @@ class HomeController extends Controller
         }
 
         return view('umkm.show', compact('product', 'relatedProducts'));
+    }
+
+    public function createUmkm()
+    {
+        $kategori_umkms = \App\Models\KategoriUmkm::all();
+        return view('umkm.create', compact('kategori_umkms'));
+    }
+
+    public function storeUmkm(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'kategori_umkm_id' => 'required|exists:kategori_umkms,id',
+            'price' => 'required|integer|min:0',
+            'stock' => 'required|integer|min:0',
+            'description' => 'required|string',
+            'seller' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('umkm', 'public');
+        }
+
+        $validated['status'] = 'active';
+        $validated['approval_status'] = 'pending';
+        if (auth()->check()) {
+            $validated['user_id'] = auth()->id();
+        }
+
+        Umkm::create($validated);
+
+        return redirect()->route('umkm-saya.index')->with('success', 'Pengajuan UMKM berhasil dikirim! Menunggu persetujuan admin.');
     }
 
     public function berita()

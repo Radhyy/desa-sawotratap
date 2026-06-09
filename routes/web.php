@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PengajuanSuratController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PerizinanController;
+use App\Http\Controllers\LaporanSayaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 use App\Http\Controllers\Admin\BeritaController as AdminBeritaController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\KategoriUmkmController as AdminKategoriUmkmContro
 use App\Http\Controllers\Admin\PengajuanSuratController as AdminPengajuanSuratController;
 use App\Http\Controllers\Admin\PengaduanController as AdminPengaduanController;
 use App\Http\Controllers\Admin\PerizinanController as AdminPerizinanController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 use App\Http\Controllers\Kades\DashboardController as KadesDashboardController;
 use App\Http\Controllers\Kades\PengajuanSuratController as KadesPengajuanSuratController;
@@ -27,10 +29,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/pengumuman', [HomeController::class, 'announcements'])->name('announcements');
 Route::get('/pengumuman/{announcement}', [HomeController::class, 'show'])->name('announcements.show');
 Route::get('/umkm', [HomeController::class, 'umkm'])->name('umkm');
+Route::get('/umkm/daftar', [HomeController::class, 'createUmkm'])->name('umkm.create');
+Route::post('/umkm/daftar', [HomeController::class, 'storeUmkm'])->name('umkm.store');
 Route::get('/umkm/{id}', [HomeController::class, 'showUmkm'])->name('umkm.show');
 Route::get('/berita', [HomeController::class, 'berita'])->name('berita');
 Route::get('/berita/{id}', [HomeController::class, 'showBerita'])->name('berita.show');
-Route::get('/agenda', [HomeController::class, 'agenda'])->name('agenda');
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/galeri/{id}', [HomeController::class, 'showGaleri'])->name('galeri.show');
 Route::view('/profile-desa', 'profile-desa.index')->name('profile-desa.index');
@@ -62,12 +65,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/reset-password', [ProfileController::class, 'showResetPassword'])->name('profile.reset-password');
     Route::put('/profile/reset-password', [ProfileController::class, 'resetPassword'])->name('profile.reset-password.update');
     
+    // Laporan Saya
+    Route::get('/laporan-saya', [LaporanSayaController::class, 'index'])->name('laporan-saya.index');
+
     // Pengajuan Surat Routes (User)
     Route::get('/pengajuan-surat/{pengajuanSurat}', [PengajuanSuratController::class, 'show'])->name('pengajuan-surat.show');
     Route::get('/pengajuan-surat/{pengajuanSurat}/edit', [PengajuanSuratController::class, 'edit'])->name('pengajuan-surat.edit');
     Route::put('/pengajuan-surat/{pengajuanSurat}', [PengajuanSuratController::class, 'update'])->name('pengajuan-surat.update');
     Route::delete('/pengajuan-surat/{pengajuanSurat}', [PengajuanSuratController::class, 'destroy'])->name('pengajuan-surat.destroy');
     Route::delete('/pengajuan-surat-dokumen/{dokumen}', [PengajuanSuratController::class, 'deleteDokumen'])->name('pengajuan-surat.dokumen.delete');
+    // UMKM Saya
+    Route::get('/produk-anda', [\App\Http\Controllers\UmkmSayaController::class, 'index'])->name('umkm-saya.index');
+    Route::get('/produk-anda/{id}/edit', [\App\Http\Controllers\UmkmSayaController::class, 'edit'])->name('umkm-saya.edit');
+    Route::put('/produk-anda/{id}', [\App\Http\Controllers\UmkmSayaController::class, 'update'])->name('umkm-saya.update');
+    Route::delete('/produk-anda/{id}', [\App\Http\Controllers\UmkmSayaController::class, 'destroy'])->name('umkm-saya.destroy');
 });
 
 // Admin Routes
@@ -77,7 +88,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('berita', AdminBeritaController::class);
     Route::resource('galeri', AdminGaleriController::class);
     Route::resource('umkm', AdminUmkmController::class);
+    Route::put('/umkm/{umkm}/status', [AdminUmkmController::class, 'updateStatus'])->name('umkm.update-status');
     Route::resource('kategori-umkm', AdminKategoriUmkmController::class);
+    Route::resource('users', AdminUserController::class);
+
+    Route::resource('apbdes', \App\Http\Controllers\Admin\ApbdesController::class);
+    Route::put('/apbdes/{apbde}/activate', [\App\Http\Controllers\Admin\ApbdesController::class, 'activate'])->name('apbdes.activate');
+
+    // Settings Routes
+    Route::get('settings', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::put('settings', [App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
 
     // Pengajuan Surat Admin
     Route::get('/pengajuan-surat', [AdminPengajuanSuratController::class, 'index'])->name('pengajuan-surat.index');

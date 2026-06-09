@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             AnnouncementSeeder::class,
             UmkmSeeder::class,
             BeritaSeeder::class,
+            SuratKeteranganSeeder::class,
+            ApbdesSeeder::class,
         ]);
     }
 }

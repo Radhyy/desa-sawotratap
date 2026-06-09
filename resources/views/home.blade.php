@@ -884,20 +884,26 @@
                     <div class="mb-4">
                         <div class="d-flex justify-content-between mb-1">
                             <span class="text-target">Target</span>
-                            <span class="val-target">Rp {{ number_format($apbdes['target'], 0, ',', '.') }}</span>
+                            <span class="val-target">Rp {{ number_format($apbdesObj->target_amount, 0, ',', '.') }}</span>
                         </div>
+                        @php 
+                            $targetPercent = $apbdesObj->target_amount > 0 ? min(100, round(($apbdesObj->target_amount / max($apbdesObj->target_amount, $apbdesObj->realization_amount)) * 100)) : 0; 
+                        @endphp
                         <div class="modern-progress-wrap">
-                            <div class="modern-progress-bar bg-success" style="width: 54%; background: linear-gradient(90deg, #2d5016, #4a7c24) !important;">54%</div>
+                            <div class="modern-progress-bar bg-success" style="width: {{ $targetPercent }}%; background: linear-gradient(90deg, #2d5016, #4a7c24) !important;">{{ $targetPercent }}%</div>
                         </div>
                     </div>
                     
                     <div class="mb-4">
                         <div class="d-flex justify-content-between mb-1">
                             <span class="text-target">Realisasi</span>
-                            <span class="val-target">Rp {{ number_format($apbdes['realization'], 0, ',', '.') }}</span>
+                            <span class="val-target">Rp {{ number_format($apbdesObj->realization_amount, 0, ',', '.') }}</span>
                         </div>
+                        @php 
+                            $realPercent = $apbdesObj->target_amount > 0 ? min(100, round(($apbdesObj->realization_amount / $apbdesObj->target_amount) * 100)) : 0; 
+                        @endphp
                         <div class="modern-progress-wrap">
-                            <div class="modern-progress-bar" style="width: 46%; background: linear-gradient(90deg, #7fda4f, #a3f47c) !important; color: #2d5016;">46%</div>
+                            <div class="modern-progress-bar" style="width: {{ $realPercent }}%; background: linear-gradient(90deg, #7fda4f, #a3f47c) !important; color: #2d5016;">{{ $realPercent }}%</div>
                         </div>
                     </div>
                     
@@ -1198,7 +1204,7 @@ new Chart(budgetCtx, {
     data: {
         labels: ['Belanja', 'Pendapatan', 'Pembiayaan'],
         datasets: [{
-            data: [45, 35, 20],
+            data: [{{ $apbdesObj->pie_belanja }}, {{ $apbdesObj->pie_pendapatan }}, {{ $apbdesObj->pie_pembiayaan }}],
             backgroundColor: ['#2d5016', '#4a7c24', '#6b9c3d'],
             borderWidth: 0
         }]
@@ -1219,21 +1225,21 @@ const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
 new Chart(monthlyCtx, {
     type: 'bar',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+        labels: {!! json_encode($apbdesObj->chart_months) !!},
         datasets: [
             {
                 label: 'Pendapatan',
-                data: [220, 240, 260, 210, 230, 250],
+                data: {!! json_encode($apbdesObj->chart_pendapatan) !!},
                 backgroundColor: '#2d5016'
             },
             {
                 label: 'Belanja',
-                data: [180, 200, 190, 185, 195, 210],
+                data: {!! json_encode($apbdesObj->chart_belanja) !!},
                 backgroundColor: '#4a7c24'
             },
             {
                 label: 'Surplus',
-                data: [40, 40, 70, 25, 35, 40],
+                data: {!! json_encode($apbdesObj->chart_surplus) !!},
                 backgroundColor: '#6b9c3d'
             }
         ]

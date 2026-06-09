@@ -93,11 +93,11 @@
                 @if($perizinan->status === 'menunggu_kades')
                 <div class="d-grid gap-2">
                     <button type="submit" name="action" value="selesai" class="btn btn-success"
-                        onclick="return confirm('Setujui dan tanda tangani perizinan ini secara elektronik?')">
+                        onclick="confirmAction(event, 'Setujui dan tanda tangani perizinan ini secara elektronik?')">
                         <i class="bi bi-pen me-1"></i> Setujui & TTD
                     </button>
                     <button type="submit" name="action" value="tolak" class="btn btn-outline-danger"
-                        onclick="return confirm('Tolak permohonan izin ini?')">
+                        onclick="confirmAction(event, 'Tolak permohonan izin ini?')">
                         <i class="bi bi-x-circle me-1"></i> Tolak Permohonan
                     </button>
                 </div>

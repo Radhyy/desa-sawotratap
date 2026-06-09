@@ -109,17 +109,19 @@
 
                 @if(in_array($perizinan->status, ['menunggu_admin']))
                 <div class="d-grid gap-2">
-                    <button type="submit" name="action" value="proses" class="btn btn-primary">
+                    <button type="submit" name="action" value="proses" class="btn btn-primary"
+                        onclick="confirmAction(event, 'Verifikasi dan proses pengajuan izin ini?')">
                         <i class="bi bi-check-circle me-1"></i> Verifikasi & Proses
                     </button>
                     <button type="submit" name="action" value="tolak" class="btn btn-outline-danger"
-                        onclick="return confirm('Yakin ingin menolak pengajuan ini?')">
+                        onclick="confirmAction(event, 'Yakin ingin menolak pengajuan ini?')">
                         <i class="bi bi-x-circle me-1"></i> Tolak Pengajuan
                     </button>
                 </div>
                 @elseif($perizinan->status === 'diproses')
                 <div class="d-grid gap-2">
-                    <button type="submit" name="action" value="selesai" class="btn btn-success">
+                    <button type="submit" name="action" value="selesai" class="btn btn-success"
+                        onclick="confirmAction(event, 'Tandai perizinan ini telah selesai?')">
                         <i class="bi bi-check2-all me-1"></i> Tandai Selesai
                     </button>
                 </div>

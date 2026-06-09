@@ -116,11 +116,11 @@
                 @if($pengaduan->status === 'Menunggu Kades')
                 <div class="d-grid gap-2">
                     <button type="submit" name="action" value="setujui" class="btn btn-primary"
-                        onclick="return confirm('Setujui disposisi pengaduan ini agar diproses?')">
+                        onclick="confirmAction(event, 'Setujui disposisi pengaduan ini agar diproses?')">
                         <i class="bi bi-check-circle me-1"></i> Setujui & Proses
                     </button>
                     <button type="submit" name="action" value="tolak" class="btn btn-outline-danger"
-                        onclick="return confirm('Tolak laporan pengaduan ini?')">
+                        onclick="confirmAction(event, 'Tolak laporan pengaduan ini?')">
                         <i class="bi bi-x-circle me-1"></i> Tolak Pengaduan
                     </button>
                 </div>

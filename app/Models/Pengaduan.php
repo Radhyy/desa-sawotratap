@@ -10,6 +10,7 @@ class Pengaduan extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'ticket',
         'nama',
         'no_whatsapp',
@@ -27,4 +28,9 @@ class Pengaduan extends Model
     protected $casts = [
         'waktu_kejadian' => 'date',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

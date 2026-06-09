@@ -131,7 +131,8 @@
                     <th width="15%">Penjual</th>
                     <th width="8%">Stok</th>
                     <th width="10%">Status</th>
-                    <th width="10%">Aksi</th>
+                    <th width="10%">Persetujuan</th>
+                    <th width="12%">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -195,6 +196,31 @@
                         @endif
                     </td>
                     <td>
+                        @if($product->approval_status == 'pending')
+                            <div class="d-flex flex-column align-items-start">
+                                <span class="badge bg-warning text-dark mb-1"><i class="bi bi-hourglass-split me-1"></i>Menunggu</span>
+                                <div class="d-flex gap-1">
+                                    <form action="{{ route('admin.umkm.update-status', $product) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="approval_status" value="approved">
+                                        <button type="submit" class="btn btn-success p-0 d-flex align-items-center justify-content-center rounded" style="width: 26px; height: 26px;" title="Setujui"><i class="bi bi-check2" style="font-size: 1rem;"></i></button>
+                                    </form>
+                                    <form action="{{ route('admin.umkm.update-status', $product) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="approval_status" value="rejected">
+                                        <button type="submit" class="btn btn-danger p-0 d-flex align-items-center justify-content-center rounded" style="width: 26px; height: 26px;" title="Tolak"><i class="bi bi-x" style="font-size: 1.1rem;"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        @elseif($product->approval_status == 'approved')
+                            <span class="badge bg-success"><i class="bi bi-check-circle-fill me-1"></i>Disetujui</span>
+                        @else
+                            <span class="badge bg-danger"><i class="bi bi-x-circle-fill me-1"></i>Ditolak</span>
+                        @endif
+                    </td>
+                    <td>
                         <div class="action-buttons">
                             <a href="{{ route('umkm.show', $product->id) }}" 
                                class="action-btn view-btn" 
@@ -250,9 +276,21 @@
 @push('scripts')
 <script>
 function confirmDelete(id) {
-    if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
-        document.getElementById('delete-form-' + id).submit();
-    }
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: 'Apakah Anda yakin ingin menghapus produk ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#2d5016',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    });
 }
 </script>
 @endpush

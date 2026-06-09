@@ -131,18 +131,18 @@
                 @if(in_array($pengaduan->status, ['Menunggu Verifikasi', 'Diverifikasi Admin', 'Didisposisi Kades']))
                 <div class="d-grid gap-2">
                     <button type="submit" name="action" value="teruskan_kades" class="btn btn-primary"
-                        onclick="return confirm('Verifikasi pengaduan ini dan teruskan ke Kepala Desa?')">
+                        onclick="confirmAction(event, 'Verifikasi pengaduan ini dan teruskan ke Kepala Desa?')">
                         <i class="bi bi-arrow-right-circle me-1"></i> Verifikasi & Teruskan ke Kades
                     </button>
                     <button type="submit" name="action" value="tolak" class="btn btn-outline-danger"
-                        onclick="return confirm('Tolak laporan pengaduan ini?')">
+                        onclick="confirmAction(event, 'Tolak laporan pengaduan ini?')">
                         <i class="bi bi-x-circle me-1"></i> Tolak Pengaduan
                     </button>
                 </div>
                 @elseif($pengaduan->status === 'Diproses')
                 <div class="d-grid gap-2">
                     <button type="submit" name="action" value="selesai" class="btn btn-success"
-                        onclick="return confirm('Tandai laporan ini sebagai selesai/sudah diperbaiki?')">
+                        onclick="confirmAction(event, 'Tandai laporan ini sebagai selesai/sudah diperbaiki?')">
                         <i class="bi bi-check2-all me-1"></i> Tandai Selesai (Sudah Diperbaiki)
                     </button>
                 </div>

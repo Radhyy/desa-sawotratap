@@ -101,7 +101,7 @@
                     <button type="submit" name="action" value="proses" class="btn btn-primary">
                         <i class="bi bi-check-circle me-1"></i> Verifikasi & Proses
                     </button>
-                    <button type="submit" name="action" value="tolak" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin menolak pengajuan ini?')">
+                    <button type="submit" name="action" value="tolak" class="btn btn-outline-danger" onclick="confirmAction(event, 'Yakin ingin menolak pengajuan ini?')">
                         <i class="bi bi-x-circle me-1"></i> Tolak Pengajuan
                     </button>
                 </div>
